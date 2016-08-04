@@ -5,6 +5,7 @@
 @import "spinner";
 @import "mobile_adaptation";
 
+
 /*Mobile adaptation*/
 @media screen and (min-device-width: 300px) and (max-device-width: 600px){
   .blog-article-info{
@@ -16,6 +17,56 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .header__navigation{
+    border-bottom: none ;
+    padding: 10px 0 10px 0;
+    display: flex;
+    flex-direction: row;
+    background-color: #6b9ad0;
+    height: 30px;
+  }
+
+  .header__navigation__menu-button{
+    display: block;
+    border: none;
+    width: 100px;
+    background: url(../img/SVG/menu.svg) no-repeat center;
+    margin-left: auto;
+  }
+
+  .header__navigation:after, .header__navigation:before {
+    top: 0;
+    left: 0;
+    border: none;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .header__navigation:after {
+    border-top-color: @deep-blue;
+    border-width: 0;
+    margin-left: 0;
+  }
+  .header__navigation:before {
+    border-top-color: @sky;
+    border-width: 0;
+    margin-left: 0;
+  }
+
+  .sidebar-hint__header{
+    border: none;
+  }
+
+  .header__navigation__menu{
+    display: none;
+  }
+
+
+
   .sidebar{
     display: none;
     width: 0;

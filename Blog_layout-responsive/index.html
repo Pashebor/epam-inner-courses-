@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>RACOONBLOG</title>
@@ -11,6 +11,8 @@
  <header class="header" role="banner">
         <h1 class="header__logo">racco<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="header__logo__icon"><g><title>Title image</title><g><use xlink:href="img/sprite.svg#icon-racoon-negative"/></g></g></svg>nblog</h1>
      <nav role="navigation" class="header__navigation">
+         <button class="sidebar-hint__header sidebar-hint__header--exclamation"></button>
+         <button class="header__navigation__menu-button"></button>
          <ul class="header__navigation__menu">
              <a href="#javascript" role="link" title="javascript page" class="header__navigation__menu_link"><span class="screen-reader-text">Link to Javascript page</span><li class="menu-item">javascript</li></a>
              <a href="#css" role="link" title="css page" class="header__navigation__menu_link"><span class="screen-reader-text">Link to Css page</span><li class="menu-item">css</li></a>
@@ -24,7 +26,7 @@
   <main role="main" class="blog">
           <article role="article" class="blog-article">
               <figure class="blog-article__image-block" role="img">
-                  <img src="img/flowers.png" alt="Blogoflowers" title="Blogoflowers">
+                  <img src="img/flowers.png" alt="Blogoflowers" title="Blogoflowers" class="blog-article__image-block__picture">
                   <figcaption class="blog-article__image-block__caption"> Blogotitle of blogopost about blogoflowers</figcaption>
               </figure>
                   <footer class="blog-article-info" role="contentinfoo">
@@ -48,7 +50,7 @@
 
           <article role="article" class="blog-article">
             <figure class="blog-article__image-block" role="img">
-              <img src="img/paint.png" alt="Blogopaint" title="Blogopaint">
+              <img src="img/paint.png" alt="Blogopaint" title="Blogopaint" class="blog-article__image-block__picture">
                 <figcaption class="blog-article__image-block__caption">Blogotitle of blogopost about blogoflowers</figcaption>
             </figure>
 
