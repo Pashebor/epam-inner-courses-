@@ -13,12 +13,15 @@
   "author": "pashebor",
   "license": "ISC",
   "devDependencies": {
+    "postcss": "latest",
     "autoprefixer": "latest",
     "less": "latest"
   },
   "scripts": {
     "test": "run",
-    "build:css": "lessc less/style.less css/style.css --autoprefix=\"last 2 versions\""
+    "build:css": "lessc less/style.less css/style.css ",
+    "build:prefix": "postcss --use autoprefixer css/style.css -d css/",
+    "build": "npm run build:css && npm run build:prefix"
   }
 
 }

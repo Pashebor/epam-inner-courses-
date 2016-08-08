@@ -84,11 +84,17 @@ h6 {
   text-align: center;
   letter-spacing: 5px;
 }
+.header__logo--on-scroll {
+  display: none;
+}
 .header__logo__icon {
   margin-bottom: -15px;
   fill: #6b9ad0;
   width: 60px;
   height: 60px;
+}
+.header__logo__icon_mobile {
+  display: none;
 }
 .header__navigation {
   display: -webkit-box;
@@ -106,11 +112,20 @@ h6 {
   list-style: none;
   text-align: center;
 }
-.header__navigation__menu-button {
+.header__navigation__menu--mobile {
   display: none;
 }
+#menu-button {
+  display: none;
+}
+.header__navigation__button {
+  display: none;
+}
+.header__navigation__menu_link {
+  text-decoration: none;
+}
 .header__navigation__menu_link:focus {
-  border: 4px solid #fefefe;
+  text-decoration: none;
 }
 .menu-item {
   display: inline-block;
