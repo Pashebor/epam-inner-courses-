@@ -1,0 +1,26 @@
+{
+  "name": "my_project",
+  "version": "1.0.0",
+  "description": "doing something",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://git.epam.com/Pavel_Demyanov/my-brilliant-project"
+  },
+  "keywords": [
+    "epam"
+  ],
+  "author": "pashebor",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "less": "latest"
+  },
+  "scripts": {
+    "test": "run",
+    "build:css": "lessc less/style.less css/style.css --autoprefix=\"last 2 versions\""
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

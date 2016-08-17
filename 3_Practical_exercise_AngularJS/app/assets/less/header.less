@@ -1,0 +1,95 @@
+@import "variables";
+@import "fonts";
+
+body, p, div, li, figure, figcaption{
+  font-family: @overall-text;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: @headers-text;
+}
+
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+.header-logo {
+  font-family: @headers-text;
+  text-transform: uppercase;
+  font-size: 3em;
+  color: @navigation-bar-color;
+  text-align: center;
+  letter-spacing: 5px;
+  padding: 20px 0;
+  font-weight: bolder;
+}
+.header-logo__icon {
+  margin-bottom: -15px;
+  fill: @navigation-bar-color;
+  width: 60px;
+  height: 60px;
+}
+
+.navigation-bar {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  float: left;
+
+  background-color: @navigation-bar-color;
+  border-bottom: 4px solid @nav-border-bottom-color;
+  margin-bottom: 3.125em;
+
+
+}
+
+.navigation-menu {
+  list-style: none;
+  text-align: center;
+}
+
+.navigation-menu__link {
+  text-decoration: none;
+  color: @link-text-color;
+}
+
+.navigation-menu__link:active{
+  border-bottom: 3px solid @link-text-color;
+}
+
+.navigation-menu__item {
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 1.5em;
+  padding:  0 60px 0 0;
+}
+
+.navigation-menu__link:hover{
+  color: @social-link-text-color;
+}
+
+.navigation-bar:after, .navigation-bar:before {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.navigation-bar:after {
+  border-top-color: @navigation-bar-color;
+  border-width: 12px;
+  margin-left: -12px;
+}
+.navigation-bar:before {
+  border-top-color: @nav-border-bottom-color;
+  border-width: 16px;
+  margin-left: -16px;
+}

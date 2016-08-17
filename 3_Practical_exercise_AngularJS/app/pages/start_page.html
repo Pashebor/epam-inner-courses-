@@ -1,0 +1,42 @@
+<main role="main" class="blog">
+    <article role="article" class="blog-article" ng-repeat="article in blog" id="{{article.id}}">
+        <figure class="image-block" role="img">
+            <img class="image-block__picture" ng-src="{{article.image}}" alt="Blogoflowers" title="Blogoflowers">
+        </figure>
+        <h2 class="blog-article__description"><a href="#/edit" class="blog-article__description-link" role="link">{{article.header}}</a></h2>
+        <footer class="blog-article__info" role="contentinfoo">
+            <time role="alert" class="blog-article__date"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="blog-article__date-icon"><use xlink:href="app/assets/img/sprite.svg#icon-clock"/></svg></span>{{article.time}}</time>
+            <address class="blog-article__author"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="blog-article__author-icon"><use xlink:href="app/assets/img/sprite.svg#icon-footstep"/></svg></span>{{article.author}}</address>
+            <div class="social">
+                <ul class="social__group">
+                    <li class="social__group-item"><a href="#" role="link" class="social__group-item-link"><span class="screen-reader-text">Facebook share</span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="social__group-item-icon"><use xlink:href="app/assets/img/sprite.svg#icon-facebook"/></svg>16</a></li>
+                    <li class="social__group-item"><a href="#" role="link" class="social__group-item-link"><span class="screen-reader-text">G+ share</span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="social__group-item-icon"><use xlink:href="app/assets/img/sprite.svg#icon-gplus"/></svg>7</a></li>
+                    <li class="social__group-item"><a href="#" role="link" class="social__group-item-link"><span class="screen-reader-text">Twitter share</span><svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="social__group-item-icon"><use xlink:href="app/assets/img/sprite.svg#icon-twitter"/></svg>15</a></li>
+                    <li class="social__group-item"><a href="#" role="link" class="social__group-item-link"><span class="screen-reader-text">VK share</span><svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="social__group-item-icon"><use xlink:href="app/assets/img/sprite.svg#icon-vk"/></svg>16</a></li>
+                    <li class="social__group-item"><a href="#" role="link" class="social__group-item-link"><span class="screen-reader-text">Yaru share</span><svg version="1.1"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="social__group-item-icon"><use xlink:href="app/assets/img/sprite.svg#icon-yaru"/></svg>1</a></li>
+                </ul>
+            </div>
+        </footer>
+        <p class="blog-article__note">{{article.text}}</p>
+    </article>
+
+    <div class="spinner-block"><img src="app/assets/img/loading.png" class="spinner-block__spinner"></div>
+</main>
+<aside role="complementary" class="sidebar">
+    <article class="sidebar-hint" role="article">
+        <h3 class="sidebar-hint__header sidebar-hint__header--exclamation" role="heading">about</h3>
+        <p class="sidebar-hint__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </article>
+    <article class="sidebar-hint" role="article">
+        <h3 class="sidebar-hint__header sidebar-hint__header--question" role="heading">some information</h3>
+        <p class="sidebar-hint__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+    </article>
+    <ul class="hot-hashtags" role="presentation">
+        <li class="hot-hashtags__item" ng-repeat="tag in alltags" ><a href="#" role="link" class="hot__hashtags-item__link">{{tag}}<span class="screen-reader-text">link</span></a></li>
+    </ul>
+</aside>
