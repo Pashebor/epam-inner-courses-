@@ -7,10 +7,10 @@
     <link rel="stylesheet" type="text/css" href="app/assets/css/style.css">
     <title>RACOONBLOG</title>
 </head>
-<body ng-controller="BlogController">
+<body>
 <header class="header" role="banner">
          <h1 class="screen-reader-text">Raccon Blog</h1>
-         <span class="header-logo" aria-hidden="true">racco<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="header-logo__icon"><g><title>Title image</title><g><use xlink:href="app/assets/img/sprite.svg#icon-racoon-negative"/></g></g></svg>nblog</span>
+         <a href="#/" class="header-link"><span class="header-logo" aria-hidden="true">racco<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="header-logo__icon"><g><title>Title image</title><g><use xlink:href="app/assets/img/sprite.svg#icon-racoon-negative"/></g></g></svg>nblog</span></a>
      <nav role="navigation" class="navigation-bar">
          <ul class="navigation-menu">
              <li class="navigation-menu__item"><a href="#javascript" role="link"  class="navigation-menu__link"><span class="screen-reader-text">Link to </span>javascript<span class="screen-reader-text">page</span></a></li>
@@ -25,8 +25,11 @@
     <footer ></footer>
 <script type="text/javascript" src="app/assets/js/angular.min.js"></script>
 <script type="text/javascript" src="app/assets/js/angular-route.min.js"></script>
+<script type="text/javascript" src="app/assets/js/angular-resource.min.js"></script>
 <script type="text/javascript" src="app/modules/app.module.js"></script>
+<script type="text/javascript" src="app/services/app.factory.js"></script>
 <script type="text/javascript" src="app/config/app.route_configs.js"></script>
 <script type="text/javascript" src="app/controllers/app.start_page_controller.js"></script>
+<script type="text/javascript" src="app/controllers/app.edit_page_controller.js"></script>
 </body>
 </html>

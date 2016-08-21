@@ -1,9 +1,11 @@
 <main role="main" class="blog">
-    <article role="article" class="blog-article" ng-repeat="article in blog" id="{{article.id}}">
+    <a href="#/create" role="link" class="btn btn-info btn-submit btn-submit--create-article">create</a>
+
+    <article role="article" class="blog-article" ng-repeat="article in articles" id="{{article.id}}">
         <figure class="image-block" role="img">
             <img class="image-block__picture" ng-src="{{article.image}}" alt="Blogoflowers" title="Blogoflowers">
         </figure>
-        <h2 class="blog-article__description"><a href="#/edit" class="blog-article__description-link" role="link">{{article.header}}</a></h2>
+        <h2 class="blog-article__description"><a href="#/edit/{{article.id}}" class="blog-article__description-link" role="link">{{article.header}}</a></h2>
         <footer class="blog-article__info" role="contentinfoo">
             <time role="alert" class="blog-article__date"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="blog-article__date-icon"><use xlink:href="app/assets/img/sprite.svg#icon-clock"/></svg></span>{{article.time}}</time>
             <address class="blog-article__author"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="blog-article__author-icon"><use xlink:href="app/assets/img/sprite.svg#icon-footstep"/></svg></span>{{article.author}}</address>
@@ -37,6 +39,6 @@
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </article>
     <ul class="hot-hashtags" role="presentation">
-        <li class="hot-hashtags__item" ng-repeat="tag in alltags" ><a href="#" role="link" class="hot__hashtags-item__link">{{tag}}<span class="screen-reader-text">link</span></a></li>
+        <li class="hot-hashtags__item" ng-repeat="tag in tags" ><a href="#" role="link" class="hot__hashtags-item__link">{{tag}}<span class="screen-reader-text">link</span></a></li>
     </ul>
 </aside>

@@ -1,9 +1,9 @@
 <div class="edit-article">
- <h2 class="edit-article__header">Article Name</h2>
- <form role="form" class="form-block">
+ <h2 class="edit-article__header">{{article.header}}</h2>
+ <form role="form" class="form-block" nd-model="edit.editData.id = {{article.id}}">
      <div class="form-group">
          <label for="author" class="form-block__label">Author</label>
-         <input type="text" id="author" class="form-control" placeholder="Enter your name" required>
+         <input type="text" id="author" class="form-control" placeholder="{{article.author}}" required ng-model="edit.editData.author">
      </div>
      <div class="form-group">
          <label for="image_upd" class="form-block__label">Image</label>
@@ -11,17 +11,18 @@
      </div>
      <div class="form-group">
          <label for="title" class="form-block__label">Title</label>
-         <input type="text" id="title" class="form-control" placeholder="Change title" required>
+         <input type="text" id="title" class="form-control" placeholder="{{article.header}}" required ng-model="edit.editData.header">
      </div>
      <div class="form-group">
          <label for="text" class="form-block__label">Text</label>
-         <textarea class="form-control" rows="5" id="text" maxlength="100" required></textarea>
+         <textarea class="form-control" rows="5" id="text"  required ng-model="edit.editData.text" placeholder="{{article.text}}"></textarea>
      </div>
      <div class="form-group">
          <label for="tags" class="form-block__label">Tags</label>
-         <input type="text" id="tags" class="form-control" placeholder="Enter tags" >
+         <input type="text" id="tags" class="form-control" placeholder="{{article.tags}}" ng-model="edit.editData.tags">
      </div>
-     <a href="#/" class="btn btn-danger btn-cancel" role="link">cancel</a>
-     <input type="submit" class="btn btn-info btn-submit" value="submit">
+     <a href="#/" class="btn btn-warning btn-cancel" role="link">cancel</a>
+     <a href="#/" class="btn btn-danger btn-delete" role="link">delete</a>
+     <input type="submit" class="btn btn-info btn-submit" value="edit" ng-click="edit.submit()">
  </form>
 </div>

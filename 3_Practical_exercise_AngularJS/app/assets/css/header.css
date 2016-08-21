@@ -67,6 +67,12 @@ h5,
 h6 {
   font-family: 'Josefin Sans';
 }
+.header-link {
+  text-decoration: none;
+  margin: auto;
+  text-align: center;
+  padding: 20px 0;
+}
 .header {
   display: flex;
   flex-direction: column;
