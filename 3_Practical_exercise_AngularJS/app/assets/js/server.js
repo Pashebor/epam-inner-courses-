@@ -28,19 +28,29 @@ var articles = [
 ];
 
 
-function savePersonToPublicFolder(person, callback) {
-    fs.writeFile('./some.json', JSON.stringify(person), callback);
+function saveEditedArticle(editedArt, callback) {
+    var jsonToUptade = JSON.parse(fs.readFileSync('./some.json', 'utf8'));
+
+    jsonToUptade.forEach(function(item) {
+        var itemId = item.id, editedItem = editedArt.id;
+        if(itemId == editedItem){
+            item.author = editedArt.author;
+            item.header = editedArt.header;
+            item.text = editedArt.text;
+            item.tags = editedArt.tags;
+        }
+    });
+
+    fs.writeFile('./some.json', JSON.stringify(jsonToUptade, null, 4), callback);
 }
 
 app.use('/', express.static('./../../../'));
 
 app.post('/articles', function (req, res) {
 
-    console.log(req.body);
-
     res.json(req.body);
 
-    savePersonToPublicFolder(req.body, function(err) {
+    saveEditedArticle(req.body, function(err) {
         if (err) {
             res.status(404).send('User not saved');
             return;

@@ -1,1 +1,16 @@
-{"author":"sdvsdv","header":"sdvv","text":"svdsv","tags":"svvs","id":"1"}
+[
+    {
+        "author": "Demyanov",
+        "header": "Some Title",
+        "text": "bla bla bla",
+        "tags": "any tags",
+        "id": "1"
+    },
+    {
+        "author": "The Same Autor",
+        "header": "And now title",
+        "text": "Text",
+        "tags": "Tags",
+        "id": "2"
+    }
+]
