@@ -1,4 +1,3 @@
-(function () {
+
     'use strict';
-    angular.module('racoonBlog', ['ngRoute', 'ngResource']);
-})();
+    angular.module('racoonBlog', ['ngRoute', 'ngResource', 'blogComponents']);

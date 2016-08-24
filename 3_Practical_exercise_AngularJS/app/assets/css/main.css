@@ -97,8 +97,8 @@
 .blog-article__author {
   display: flex;
   flex-direction: row;
-  width: 20%;
-  margin: 0 1.563em 0 0;
+  width: 25%;
+  margin: 0 1.2em 0 0;
   text-transform: none;
   color: #69747c;
   font-style: normal;
@@ -159,4 +159,9 @@
   color: #69747c;
   text-align: justify;
   word-wrap: break-word;
+}
+.create-and-search {
+  display: flex;
+  flex-direction: row;
+  width: 94%;
 }

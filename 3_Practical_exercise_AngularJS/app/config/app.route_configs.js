@@ -1,19 +1,18 @@
-(function(){
+
     'use strict';
     angular.module('racoonBlog').config(config);
 
         function config($routeProvider){
             $routeProvider
                 .when('/',  {
-                    templateUrl: '../app/pages/start_page.html',
-                    controller: 'BlogController'
+                    template: "<start-blog class='start-blog'></start-blog>"
+                    /*controller: 'BlogController'*/
                 })
                 .when('/edit/:articleId', {
-                    templateUrl: "../app/pages/edit.html",
-                    controller: 'EditBlogController as edit'
+                    template: "<edit-article class='create-article'></edit-article>"
+                    /*controller: 'EditArticleController as edit'*/
                 })
                 .when('/create', {
-                    templateUrl: "../app/pages/create_article.html"
+                    template: "<create-article class='create-article'></create-article>"
                 });
     }
-})();

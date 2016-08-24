@@ -61,6 +61,27 @@
   text-align: center;
   color: #69747c;
 }
+.edit-article__alert-window {
+  width: 20%;
+  margin-top: -10px;
+  padding: 10px 0;
+  text-align: center;
+  color: #fefefe;
+  background-color: #6b9ad0;
+  border-radius: 10px;
+  animation: animateAlert 0.3s 1 linear;
+}
+.edit-article__alert-window--error {
+  background-color: #d9534f;
+}
+@keyframes animateAlert {
+  0% {
+    padding: 0;
+  }
+  100% {
+    padding: 10px 0;
+  }
+}
 .form-block {
   width: 50%;
   margin: auto;
@@ -95,6 +116,10 @@
   margin-right: 10px;
 }
 .create-article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 .start-blog {
