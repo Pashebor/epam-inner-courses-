@@ -9,19 +9,15 @@ angular.module('blogComponents').component('startBlog', {
 });
 
 function blogController(){
-    var that = this;
+    let that = this;
     this.searchInput = document.getElementById('searchInput').value;
 
     this.blog = this.articles.list;
     this.tags = this.articles.tags;
 
-    this.changeInput = function (){
-        that.searchInput;
-    };
+    this.changeInput = () => that.searchInput;
 
-    this.changeInputWithTag = function (tag) {
-        that.searchInput = '' + tag;
-    };
+    this.changeInputWithTag = tag => that.searchInput = '' + tag;
 
 
 
