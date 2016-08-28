@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('blogComponents').component('startBlog', {
-    templateUrl: '../app/templates/start_page.html',
+    templateUrl: '/templates/start_page.html',
     controller: blogController,
     bindings: {
         articles: '='

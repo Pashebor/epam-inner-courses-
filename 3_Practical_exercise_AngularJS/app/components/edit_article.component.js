@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('blogComponents').component('editArticle', {
-    templateUrl: '../app/templates/edit_article.html',
+    templateUrl: '/templates/edit_article.html',
     controller:  EditController,
     bindings: {
         articles: '='
@@ -67,7 +67,7 @@ function EditController($scope, $routeParams, blogArticleService, $uibModal){
 
 
         var modalInstance = $uibModal.open({
-            templateUrl: '../app/templates/modal_delete.html',
+            templateUrl: '/templates/modal_delete.html',
             controller: 'ModalController as ctrl',
             scope: $scope,
             size: size,

@@ -1,7 +1,7 @@
 'use strict';
 
     angular.module('blogComponents').component('createArticle', {
-        templateUrl: '../app/templates/create_article.html',
+        templateUrl: '/templates/create_article.html',
         controller: createArticleController,
         bindings: {
             articles: '='

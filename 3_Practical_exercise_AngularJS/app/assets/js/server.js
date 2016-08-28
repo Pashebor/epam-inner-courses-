@@ -66,7 +66,7 @@ function createArticle(createdData, callback) {
     fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
 }
 
-app.use('/', express.static('./../../../'));
+app.use('/', express.static('./../../'));
 
 app.post('/delete_article', function(req, res) {
 
