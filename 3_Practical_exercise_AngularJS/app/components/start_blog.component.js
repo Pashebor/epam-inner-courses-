@@ -2,9 +2,27 @@
 
 angular.module('blogComponents').component('startBlog', {
     templateUrl: '../app/templates/start_page.html',
-    controller: blogController});
+    controller: blogController,
+    bindings: {
+        articles: '='
+    }
+});
 
-function blogController($scope, blogArticleService){
-    this.blog = blogArticleService.getArticles.query();
-    this.tags = blogArticleService.getTags.query();
+function blogController(){
+    var that = this;
+    this.searchInput = document.getElementById('searchInput').value;
+
+    this.blog = this.articles.list;
+    this.tags = this.articles.tags;
+
+    this.changeInput = function (){
+        that.searchInput;
+    };
+
+    this.changeInputWithTag = function (tag) {
+        that.searchInput = '' + tag;
+    };
+
+
+
 }

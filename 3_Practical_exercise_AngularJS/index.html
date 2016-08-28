@@ -21,11 +21,12 @@
          </ul>
      </nav>
  </header>
- <div class="container" ng-view></div>
+ <div class="container" ng-view ng-controller="AppController as ctrl"></div>
     <footer ></footer>
 <script type="text/javascript" src="app/assets/js/angular.min.js"></script>
 <script type="text/javascript" src="app/assets/js/angular-route.min.js"></script>
 <script type="text/javascript" src="app/assets/js/angular-resource.min.js"></script>
+<script type="text/javascript" src="app/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
 <script type="text/javascript" src="app/modules/app.module.js"></script>
 <script type="text/javascript" src="app/services/app.factory.js"></script>
 <script type="text/javascript" src="app/config/app.route_configs.js"></script>
@@ -33,5 +34,6 @@
 <script type="text/javascript" src="app/components/start_blog.component.js"></script>
 <script type="text/javascript" src="app/components/edit_article.component.js"></script>
 <script type="text/javascript" src="app/components/create_article.component.js"></script>
+<script type="text/javascript" src="app/components/modal_delete.component.js"></script>
 </body>
 </html>

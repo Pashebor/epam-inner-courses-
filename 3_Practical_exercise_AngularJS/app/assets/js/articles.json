@@ -19,47 +19,15 @@
         ]
     },
     {
-        "id": "2",
-        "author": "E. Hyperraccoon",
-        "image": "app/assets/img/paint.png",
-        "header": "Blogotitle of paints",
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "time": "28:67 Jan 01, 2014",
-        "tags": [
-            "Racoon",
-            "Racoon",
-            "Coon",
-            "Dog",
-            "Cat",
-            "Duck",
-            "Developer",
-            "Car",
-            "Jeep"
-        ]
-    },
-    {
         "author": "P. Demyanov",
-        "image": "https://i.ytimg.com/vi/mW3S0u8bj58/maxresdefault.jpg",
-        "header": "Cats",
-        "text": "rgreg",
+        "image": "http://www.alternativenation.net/wp-content/uploads/2016/04/Black_Sabbath.jpg",
+        "header": "Scroll to change background-color (jquery)",
+        "text": "qfewq",
         "tags": [
-            "armle;remg",
-            " dswnfown"
+            "sludge",
+            " ozzy"
         ],
-        "time": "16:53 Aug 24, 2016",
-        "id": "3"
-    },
-    {
-        "author": "Some Text",
-        "image": "https://images-na.ssl-images-amazon.com/images/G/01/img15/pet-products/small-tiles/30423_pets-products_january-site-flip_3-cathealth_short-tile_592x304._CB286975940_.jpg",
-        "header": "Some Text",
-        "text": "Some TextSome TextSome TextSome TextSome Text",
-        "tags": [
-            "Some Text",
-            " Some Text",
-            " Some Text"
-        ],
-        "time": "18:19 Aug 24, 2016",
-        "id": "4"
+        "id": "2",
+        "time": "03:47 Aug 28, 2016"
     }
 ]

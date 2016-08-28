@@ -62,14 +62,6 @@ function deleteArticle(deleteArt, callback) {
 
 function createArticle(createdData, callback) {
     var jsonToCreateArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-    var ids = [], largestDigitID;
-
-    jsonToCreateArticle.forEach(function(article){
-       ids.push(article.id);
-    });
-    largestDigitID = Math.max.apply(Math, ids);
-
-    createdData.id = "" + (largestDigitID + 1);
     jsonToCreateArticle.push(createdData);
     fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
 }

@@ -1,9 +1,9 @@
 <main role="main" class="blog">
    <div class="create-and-search">
        <a href="#/create" role="link" class="btn btn-info btn-submit btn-submit--create-article">create</a>
-       <input type="search" placeholder="Search" class="form-control" ng-model="searchArticle.$">
+       <input type="search" id="searchInput" placeholder="Search" class="form-control" ng-model="$ctrl.searchInput" ng-change="$ctrl.changeInput()">
    </div>
-    <article role="article" class="blog-article" ng-repeat="article in $ctrl.blog | filter: searchArticle" id="{{article.id}}">
+    <article role="article" class="blog-article" ng-repeat="article in $ctrl.blog | filter: $ctrl.searchInput" id="{{article.id}}">
         <figure class="image-block" role="img">
             <img class="image-block__picture" ng-src="{{article.image}}" alt="Blogoflowers" title="Blogoflowers">
         </figure>
@@ -41,6 +41,6 @@
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </article>
     <ul class="hot-hashtags" role="presentation">
-        <li class="hot-hashtags__item" ng-repeat="tag in $ctrl.tags" ><a href="#" role="link" class="hot__hashtags-item__link">{{tag}}<span class="screen-reader-text">link</span></a></li>
+        <li class="hot-hashtags__item" ng-repeat="tag in $ctrl.tags" ng-click="$ctrl.changeInputWithTag(tag)"><span class="hot__hashtags-item__link">{{tag}}<span class="screen-reader-text">link</span></span></li>
     </ul>
 </aside>

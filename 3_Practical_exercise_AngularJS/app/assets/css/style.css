@@ -684,6 +684,7 @@ h6 {
   color: #fefefe;
   text-decoration: none;
   margin-bottom: 0.625em;
+  cursor: pointer;
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
@@ -840,4 +841,26 @@ h6 {
   display: flex;
   flex-direction: row;
   width: 100%;
+}
+.modal-dialog {
+  margin-top: 10%;
+}
+.modal-header {
+  text-align: center;
+  border-bottom: none;
+  color: #69747c;
+}
+.modal-body {
+  margin-top: -25px;
+  border-top: none;
+  color: #69747c;
+  text-align: center;
+}
+.modal-footer {
+  text-align: center;
+}
+.btn-submit--modal,
+.btn-cancel--modal {
+  width: 20%;
+  text-decoration: none;
 }
