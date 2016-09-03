@@ -1,0 +1,17 @@
+.spinner-block{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.spinner-block__spinner{
+  width: 50px;
+  height: 50px;
+  animation: spinnerRotate 0.5s infinite linear;
+}
+
+@keyframes spinnerRotate {
+  0%{-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+  100%{-webkit-transform: rotate(360deg);transform: rotate(360deg)}
+}
