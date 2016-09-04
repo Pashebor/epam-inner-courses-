@@ -1,7 +1,9 @@
 'use strict';
 import ReactDOM from 'react-dom';
 import React from 'react';
+import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import $ from 'jquery';
+
 
 /*
 let dataObjectArticles = {};
@@ -69,7 +71,7 @@ const StartPageBlog = React.createClass({
             return (
                 <main role="main" className="blog">
                     <div className="create-and-search">
-                        <a href="#/ass" role="link" className="btn btn-info btn-submit btn-submit--create-article">create</a>
+                        <Link to="create_article"  className="btn btn-info btn-submit btn-submit--create-article">create</Link>
                         <input type="search" id="searchInput" placeholder="Search" className="form-control"  />
                     </div>
                     {listArticles}
@@ -117,17 +119,17 @@ const ArticleRow = React.createClass({
                 <figure className="image-block" role="img">
                     <img className="image-block__picture" src={this.props.data.image} alt="Blogoflowers" title="Blogoflowers"/>
                 </figure>
-                <h2 className="blog-article__description"><a href="/articles" className="blog-article__description-link" role="link">{this.props.data.header}</a></h2>
+                <h2 className="blog-article__description"><Link to="/edit_article" className="blog-article__description-link" role="link">{this.props.data.header}</Link></h2>
                 <footer className="blog-article__info" role="contentinfoo">
-                    <time role="alert" className="blog-article__date"><span><svg  role="img" className="blog-article__date-icon"><use /></svg></span>{this.props.data.time}</time>
-                    <address className="blog-article__author"><span><svg  role="img" className="blog-article__author-icon"><use /></svg></span>{this.props.data.author}</address>
+                    <time role="alert" className="blog-article__date"><span><svg  role="img" className="blog-article__date-icon"><use xlinkHref='/assets/img/sprite.svg#icon-clock'/></svg></span>{this.props.data.time}</time>
+                    <address className="blog-article__author"><span><svg  role="img" className="blog-article__author-icon"><use xlinkHref='/assets/img/sprite.svg#icon-footstep'/></svg></span>{this.props.data.author}</address>
                     <div className="social">
                         <ul className="social__group">
-                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">Facebook share</span><svg  role="img" className="social__group-item-icon"><use /></svg>16</a></li>
-                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">G+ share</span><svg  role="img" className="social__group-item-icon"><use /></svg>7</a></li>
-                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">Twitter share</span><svg  role="img" className="social__group-item-icon"><use /></svg>15</a></li>
-                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">VK share</span><svg  role="img" className="social__group-item-icon"><use /></svg>16</a></li>
-                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">Yaru share</span><svg  role="img" className="social__group-item-icon"><use /></svg>1</a></li>
+                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">Facebook share</span><svg  role="img" className="social__group-item-icon"><use xlinkHref='/assets/img/sprite.svg#icon-facebook'/></svg>16</a></li>
+                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">G+ share</span><svg  role="img" className="social__group-item-icon"><use xlinkHref='/assets/img/sprite.svg#icon-gplus'/></svg>7</a></li>
+                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">Twitter share</span><svg  role="img" className="social__group-item-icon"><use xlinkHref='/assets/img/sprite.svg#icon-twitter'/></svg>15</a></li>
+                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">VK share</span><svg  role="img" className="social__group-item-icon"><use xlinkHref='/assets/img/sprite.svg#icon-vk'/></svg>16</a></li>
+                            <li className="social__group-item"><a href="#" role="link" className="social__group-item-link"><span className="screen-reader-text">Yaru share</span><svg  role="img" className="social__group-item-icon"><use xlinkHref='/assets/img/sprite.svg#icon-yaru'/></svg>1</a></li>
                         </ul>
                     </div>
                 </footer>
@@ -142,60 +144,82 @@ const Tag = React.createClass({
           return(
               <li className="hot-hashtags__item"  ><span className="hot__hashtags-item__link"><span className="screen-reader-text">link</span>{this.props.data}</span></li>
 
-          )
+          );
       }
 });
 
-ReactDOM.render(<App name="app"/>, document.getElementById('app'));
 
+const CreateArticle = React.createClass({
+   render: () => {
+       return(
+           <form name="formCreate" className="form-block " >
+               <h2 className="edit-article__header">Create an Article</h2>
+               <div className="form-group">
+                   <label htmlFor="author" className="form-block__label">Author</label>
+                   <input type="text" id="author" className="form-control" placeholder="Enter your name" required />
+               </div>
+               <div className="form-group">
+                   <label htmlFor="image_upd" className="form-block__label">Image</label>
+                   <input type="text" id="image_upd" className="form-control" placeholder="URL of an image" />
+               </div>
+               <div className="form-group">
+                   <label htmlFor="title" className="form-block__label">Title</label>
+                   <input type="text" id="title" className="form-control" placeholder="Change title" required />
+               </div>
+               <div className="form-group">
+                   <label htmlFor="text" className="form-block__label">Text</label>
+                   <textarea className="form-control" rows="5" id="text" maxLength="100" required/>
+               </div>
+               <div className="form-group">
+                   <label htmlFor="tags" className="form-block__label">Tags</label>
+                   <input type="text" id="tags" className="form-control" placeholder="Enter tags"/>
+               </div>
+               <Link to="/" className="btn btn-danger btn-cancel" >cancel</Link>
+               <input type="submit" className="btn btn-info btn-submit" value="save" />
+           </form>
+       );
+   }
+});
 
-
-/*var CommentBox = React.createClass({
-
-    render: function() {
-        return (
-            <div className="commentBox">
-                <h1>Comments</h1>
-                <CommentList data={this.props.data} />
+const EditArticle = React.createClass({
+    render: () => {
+      return(
+    <form role="form" className="form-block"  name="formEdit">
+        <h2 className="edit-article__header">Article Name</h2>
+        
+        <div className="form-group">
+            <label htmlFor="author" className="form-block__label">Author</label>
+            <input type="text" id="author" className="form-control" placeholder="" required />
             </div>
-        );
+            <div className="form-group">
+                <label htmlFor="image_upd" className="form-block__label">Image</label>
+                <input type="text" id="image_upd" className="form-control" placeholder="URL of an image" />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="title" className="form-block__label">Title</label>
+                    <input type="text" id="title" className="form-control" placeholder="" required />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="text" className="form-block__label">Text</label>
+                        <textarea className="form-control" rows="5" id="text"  required placeholder=""/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="tags" className="form-block__label">Tags</label>
+                        <input type="text" id="tags" className="form-control" placeholder="" />
+                        </div>
+                        <Link to="/" className="btn btn-warning btn-cancel" role="link">cancel</Link>
+                        <input type="reset"  className="btn btn-danger btn-delete"  value="delete"/>
+                            <input type="submit" className="btn btn-info btn-submit" value="save"  />
+                            </form>
+      );
     }
 });
 
-
-
-var CommentList = React.createClass({
-    render: function() {
-        var commentNodes = this.props.data.map(function(comment) {
-            return (
-                <Comment author={comment.author} key={comment.id}>
-                    {comment.text}
-                </Comment>
-            );
-        });
-        return (
-            <div className="commentList">
-                {commentNodes}
-            </div>
-        );
-    }
-});
-
-var Comment = React.createClass({
-    render: function() {
-        return (
-            <div className="comment">
-                <h2 className="commentAuthor">
-                    {this.props.author}
-                </h2>
-                {this.props.children}
-            </div>
-        );
-    }
-});
 
 ReactDOM.render(
-    <CommentBox data={data} />,
-    document.getElementById('app')
-);*/
+    <Router history={browserHistory}>
+        <Route path='/' component={App}/>
+        <Route path='create_article' component={CreateArticle}/>
+        <Route path='edit_article' component={EditArticle}/>
+    </Router>, document.getElementById('app'));
 
