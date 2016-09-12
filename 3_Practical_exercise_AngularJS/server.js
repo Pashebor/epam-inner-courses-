@@ -6,6 +6,10 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use('/', express.static('./build'));
+app.use('/', express.static('articles.json'));
+app.use('/node_modules', express.static('./node_modules'));
+
 /*var articles = [
     {
         "id": "1",
@@ -29,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 function saveEditedArticle(editedArt, callback) {
-    var jsonToUptade = JSON.parse(fs.readFileSync('./app/assets/js/articles.json', 'utf8'));
+    var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
 
     jsonToUptade.forEach(function(item) {
         var itemId = item.id, editedItem = editedArt.id;
@@ -43,12 +47,12 @@ function saveEditedArticle(editedArt, callback) {
         }
     });
 
-    fs.writeFile('./app/assets/js/articles.json', JSON.stringify(jsonToUptade, null, 4), callback);
+    fs.writeFile('./articles.json', JSON.stringify(jsonToUptade, null, 4), callback);
 }
 
 function deleteArticle(deleteArt, callback) {
     var i;
-    var jsonToDeleteArticle = JSON.parse(fs.readFileSync('./app/assets/js/articles.json', 'utf8'));
+    var jsonToDeleteArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
 
         for (i = 0; i < jsonToDeleteArticle.length; i += 1) {
             if (jsonToDeleteArticle[i].id === deleteArt.id) {
@@ -57,17 +61,16 @@ function deleteArticle(deleteArt, callback) {
             }
         }
 
-    fs.writeFile('./app/assets/js/articles.json', JSON.stringify(jsonToDeleteArticle, null, 4), callback);
+    fs.writeFile('./articles.json', JSON.stringify(jsonToDeleteArticle, null, 4), callback);
 }
 
 function createArticle(createdData, callback) {
-    var jsonToCreateArticle = JSON.parse(fs.readFileSync('./app/assets/js/articles.json', 'utf8'));
+    var jsonToCreateArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
     jsonToCreateArticle.push(createdData);
-    fs.writeFile('./app/assets/js/articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
+    fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
 }
 
-app.use('/', express.static('./app'));
-app.use('/node_modules', express.static('./node_modules'));
+
 
 app.post('/delete_article', function(req, res) {
 
@@ -108,14 +111,14 @@ app.post('/create_article', function(req, res) {
 });
 
 app.get('/tags', function(req, res) {
-    var articles = JSON.parse(fs.readFileSync('./app/assets/js/articles.json', 'utf8'));
+    var articles = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
 
     var allTags = [];
 
     articles.forEach(function (item) {
         var tags = item.tags;
         tags.forEach(function (tag){
-            if (allTags.indexOf(tag) === -1) {
+            if (allTags.indexOf(tag.trim()) === -1) {
                 allTags.push(tag);
             }
         });
@@ -127,7 +130,7 @@ app.get('/tags', function(req, res) {
 
 
 app.get('/articles', function(req, res) {
-    var json = JSON.parse(fs.readFileSync('./app/assets/js/articles.json', 'utf8'));
+    var json = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
 
     var arr = Object.keys(json).map(
         function(key) {
