@@ -208,7 +208,11 @@
 	var ArticleRow = _react2.default.createClass({
 	    displayName: 'ArticleRow',
 
+
 	    render: function render() {
+
+	        var linkTo = "/edit_article/" + this.props.data.id;
+
 	        return _react2.default.createElement(
 	            'article',
 	            { role: 'article', className: 'blog-article', id: this.props.data.id },
@@ -222,7 +226,7 @@
 	                { className: 'blog-article__description' },
 	                _react2.default.createElement(
 	                    _reactRouter.Link,
-	                    { to: '/edit_article', className: 'blog-article__description-link', role: 'link' },
+	                    { to: linkTo, className: 'blog-article__description-link', role: 'link' },
 	                    this.props.data.header
 	                )
 	            ),
@@ -466,7 +470,15 @@
 	var EditArticle = _react2.default.createClass({
 	    displayName: 'EditArticle',
 
+	    getArticleByID: function getArticleByID() {
+	        return this.props;
+	    },
+	    getData: function getData() {
+	        return this.props.data;
+	    },
 	    render: function render() {
+	        console.log(this.getArticleByID());
+	        console.log(this.getData());
 	        return _react2.default.createElement(
 	            'form',
 	            { role: 'form', className: 'form-block', name: 'formEdit' },
@@ -541,7 +553,7 @@
 	    { history: _reactRouter.browserHistory },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/', component: App }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'create_article', component: CreateArticle }),
-	    _react2.default.createElement(_reactRouter.Route, { path: 'edit_article', component: EditArticle })
+	    _react2.default.createElement(_reactRouter.Route, { path: 'edit_article/:id', component: EditArticle })
 	), document.getElementById('app'));
 
 /***/ },

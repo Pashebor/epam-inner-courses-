@@ -1,10 +1,15 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var history = require('connect-history-api-fallback');
+
+
 
 var app = express();
+var path = require('path');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(history());
 
 /*var articles = [
     {
@@ -69,6 +74,15 @@ function createArticle(createdData, callback) {
 app.use('/', express.static('./app'));
 app.use('/node_modules', express.static('./node_modules'));
 app.use('/public', express.static('./public'));
+
+app.get('/edit_article/:id', function (req, res) {
+  console.log(req.params.id);
+    res.sendFile(path.join(__dirname + '/app/index.html'));
+});
+
+app.get('/create_article', function (req, res) {
+    res.sendFile(path.join(__dirname + '/app/index.html'));
+});
 
 app.post('/delete_article', function(req, res) {
 

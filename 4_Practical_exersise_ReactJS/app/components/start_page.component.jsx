@@ -1,7 +1,7 @@
 'use strict';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
 import $ from 'jquery';
 
 
@@ -112,14 +112,19 @@ const StartPageSideBar = React.createClass({displayName: 'SideBar',
     }
 });
 
-const ArticleRow = React.createClass({
+const ArticleRow  = React.createClass({
+
     render: function () {
+
+        let linkTo = "/edit_article/" + this.props.data.id;
+
         return (
+
             <article role="article" className="blog-article"  id={this.props.data.id}>
                 <figure className="image-block" role="img">
                     <img className="image-block__picture" src={this.props.data.image} alt="Blogoflowers" title="Blogoflowers"/>
                 </figure>
-                <h2 className="blog-article__description"><Link to="/edit_article" className="blog-article__description-link" role="link">{this.props.data.header}</Link></h2>
+                <h2 className="blog-article__description"><Link to={linkTo}  className="blog-article__description-link" role="link">{this.props.data.header}</Link></h2>
                 <footer className="blog-article__info" role="contentinfoo">
                     <time role="alert" className="blog-article__date"><span><svg  role="img" className="blog-article__date-icon"><use xlinkHref='/assets/img/sprite.svg#icon-clock'/></svg></span>{this.props.data.time}</time>
                     <address className="blog-article__author"><span><svg  role="img" className="blog-article__author-icon"><use xlinkHref='/assets/img/sprite.svg#icon-footstep'/></svg></span>{this.props.data.author}</address>
@@ -150,7 +155,7 @@ const Tag = React.createClass({
 
 
 const CreateArticle = React.createClass({
-   render: () => {
+   render: function () {
        return(
            <form name="formCreate" className="form-block " >
                <h2 className="edit-article__header">Create an Article</h2>
@@ -182,11 +187,20 @@ const CreateArticle = React.createClass({
 });
 
 const EditArticle = React.createClass({
-    render: () => {
+    getArticleByID: function () {
+      return this.props;
+    },
+    getData: function () {
+      return this.props.data;
+    },
+    render: function () {
+      console.log(this.getArticleByID());
+      console.log(this.getData());
       return(
     <form role="form" className="form-block"  name="formEdit">
+
         <h2 className="edit-article__header">Article Name</h2>
-        
+
         <div className="form-group">
             <label htmlFor="author" className="form-block__label">Author</label>
             <input type="text" id="author" className="form-control" placeholder="" required />
@@ -219,7 +233,6 @@ const EditArticle = React.createClass({
 ReactDOM.render(
     <Router history={browserHistory}>
         <Route path='/' component={App}/>
-        <Route path='create_article' component={CreateArticle}/>
-        <Route path='edit_article' component={EditArticle}/>
+        <Route path='create_article'  component={CreateArticle}/>
+        <Route path='edit_article/:id' component={EditArticle}/>
     </Router>, document.getElementById('app'));
-
