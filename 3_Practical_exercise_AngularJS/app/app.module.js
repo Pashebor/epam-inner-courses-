@@ -10,8 +10,6 @@
                tags: (() => {
                    return blogArticleService.getTags.query();
                })()
-           },
-
-            this.sum = () => {return 2+3};
+           }
 
     }

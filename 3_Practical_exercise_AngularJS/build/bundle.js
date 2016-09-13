@@ -41392,8 +41392,6 @@
 	        tags: function () {
 	            return blogArticleService.getTags.query();
 	        }()
-	    }, this.sum = function () {
-	        return 2 + 3;
 	    };
 	}
 
@@ -41415,8 +41413,18 @@
 	        return $resource('tags');
 	    }
 
-	    function saveArticle() {
-	        return $resource('edit_articles');
+	    function articlesData() {
+	        return $resource('/articles_data/:edited_data', { edited_data: '@edited_data' }, {
+	            update: {
+	                method: 'PUT'
+	            },
+	            create: {
+	                method: 'POST'
+	            },
+	            delete: {
+	                method: 'REMOVE'
+	            }
+	        });
 	    }
 
 	    function deleteArticle() {
@@ -41538,7 +41546,7 @@
 	    return {
 	        getArticles: getArticles(),
 	        getTags: getTags(),
-	        saveArticle: saveArticle(),
+	        articlesData: articlesData(),
 	        dateFormat: dateFormat,
 	        deleteArticle: deleteArticle(),
 	        createArticleEnd: createArticleEnd()
@@ -41632,21 +41640,19 @@
 	function EditController($scope, $routeParams, blogArticleService, $uibModal) {
 	    var _this = this;
 
-	    var _id = void 0;
+	    var ID = $routeParams.articleId;
 	    var that = this;
 
-	    _id = $routeParams.articleId;
-
-	    var showListOfArticles = function showListOfArticles() {
+	    var showArticles = function showArticles() {
 	        _this.articles.list.forEach(function (items) {
-	            if (items.id === _id) {
+	            if (items.id === ID) {
 	                that.article = items;
 	            }
 	        });
 	        return that.article;
 	    };
 
-	    showListOfArticles();
+	    showArticles();
 
 	    this.submit = function () {
 
@@ -41667,7 +41673,6 @@
 	                });
 
 	                tagsData.splice(0, tagsData.length);
-
 	                editedTags.forEach(function (item) {
 	                    tagsData.push(item);
 	                });
@@ -41678,31 +41683,22 @@
 
 	        dateOfEditedArticle = new Date();
 	        stringTagBuffer = _this.editData.tags;
-	        _this.editData.id = _id;
+	        _this.editData.id = ID;
 	        _this.editData.time = blogArticleService.dateFormat(dateOfEditedArticle.format(), "HH:MM mmm dd, yyyy");
 	        _this.editData.tags = stringTagBuffer.trim().split(",");
 
 	        data = _this.editData;
 
-	        blogArticleService.saveArticle.save(data, function (savedData) {
+	        blogArticleService.articlesData.update({ edited_data: data }, function (response) {
+
 	            that.alert = 'Article has been changed.';
 	            that.alertClass = '';
 	            that.alertClass = 'edit-article__alert-window';
 
-	            that.articles.list.forEach(function (item) {
-	                var itemId = item.id,
-	                    editedItem = _id;
-	                if (itemId == editedItem) {
-	                    item.author = data.author;
-	                    item.header = data.header;
-	                    item.text = data.text;
-	                    item.tags = data.tags;
-	                    item.image = data.image;
-	                    item.time = data.time;
-	                }
-	            });
+	            that.articles.list = response.respData;
 
 	            showEditedTags(that.articles.list, that.articles.tags);
+	            showArticles();
 
 	            console.log('Article edited');
 	        }, function () {
@@ -41723,7 +41719,7 @@
 	            backdrop: 'static',
 	            resolve: {
 	                id: function id() {
-	                    return _id;
+	                    return ID;
 	                },
 	                articles: function articles() {
 	                    return that.articles.list;
@@ -41732,22 +41728,24 @@
 	        });
 	        modalInstance.result.then(function (id) {
 
-	            var dataToDelete = { id: id };
-	            blogArticleService.deleteArticle.save(dataToDelete, function (data) {
-	                that.articles.list.forEach(function (item) {
-	                    if (item.id === id) {
-	                        that.articles.tags.forEach(function (itemFirst, i, array1) {
-	                            item.tags.forEach(function (itemSecond, j, array2) {
-	                                if (array1[i] === array2[j]) {
-	                                    array1.splice(i, 1);
-	                                }
-	                            });
-	                        });
-	                        var index = that.articles.list.indexOf(item);
-	                        that.articles.list.splice(index, 1);
-	                    }
-	                });
-	                console.log(data);
+	            var dataToDelete = id;
+	            blogArticleService.articlesData.delete({ edited_data: dataToDelete }, function (response) {
+
+	                console.log(response);
+	                // that.articles.list = response.respDataDelete;
+	                // that.articles.list.forEach(item => {
+	                //     if (item.id === id) {
+	                //         that.articles.tags.forEach( (itemFirst, i, array1) => {
+	                //             item.tags.forEach( (itemSecond, j, array2) => {
+	                //                 if (array1[i] === array2[j]) {
+	                //                     array1.splice(i, 1);
+	                //                 }
+	                //             })
+	                //         });
+	                //         let index = that.articles.list.indexOf(item);
+	                //         that.articles.list.splice(index, 1);
+	                //     }
+	                // })
 	            }, function () {
 	                return console.log('Error!');
 	            });
@@ -41839,7 +41837,7 @@
 
 	angular.module('editArticleModule').controller('ModalController', ModalController);
 
-	function ModalController($uibModalInstance, id, articles, blogArticleService) {
+	function ModalController($uibModalInstance, id, articles) {
 	    var that = this;
 	    this.show = false;
 	    this.hide = false;

@@ -12,8 +12,18 @@
             return $resource('tags');
         }
 
-        function saveArticle() {
-            return $resource('edit_articles');
+        function articlesData() {
+            return $resource('/articles_data/:edited_data', { edited_data: '@edited_data' }, {
+                update: {
+                    method: 'PUT'
+                },
+                create: {
+                    method: 'POST'
+                },
+                delete: {
+                    method: 'REMOVE',
+                }
+            } );
         }
 
         function deleteArticle() {
@@ -140,7 +150,7 @@
         return{
             getArticles: getArticles(),
             getTags: getTags(),
-            saveArticle: saveArticle(),
+            articlesData: articlesData(),
             dateFormat: dateFormat,
             deleteArticle: deleteArticle(),
             createArticleEnd: createArticleEnd()

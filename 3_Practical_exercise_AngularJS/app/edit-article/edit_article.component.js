@@ -10,20 +10,19 @@ angular.module('editArticleModule').component('editArticle', {
 
 
 function EditController($scope, $routeParams, blogArticleService, $uibModal){
-    let  id;
+
+    const ID = $routeParams.articleId;
     const that = this;
 
-    id = $routeParams.articleId;
+    let showArticles = () => {
+      this.articles.list.forEach(items => {
+          if(items.id === ID) {
+               that.article = items;
+      }});
+      return that.article;
+    }
 
-    let showListOfArticles = () => {
-         this.articles.list.forEach(items => {if(items.id === id) {
-             that.article = items;
-         }});
-        return that.article;
-    };
-
-    showListOfArticles();
-
+    showArticles();
 
     this.submit = () => {
 
@@ -42,7 +41,6 @@ function EditController($scope, $routeParams, blogArticleService, $uibModal){
                 });
 
                 tagsData.splice(0, tagsData.length);
-
                 editedTags.forEach(item => {
                     tagsData.push(item);
                 });
@@ -50,51 +48,39 @@ function EditController($scope, $routeParams, blogArticleService, $uibModal){
                 return tagsData.tags;
             });
 
-        }
+        };
 
         dateOfEditedArticle = new Date();
         stringTagBuffer = this.editData.tags;
-        this.editData.id = id;
+        this.editData.id = ID;
         this.editData.time = blogArticleService.dateFormat(dateOfEditedArticle.format(), "HH:MM mmm dd, yyyy");
         this.editData.tags = stringTagBuffer.trim().split(",");
 
 
         data = this.editData;
 
-        blogArticleService.saveArticle.save(data,
+        blogArticleService.articlesData.update({edited_data: data}, response => {
 
-            savedData => {
-                that.alert = 'Article has been changed.';
-                that.alertClass = '';
-                that.alertClass = 'edit-article__alert-window';
+            that.alert = 'Article has been changed.';
+            that.alertClass = '';
+            that.alertClass = 'edit-article__alert-window';
 
-                that.articles.list.forEach(item => {
-                    let itemId = item.id, editedItem = id;
-                    if(itemId == editedItem){
-                        item.author = data.author;
-                        item.header = data.header;
-                        item.text = data.text;
-                        item.tags = data.tags;
-                        item.image = data.image;
-                        item.time = data.time;
-                    }
-                });
+            that.articles.list = response.respData;
 
-                showEditedTags(that.articles.list, that.articles.tags);
+            showEditedTags(that.articles.list, that.articles.tags);
+            showArticles();
 
-                console.log('Article edited');
-            },
-            () => {
-                that.alert = 'Error in posting!';
-                that.alertClass = '';
-                that.alertClass = 'edit-article__alert-window--error';
-                console.error('error in posting');
-            }
-        );
+            console.log('Article edited');
+        }, () => {
+            that.alert = 'Error in posting!';
+            that.alertClass = '';
+            that.alertClass = 'edit-article__alert-window--error';
+            console.error('error in posting');
+        });
+
     };
 
     this.delete = size => {
-
 
         let modalInstance = $uibModal.open({
             templateUrl: 'templates/modal_delete.template.html',
@@ -103,29 +89,30 @@ function EditController($scope, $routeParams, blogArticleService, $uibModal){
             size: size,
             backdrop: 'static',
             resolve:{
-                id: () => {return id;},
+                id: () => {return ID;},
                 articles: () => {return that.articles.list;}
             }
         });
         modalInstance.result.then(id => {
+ 
+          let dataToDelete = id;
+          blogArticleService.articlesData.delete({edited_data: dataToDelete}, response => {
 
-          let dataToDelete = {id: id};
-          blogArticleService.deleteArticle.save(dataToDelete,
-          data => {
-            that.articles.list.forEach(item => {
-                if (item.id === id) {
-                    that.articles.tags.forEach( (itemFirst, i, array1) => {
-                        item.tags.forEach( (itemSecond, j, array2) => {
-                            if (array1[i] === array2[j]) {
-                                array1.splice(i, 1);
-                            }
-                        })
-                    });
-                    let index = that.articles.list.indexOf(item);
-                    that.articles.list.splice(index, 1);
-                }
-            })
-              console.log(data);
+            console.log(response);
+            // that.articles.list = response.respDataDelete;
+            // that.articles.list.forEach(item => {
+            //     if (item.id === id) {
+            //         that.articles.tags.forEach( (itemFirst, i, array1) => {
+            //             item.tags.forEach( (itemSecond, j, array2) => {
+            //                 if (array1[i] === array2[j]) {
+            //                     array1.splice(i, 1);
+            //                 }
+            //             })
+            //         });
+            //         let index = that.articles.list.indexOf(item);
+            //         that.articles.list.splice(index, 1);
+            //     }
+            // })
           },
           () => console.log('Error!'));
         })

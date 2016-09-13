@@ -2,7 +2,7 @@
 
 angular.module('editArticleModule').controller('ModalController', ModalController);
 
-function ModalController($uibModalInstance, id, articles, blogArticleService) {
+function ModalController($uibModalInstance, id, articles) {
     const that = this;
     this.show = false;
     this.hide = false;
