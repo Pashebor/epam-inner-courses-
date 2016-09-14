@@ -31,46 +31,55 @@ app.use('/node_modules', express.static('./node_modules'));
     }
 ];*/
 
+function tagsWithoutDuplicates(jsonData) {
+    var allTags = [];
 
-function createArticle(createdData, callback) {
-    var jsonToCreateArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-    jsonToCreateArticle.push(createdData);
-    fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
+    jsonData.forEach(function (item) {
+        var tags = item.tags;
+        tags.forEach(function (tag){
+            if (allTags.indexOf(tag.trim()) === -1) {
+                allTags.push(tag);
+            }
+        });
+    });
+
+    return allTags;
 }
 
-
-
 app.delete('/articles_data/:edited_data', function(req, res) {
-  console.log(req.body.edited_data);
-  // function deleteArticle(deleteArt, callback) {
-  //     console.log(deleteArt);
-  //     var i;
-  //     var jsonToDeleteArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-  //     var objData = {};
-  //
-  //         for (i = 0; i < jsonToDeleteArticle.length; i += 1) {
-  //             if (jsonToDeleteArticle[i].id === deleteArt.id) {
-  //                 var index = jsonToDeleteArticle.indexOf(jsonToDeleteArticle[i]);
-  //                 jsonToDeleteArticle.splice(index, 1);
-  //             }
-  //         }
-  //     objData.respDataDelete = jsonToDeleteArticle;
-  //     console.log(objData);
-  //     res.send(objData)
-  //     fs.writeFile('./articles.json', JSON.stringify(jsonToDeleteArticle, null, 4), callback);
-  // }
-  //
-  //
-  // deleteArticle(req.body.edited_data, function(error) {
-  //      if (error) {
-  //          res.status(404).send('The record did not deleted');
-  //          return;
-  //      }
-  //   });
+
+    var datId = JSON.parse(req.params.edited_data);
+
+    function deleteArticle(deleteArt, callback) {
+       console.log(deleteArt);
+
+       var jsonToDeleteArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
+       var objData = {};
+
+        jsonToDeleteArticle.forEach(function(item, i) {
+               if (jsonToDeleteArticle[i].id === deleteArt.id) {
+                   var index = jsonToDeleteArticle.indexOf(jsonToDeleteArticle[i]);
+                   jsonToDeleteArticle.splice(index, 1);
+               }
+        });
+
+        objData.respDataDelete = jsonToDeleteArticle;
+        res.send(objData);
+        fs.writeFile('./articles.json', JSON.stringify(jsonToDeleteArticle, null, 4), callback);
+    }
+
+    deleteArticle(datId, function(error) {
+        if (error) {
+            res.status(404).send('The record did not deleted');
+            return;
+        }
+    });
 
 });
 
 app.put('/articles_data/:edited_data', function (req, res) {
+
+    var editedData = JSON.parse(req.params.edited_data);
 
     function saveEditedArticle(editedArt, callback) {
         var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
@@ -89,11 +98,11 @@ app.put('/articles_data/:edited_data', function (req, res) {
         });
 
         objData.respData = jsonToUptade;
-        res.send(objData)
+        res.send(objData);
         fs.writeFile('./articles.json', JSON.stringify(jsonToUptade, null, 4), callback);
     }
 
-    saveEditedArticle(req.body.edited_data, function(err) {
+    saveEditedArticle(editedData, function(err) {
         if (err) {
             res.status(404).send('Data not saved');
             return;
@@ -101,11 +110,24 @@ app.put('/articles_data/:edited_data', function (req, res) {
     });
 });
 
-app.post('/create_article', function(req, res) {
+app.post('/articles_data/:edited_data', function(req, res) {
 
-    res.json(req.body);
+    var createdData = JSON.parse(req.params.edited_data);
 
-    createArticle(req.body, function (error) {
+    function createArticle(createdData, callback) {
+        var objData = {};
+
+        var jsonToCreateArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
+        jsonToCreateArticle.push(createdData);
+        fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
+
+        objData.respDataCreate = jsonToCreateArticle;
+        res.send(objData);
+
+        fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
+    }
+
+    createArticle(createdData, function (error) {
         if (error) {
             res.status(404).send('Data not created');
             return;
@@ -113,24 +135,6 @@ app.post('/create_article', function(req, res) {
     })
 
 });
-
-app.get('/tags', function(req, res) {
-    var articles = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
-
-    var allTags = [];
-
-    articles.forEach(function (item) {
-        var tags = item.tags;
-        tags.forEach(function (tag){
-            if (allTags.indexOf(tag.trim()) === -1) {
-                allTags.push(tag);
-            }
-        });
-    });
-
-    res.send(allTags);
-});
-
 
 
 app.get('/articles', function(req, res) {
@@ -144,8 +148,21 @@ app.get('/articles', function(req, res) {
     res.send(JSON.stringify(arr));
 });
 
-app.get('/', function (req, res) {
-    res.send('Hello World!');
+app.get('/tags', function(req, res) {
+    var jsonData = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
+
+    var allTags = [];
+
+    jsonData.forEach(function (item) {
+        var tags = item.tags;
+        tags.forEach(function (tag){
+            if (allTags.indexOf(tag.trim()) === -1) {
+                allTags.push(tag);
+            }
+        });
+    });
+
+    res.send(allTags);
 });
 
 app.listen(3000, function () {

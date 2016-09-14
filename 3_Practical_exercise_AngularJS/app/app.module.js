@@ -1,9 +1,10 @@
 
     'use strict';
-   angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'editArticleModule', 'createArticleModule', 'startBlogModule']).controller('AppController', ShareData);
+   angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'tagModule', 'editArticleModule', 'createArticleModule', 'startBlogModule']).controller('AppController', appController);
 
-    function ShareData(blogArticleService) {
-           this.articles = {
+    function appController (blogArticleService) {
+
+        this.articles = {
                list:  (() => {
                   return blogArticleService.getArticles.query();
                })(),
@@ -11,5 +12,4 @@
                    return blogArticleService.getTags.query();
                })()
            }
-
     }

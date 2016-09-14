@@ -5,11 +5,12 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var root = path.resolve(__dirname, 'app');
 var modules = path.resolve(__dirname, 'app/modules');
 
+
 module.exports = {
     entry: {
         app_spec: path.resolve(root, 'app.spec.js'),
         bundle: path.resolve(root, 'app.js'),
-        styles: path.resolve(root, 'assets/css/style.css'),
+        style: path.resolve(root, 'style.less'),
         svg: path.resolve(root, 'assets/img/sprite.svg'),
         flower: path.resolve(root, 'assets/img/flowers.png'),
         paint: path.resolve(root, 'assets/img/paint.png'),
@@ -31,9 +32,14 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                test: /\.less$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader!autoprefixer-loader?safe=true!less-loader")
             },
+
+            // {
+            //     test: /\.css$/,
+            //     loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+            // },
             {
                 test: /\.(svg)$/,
                 loader: 'file?name=images/[name].[ext]'
@@ -52,7 +58,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/create_article.template.html',
-            template: path.resolve(root, './create-article/create_article.template.html')
+            template: path.resolve(root, './blog-forms/create_article.template.html')
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/start_page.template.html',
@@ -60,13 +66,17 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/edit_article.template.html',
-            template: path.resolve(root, './edit-article/edit_article.template.html')
+            template: path.resolve(root, './blog-forms/edit_article.template.html')
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/modal_delete.template.html',
-            template: path.resolve(root, './edit-article/modal_delete.template.html')
+            template: path.resolve(root, './blog-forms/modal_delete.template.html')
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'templates/tags.template.html',
+            template: path.resolve(root, './tags/tags.template.html')
         }),
 
-        new ExtractTextPlugin("css/style.css", {allChunk:true})
+        new ExtractTextPlugin("css/[name].css", {allChunk:true})
     ]
 };

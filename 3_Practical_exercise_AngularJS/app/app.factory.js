@@ -12,7 +12,7 @@
             return $resource('tags');
         }
 
-        function articlesData() {
+        var articlesData = () => {
             return $resource('/articles_data/:edited_data', { edited_data: '@edited_data' }, {
                 update: {
                     method: 'PUT'
@@ -21,18 +21,25 @@
                     method: 'POST'
                 },
                 delete: {
-                    method: 'REMOVE',
+                    method: 'DELETE'
                 }
             } );
-        }
+        };
 
-        function deleteArticle() {
-            return $resource('delete_article');
-        }
+        var tagsWithoutDuplicates = jsonData => {
+            var allTags = [];
 
-        function createArticleEnd() {
-            return $resource('create_article');
-        }
+            jsonData.forEach(function (item) {
+                var tags = item.tags;
+                tags.forEach(function (tag){
+                    if (allTags.indexOf(tag.trim()) === -1) {
+                        allTags.push(tag);
+                    }
+                });
+            });
+
+            return allTags;
+        };
 
         /*Copy-pasted, very useful function with date time*/
         var dateFormat = function () {
@@ -152,8 +159,7 @@
             getTags: getTags(),
             articlesData: articlesData(),
             dateFormat: dateFormat,
-            deleteArticle: deleteArticle(),
-            createArticleEnd: createArticleEnd()
+            tagsWithoutDuplicates: tagsWithoutDuplicates
         }
 
     }

@@ -41,6 +41,6 @@
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </article>
     <ul class="hot-hashtags" role="presentation">
-        <li class="hot-hashtags__item" ng-repeat="tag in $ctrl.tags" ng-click="$ctrl.changeInputWithTag(tag)"><span class="hot__hashtags-item__link">{{tag}}<span class="screen-reader-text">link</span></span></li>
+        <tag-component ng-repeat="tag in $ctrl.tags" tag="tag"></tag-component>
     </ul>
 </aside>

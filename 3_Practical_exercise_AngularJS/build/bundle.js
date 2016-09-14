@@ -46,54 +46,69 @@
 
 	'use strict';
 
-	var _angular = __webpack_require__(1);
+	var _angular = __webpack_require__(12);
 
 	var _angular2 = _interopRequireDefault(_angular);
 
-	var _angularRoute = __webpack_require__(3);
+	var _angularRoute = __webpack_require__(14);
 
 	var _angularRoute2 = _interopRequireDefault(_angularRoute);
 
-	var _angularResource = __webpack_require__(5);
+	var _angularResource = __webpack_require__(16);
 
 	var _angularResource2 = _interopRequireDefault(_angularResource);
 
-	var _angularUiBootstrap = __webpack_require__(7);
+	var _angularUiBootstrap = __webpack_require__(18);
 
 	var _angularUiBootstrap2 = _interopRequireDefault(_angularUiBootstrap);
 
-	__webpack_require__(9);
+	__webpack_require__(20);
 
-	__webpack_require__(10);
+	__webpack_require__(21);
 
-	__webpack_require__(11);
+	__webpack_require__(22);
 
-	__webpack_require__(12);
+	__webpack_require__(23);
 
-	__webpack_require__(13);
+	__webpack_require__(24);
 
-	__webpack_require__(14);
+	__webpack_require__(25);
 
-	__webpack_require__(15);
+	__webpack_require__(26);
 
-	__webpack_require__(16);
+	__webpack_require__(27);
 
-	__webpack_require__(17);
+	__webpack_require__(28);
 
-	__webpack_require__(18);
+	__webpack_require__(29);
+
+	__webpack_require__(30);
+
+	__webpack_require__(31);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 1 */
+/* 1 */,
+/* 2 */,
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2);
+	__webpack_require__(13);
 	module.exports = angular;
 
 
 /***/ },
-/* 2 */
+/* 13 */
 /***/ function(module, exports) {
 
 	/**
@@ -31866,15 +31881,15 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 3 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(4);
+	__webpack_require__(15);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 4 */
+/* 15 */
 /***/ function(module, exports) {
 
 	/**
@@ -32949,15 +32964,15 @@
 
 
 /***/ },
-/* 5 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(6);
+	__webpack_require__(17);
 	module.exports = 'ngResource';
 
 
 /***/ },
-/* 6 */
+/* 17 */
 /***/ function(module, exports) {
 
 	/**
@@ -33826,16 +33841,16 @@
 
 
 /***/ },
-/* 7 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(8);
+	__webpack_require__(19);
 
 	module.exports = 'ui.bootstrap';
 
 
 /***/ },
-/* 8 */
+/* 19 */
 /***/ function(module, exports) {
 
 	/*
@@ -41376,15 +41391,16 @@
 	angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
 
 /***/ },
-/* 9 */
+/* 20 */
 /***/ function(module, exports) {
 
 	
 	'use strict';
 
-	angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'editArticleModule', 'createArticleModule', 'startBlogModule']).controller('AppController', ShareData);
+	angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'tagModule', 'editArticleModule', 'createArticleModule', 'startBlogModule']).controller('AppController', appController);
 
-	function ShareData(blogArticleService) {
+	function appController(blogArticleService) {
+
 	    this.articles = {
 	        list: function () {
 	            return blogArticleService.getArticles.query();
@@ -41396,7 +41412,7 @@
 	}
 
 /***/ },
-/* 10 */
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41413,7 +41429,7 @@
 	        return $resource('tags');
 	    }
 
-	    function articlesData() {
+	    var articlesData = function articlesData() {
 	        return $resource('/articles_data/:edited_data', { edited_data: '@edited_data' }, {
 	            update: {
 	                method: 'PUT'
@@ -41422,18 +41438,25 @@
 	                method: 'POST'
 	            },
 	            delete: {
-	                method: 'REMOVE'
+	                method: 'DELETE'
 	            }
 	        });
-	    }
+	    };
 
-	    function deleteArticle() {
-	        return $resource('delete_article');
-	    }
+	    var tagsWithoutDuplicates = function tagsWithoutDuplicates(jsonData) {
+	        var allTags = [];
 
-	    function createArticleEnd() {
-	        return $resource('create_article');
-	    }
+	        jsonData.forEach(function (item) {
+	            var tags = item.tags;
+	            tags.forEach(function (tag) {
+	                if (allTags.indexOf(tag.trim()) === -1) {
+	                    allTags.push(tag);
+	                }
+	            });
+	        });
+
+	        return allTags;
+	    };
 
 	    /*Copy-pasted, very useful function with date time*/
 	    var dateFormat = function () {
@@ -41548,13 +41571,12 @@
 	        getTags: getTags(),
 	        articlesData: articlesData(),
 	        dateFormat: dateFormat,
-	        deleteArticle: deleteArticle(),
-	        createArticleEnd: createArticleEnd()
+	        tagsWithoutDuplicates: tagsWithoutDuplicates
 	    };
 	}
 
 /***/ },
-/* 11 */
+/* 22 */
 /***/ function(module, exports) {
 
 	
@@ -41575,7 +41597,7 @@
 	}
 
 /***/ },
-/* 12 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41583,7 +41605,15 @@
 	angular.module('startBlogModule', ['ngRoute']);
 
 /***/ },
-/* 13 */
+/* 24 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	angular.module('tagModule', ['ngRoute']);
+
+/***/ },
+/* 25 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41591,7 +41621,7 @@
 	angular.module('editArticleModule', ['ngRoute', 'ui.bootstrap']);
 
 /***/ },
-/* 14 */
+/* 26 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41599,7 +41629,28 @@
 	angular.module('createArticleModule', ['ngRoute']);
 
 /***/ },
-/* 15 */
+/* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	angular.module('tagModule').component('tagComponent', {
+	    templateUrl: 'templates/tags.template.html',
+	    controller: tagController,
+	    bindings: {
+	        tag: '<'
+	    }
+	});
+
+	function tagController($scope) {
+
+	    this.changeInputWithTag = function (tag) {
+	        $scope.$emit('TagOnClick', tag);
+	    };
+	}
+
+/***/ },
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41608,23 +41659,23 @@
 	    templateUrl: 'templates/start_page.template.html',
 	    controller: blogController,
 	    bindings: {
-	        articles: '='
+	        articles: '<'
 	    }
 	});
 
-	function blogController() {
-	    var _this = this;
+	function blogController($scope, blogArticleService) {
+	    var that = this;
+
+	    $scope.$on('TagOnClick', function (event, tagName) {
+	        that.search = tagName;
+	    });
 
 	    this.blog = this.articles.list;
-	    this.tags = this.articles.tags;
-
-	    this.changeInputWithTag = function (tag) {
-	        return _this.search = '' + tag;
-	    };
+	    this.tags = blogArticleService.tagsWithoutDuplicates(this.articles.list);
 	}
 
 /***/ },
-/* 16 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41633,7 +41684,7 @@
 	    templateUrl: 'templates/edit_article.template.html',
 	    controller: EditController,
 	    bindings: {
-	        articles: '='
+	        articles: '<'
 	    }
 	});
 
@@ -41643,16 +41694,15 @@
 	    var ID = $routeParams.articleId;
 	    var that = this;
 
-	    var showArticles = function showArticles() {
-	        _this.articles.list.forEach(function (items) {
+	    var showArticles = function showArticles(dataArticles) {
+	        dataArticles.forEach(function (items) {
 	            if (items.id === ID) {
 	                that.article = items;
 	            }
 	        });
-	        return that.article;
 	    };
 
-	    showArticles();
+	    showArticles(this.articles.list);
 
 	    this.submit = function () {
 
@@ -41660,26 +41710,6 @@
 	        var data = void 0,
 	            dateOfEditedArticle = void 0,
 	            stringTagBuffer = void 0;
-
-	        var showEditedTags = function showEditedTags(articles, tagsData) {
-	            var editedTags = [];
-
-	            articles.forEach(function (items) {
-	                var tags = items.tags;
-	                tags.forEach(function (tag) {
-	                    if (editedTags.indexOf(tag.trim()) === -1) {
-	                        editedTags.push(tag);
-	                    }
-	                });
-
-	                tagsData.splice(0, tagsData.length);
-	                editedTags.forEach(function (item) {
-	                    tagsData.push(item);
-	                });
-
-	                return tagsData.tags;
-	            });
-	        };
 
 	        dateOfEditedArticle = new Date();
 	        stringTagBuffer = _this.editData.tags;
@@ -41689,7 +41719,7 @@
 
 	        data = _this.editData;
 
-	        blogArticleService.articlesData.update({ edited_data: data }, function (response) {
+	        blogArticleService.articlesData.update({ edited_data: JSON.stringify(data) }, function (response) {
 
 	            that.alert = 'Article has been changed.';
 	            that.alertClass = '';
@@ -41697,8 +41727,7 @@
 
 	            that.articles.list = response.respData;
 
-	            showEditedTags(that.articles.list, that.articles.tags);
-	            showArticles();
+	            showArticles(that.articles.list);
 
 	            console.log('Article edited');
 	        }, function () {
@@ -41726,26 +41755,25 @@
 	                }
 	            }
 	        });
+
 	        modalInstance.result.then(function (id) {
 
-	            var dataToDelete = id;
-	            blogArticleService.articlesData.delete({ edited_data: dataToDelete }, function (response) {
+	            var dataToDelete = { id: id };
+	            blogArticleService.articlesData.delete({ edited_data: JSON.stringify(dataToDelete) }, function () {
 
-	                console.log(response);
-	                // that.articles.list = response.respDataDelete;
-	                // that.articles.list.forEach(item => {
-	                //     if (item.id === id) {
-	                //         that.articles.tags.forEach( (itemFirst, i, array1) => {
-	                //             item.tags.forEach( (itemSecond, j, array2) => {
-	                //                 if (array1[i] === array2[j]) {
-	                //                     array1.splice(i, 1);
-	                //                 }
-	                //             })
-	                //         });
-	                //         let index = that.articles.list.indexOf(item);
-	                //         that.articles.list.splice(index, 1);
-	                //     }
-	                // })
+	                that.articles.list.forEach(function (item) {
+	                    if (item.id === id) {
+	                        that.articles.tags.forEach(function (itemFirst, i, array1) {
+	                            item.tags.forEach(function (itemSecond, j, array2) {
+	                                if (array1[i] === array2[j]) {
+	                                    array1.splice(i, 1);
+	                                }
+	                            });
+	                        });
+	                        var index = that.articles.list.indexOf(item);
+	                        that.articles.list.splice(index, 1);
+	                    }
+	                });
 	            }, function () {
 	                return console.log('Error!');
 	            });
@@ -41754,7 +41782,7 @@
 	}
 
 /***/ },
-/* 17 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41763,64 +41791,56 @@
 	    templateUrl: 'templates/create_article.template.html',
 	    controller: createArticleController,
 	    bindings: {
-	        articles: '='
+	        articles: '<'
 	    }
 	});
 
 	function createArticleController(blogArticleService) {
+	    var _this = this;
+
 	    var that = this;
 	    this.show = false;
 
+	    /*var tagsWithoutDuplicates = jsonData => {
+	        var allTags = [];
+	         jsonData.forEach(function (item) {
+	            var tags = item.tags;
+	            tags.forEach(function (tag){
+	                if (allTags.indexOf(tag.trim()) === -1) {
+	                    allTags.push(tag);
+	                }
+	            });
+	        });
+	         return allTags;
+	    }*/
+
 	    this.createArticleBtn = function () {
-	        this.show = !this.show;
+	        _this.show = !_this.show;
 	        var dateOfCreatedArticle = new Date(),
 	            formData = void 0,
 	            stringTagsBuffer = void 0;
 	        var ids = [],
-	            largestDigitID = void 0,
-	            addedTags = [],
-	            arrayNoDuplicates = [];
+	            largestDigitID = void 0;
 
-	        var mergeTwoArraysWithoutDuplicates = function mergeTwoArraysWithoutDuplicates(firstArray, secondArray, tagsData) {
-	            for (var i = 0; i < firstArray.length; i++) {
-	                tagsData.push(firstArray[i]);
-	            }
-
-	            tagsData.forEach(function (item) {
-	                if (secondArray.indexOf(item.trim()) === -1) {
-	                    secondArray.push(item);
-	                }
-	            });
-
-	            tagsData.splice(0, tagsData.length);
-
-	            secondArray.forEach(function (item) {
-	                tagsData.push(item);
-	            });
-
-	            return tagsData.tags;
-	        };
-
-	        this.articles.list.forEach(function (item) {
+	        _this.articles.list.forEach(function (item) {
 	            return ids.push(item.id);
 	        });
 	        largestDigitID = Math.max.apply(Math, ids);
 
-	        this.createData.id = "" + (largestDigitID + 1);
-	        stringTagsBuffer = this.createData.tags;
-	        this.createData.tags = stringTagsBuffer.trim().split(",");
-	        addedTags = this.createData.tags;
-	        this.createData.time = blogArticleService.dateFormat(dateOfCreatedArticle.format(), "HH:MM mmm dd, yyyy");
-	        formData = this.createData;
+	        _this.createData.id = "" + (largestDigitID + 1);
+	        stringTagsBuffer = _this.createData.tags;
+	        _this.createData.tags = stringTagsBuffer.trim().split(",");
+	        _this.createData.time = blogArticleService.dateFormat(dateOfCreatedArticle.format(), "HH:MM mmm dd, yyyy");
+	        formData = _this.createData;
 
-	        blogArticleService.createArticleEnd.save(formData, function (savedData) {
+	        blogArticleService.articlesData.create({ edited_data: JSON.stringify(formData) }, function (response) {
 	            that.alert = 'Article created.';
 	            that.alertClass = '';
 	            that.alertClass = 'edit-article__alert-window';
-	            that.articles.list.push(formData);
-	            mergeTwoArraysWithoutDuplicates(addedTags, arrayNoDuplicates, that.articles.tags);
+	            that.articles.list = response.respDataCreate;
+	            /*mergeTwoArraysWithoutDuplicates(addedTags, arrayNoDuplicates, that.articles.tags);*/
 	            console.log(formData);
-	        }, function (savedData) {
+	        }, function () {
 	            that.alert = 'Error in creating!';
 	            that.alertClass = '';
 	            that.alertClass = 'edit-article__alert-window--error';
@@ -41830,7 +41850,7 @@
 	}
 
 /***/ },
-/* 18 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
