@@ -31,20 +31,6 @@ app.use('/node_modules', express.static('./node_modules'));
     }
 ];*/
 
-function tagsWithoutDuplicates(jsonData) {
-    var allTags = [];
-
-    jsonData.forEach(function (item) {
-        var tags = item.tags;
-        tags.forEach(function (tag){
-            if (allTags.indexOf(tag.trim()) === -1) {
-                allTags.push(tag);
-            }
-        });
-    });
-
-    return allTags;
-}
 
 app.delete('/articles_data/:edited_data', function(req, res) {
 
@@ -64,7 +50,7 @@ app.delete('/articles_data/:edited_data', function(req, res) {
         });
 
         objData.respDataDelete = jsonToDeleteArticle;
-        res.send(objData);
+        res.send(deleteArt);
         fs.writeFile('./articles.json', JSON.stringify(jsonToDeleteArticle, null, 4), callback);
     }
 
@@ -75,6 +61,18 @@ app.delete('/articles_data/:edited_data', function(req, res) {
         }
     });
 
+});
+
+app.get('/articles_data/:edited_data', function (req, res) {
+    var idToEdit = JSON.parse(req.params.edited_data);
+
+    var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
+
+       jsonToUptade.forEach( function (item) {
+           if (item.id === idToEdit) {
+               res.send(item);
+           }
+       })
 });
 
 app.put('/articles_data/:edited_data', function (req, res) {
@@ -98,6 +96,7 @@ app.put('/articles_data/:edited_data', function (req, res) {
         });
 
         objData.respData = jsonToUptade;
+        objData.editedArticle = editedData;
         res.send(objData);
         fs.writeFile('./articles.json', JSON.stringify(jsonToUptade, null, 4), callback);
     }
@@ -114,17 +113,22 @@ app.post('/articles_data/:edited_data', function(req, res) {
 
     var createdData = JSON.parse(req.params.edited_data);
 
-    function createArticle(createdData, callback) {
+    function createArticle(data, callback) {
         var objData = {};
+        var ids = [], largestDigitID;
 
         var jsonToCreateArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-        jsonToCreateArticle.push(createdData);
-        fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
 
-        objData.respDataCreate = jsonToCreateArticle;
+        jsonToCreateArticle.forEach(function(item) {ids.push(item.id)});
+        largestDigitID = Math.max.apply(Math, ids);
+        data.id = "" + (largestDigitID + 1);
+        jsonToCreateArticle.push(data);
+
+        objData.respDataCreate = data;
         res.send(objData);
 
         fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
+
     }
 
     createArticle(createdData, function (error) {
@@ -136,8 +140,7 @@ app.post('/articles_data/:edited_data', function(req, res) {
 
 });
 
-
-app.get('/articles', function(req, res) {
+app.get('/articles_data', function(req, res) {
     var json = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
 
     var arr = Object.keys(json).map(
@@ -147,6 +150,7 @@ app.get('/articles', function(req, res) {
 
     res.send(JSON.stringify(arr));
 });
+
 
 app.get('/tags', function(req, res) {
     var jsonData = JSON.parse(fs.readFileSync('articles.json', 'utf8'));

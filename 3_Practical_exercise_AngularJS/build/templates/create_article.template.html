@@ -1,7 +1,8 @@
 <head><link href="../css/style.css" rel="stylesheet"></head>
-    <h2 class="edit-article__header">Create an Article</h2>
-    <h3 class="edit-article__alert-window" ng-show="$ctrl.show" ng-class="alertClass">{{$ctrl.alert}}</h3>
+
     <form role="form" class="form-block" name="formCreate">
+      <h2 class="edit-article__header">Create an Article</h2>
+      <h3 class="edit-article__alert-window" ng-show="$ctrl.show" ng-class="alertClass">{{$ctrl.alert}}</h3>
         <div class="form-group">
             <label for="author" class="form-block__label">Author</label>
             <input type="text" id="author" class="form-control" placeholder="Enter your name" required ng-model="$ctrl.createData.author">

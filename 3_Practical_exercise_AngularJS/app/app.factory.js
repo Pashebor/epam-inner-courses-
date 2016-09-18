@@ -4,15 +4,15 @@
 
     function blogArticle($resource) {
 
-        function getArticles() {
-            return $resource('articles');
-        }
+        let getArticles = () => {
+            return $resource('/articles_data').query();
+        };
 
         function getTags() {
             return $resource('tags');
         }
 
-        var articlesData = () => {
+        let articlesData = () => {
             return $resource('/articles_data/:edited_data', { edited_data: '@edited_data' }, {
                 update: {
                     method: 'PUT'
@@ -22,11 +22,14 @@
                 },
                 delete: {
                     method: 'DELETE'
+                },
+                get:{
+                  method: 'GET'
                 }
             } );
         };
 
-        var tagsWithoutDuplicates = jsonData => {
+        let tagsWithoutDuplicates = jsonData => {
             var allTags = [];
 
             jsonData.forEach(function (item) {

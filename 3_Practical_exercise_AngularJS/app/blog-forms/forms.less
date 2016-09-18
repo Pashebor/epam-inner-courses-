@@ -1,6 +1,12 @@
 @import "../assets/less/fonts";
 @import "../assets/less/variables";
 
+
+.form-block{
+   width: 980px;
+}
+
+
 .edit-article{
   display: flex;
   flex-direction: column;
@@ -11,13 +17,14 @@
 }
 
 .edit-article__header{
+  margin-top: -10px;
   text-align: center;
   color: @main-text-color;
 }
 
 .edit-article__alert-window{
   width: 20%;
-  margin-top: -10px;
+  margin: auto;
   padding: 10px 0;
   text-align: center;
   color: @link-text-color;
@@ -34,13 +41,13 @@
   100%{padding: 10px 0;}
 }
 
-.form-block{
+.form{
   width: 50%;
-  margin: auto;
+  margin: 40px auto;
   color: @main-text-color;
 }
 
-.form-block__label{
+.form__label{
   text-transform: uppercase;
 }
 
@@ -78,11 +85,5 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-}
-
-.start-blog{
-  display: flex;
-  flex-direction: row;
   width: 100%;
 }

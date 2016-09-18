@@ -1,28 +1,22 @@
 'use strict';
 
 angular.module('editArticleModule').component('editArticle', {
-    templateUrl: 'templates/edit_article.template.html',
-    controller:  EditController,
-    bindings: {
-        articles: '<'
-    }
+    templateUrl: 'templates/forms.template.html',
+    controller:  EditController
 });
 
 
-function EditController($scope, $routeParams, blogArticleService, $uibModal){
+function EditController($scope, $routeParams, blogArticleService, $uibModal, FormService, $location){
 
-    const ID = $routeParams.articleId;
+    const ID = $routeParams.id;
     const that = this;
 
+    this.switchTepmplate = 'edit';
 
-    let showArticles = dataArticles => {
-        dataArticles.forEach(items => {
-            if(items.id === ID) {
-                that.article = items;
-            }});
-    };
-
-    showArticles(this.articles.list);
+    blogArticleService.articlesData.get({edited_data: JSON.stringify(ID)}, response => {
+        console.log(response.header);
+        that.article = response;
+    });
 
     this.submit = () => {
 
@@ -46,9 +40,8 @@ function EditController($scope, $routeParams, blogArticleService, $uibModal){
             that.alertClass = '';
             that.alertClass = 'edit-article__alert-window';
 
-            that.articles.list = response.respData;
-
-            showArticles(that.articles.list);
+            that.article = response.editedArticle;
+            FormService.addEditedArticle(response.editedArticle);
 
             console.log('Article edited');
         }, () => {
@@ -72,34 +65,20 @@ function EditController($scope, $routeParams, blogArticleService, $uibModal){
             backdrop: 'static',
             resolve:{
                 id: () => {return ID;},
-                articles: () => {return that.articles.list;}
+                article: this.article
             }
         });
 
         modalInstance.result.then(id => {
 
           let dataToDelete = {id: id};
-          blogArticleService.articlesData.delete({edited_data: JSON.stringify(dataToDelete)}, () => {
-
-              that.articles.list.forEach(item => {
-                if (item.id === id) {
-                    that.articles.tags.forEach( (itemFirst, i, array1) => {
-                        item.tags.forEach( (itemSecond, j, array2) => {
-                            if (array1[i] === array2[j]) {
-                                array1.splice(i, 1);
-                            }
-                        })
-                    });
-                    let index = that.articles.list.indexOf(item);
-                    that.articles.list.splice(index, 1);
-                }
-            })
-
+          blogArticleService.articlesData.delete({edited_data: JSON.stringify(dataToDelete)}, response => {
+              FormService.addDelArticle(dataToDelete);
+              $location.path('/');
           },
           () => console.log('Error!'));
         })
+
     };
-
-
 
 }

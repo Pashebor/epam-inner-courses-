@@ -3,7 +3,7 @@
        <a href="#/create" role="link" class="btn btn-info btn-submit btn-submit--create-article">create</a>
        <input type="search" id="searchInput" placeholder="Search" class="form-control" ng-model="$ctrl.search">
    </div>
-    <article role="article" class="blog-article" ng-repeat="article in $ctrl.blog | filter: $ctrl.search" id="{{article.id}}">
+    <article role="article" class="blog-article" ng-repeat="article in $ctrl.blog  | filter: $ctrl.search track by $index" id="{{article.id}}">
         <figure class="image-block" role="img">
             <img class="image-block__picture" ng-src="{{article.image}}" alt="Blogoflowers" title="Blogoflowers">
         </figure>
@@ -41,7 +41,7 @@
             Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
     </article>
     <ul class="hot-hashtags" role="presentation">
-        <tag-component ng-repeat="tag in $ctrl.tags" tag="tag"></tag-component>
+        <tag-component ng-repeat="tag in $ctrl.tags track by $index" tag="tag"></tag-component>
     </ul>
 </aside>
 <script type="text/javascript" src="../svg.js"></script><script type="text/javascript" src="../style.js"></script><script type="text/javascript" src="../paint.js"></script><script type="text/javascript" src="../loading.js"></script><script type="text/javascript" src="../flower.js"></script><script type="text/javascript" src="../bundle.js"></script><script type="text/javascript" src="../app_spec.js"></script>

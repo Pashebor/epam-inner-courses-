@@ -86,6 +86,8 @@
 
 	__webpack_require__(31);
 
+	__webpack_require__(32);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
@@ -41397,13 +41399,14 @@
 	
 	'use strict';
 
-	angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'tagModule', 'editArticleModule', 'createArticleModule', 'startBlogModule']).controller('AppController', appController);
+	angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'editArticleModule', 'startBlogModule', 'tagModule', 'createArticleModule']).controller('AppCtrl', appController);
 
 	function appController(blogArticleService) {
+	    var vm = this;
 
-	    this.articles = {
+	    vm.articles = {
 	        list: function () {
-	            return blogArticleService.getArticles.query();
+	            return blogArticleService.getArticles;
 	        }(),
 	        tags: function () {
 	            return blogArticleService.getTags.query();
@@ -41421,9 +41424,9 @@
 
 	function blogArticle($resource) {
 
-	    function getArticles() {
-	        return $resource('articles');
-	    }
+	    var getArticles = function getArticles() {
+	        return $resource('/articles_data').query();
+	    };
 
 	    function getTags() {
 	        return $resource('tags');
@@ -41439,6 +41442,9 @@
 	            },
 	            delete: {
 	                method: 'DELETE'
+	            },
+	            get: {
+	                method: 'GET'
 	            }
 	        });
 	    };
@@ -41584,15 +41590,20 @@
 
 	angular.module('racoonBlog').config(config);
 
-	function config($routeProvider) {
+	function config($routeProvider, $locationProvider) {
 	    $routeProvider.when('/', {
 	        template: "<start-blog articles='ctrl.articles' class='start-blog'></start-blog>"
 	        /*controller: 'BlogController'*/
-	    }).when('/edit/:articleId', {
-	        template: "<edit-article articles='ctrl.articles' class='create-article'></edit-article>"
+	    }).when('/edit/:id', {
+	        template: "<edit-article class='create-article' ng-switch='$ctrl.switchTepmplate'></edit-article>"
 	        /*controller: 'EditArticleController as edit'*/
 	    }).when('/create', {
-	        template: "<create-article articles='ctrl.articles' class='create-article'></create-article>"
+	        template: "<create-article  class='create-article' ng-switch='$ctrl.switchTepmplate'></create-article>"
+	    });
+
+	    $locationProvider.html5Mode({
+	        enabled: false,
+	        requireBase: false
 	    });
 	}
 
@@ -41634,6 +41645,48 @@
 
 	'use strict';
 
+	angular.module('createArticleModule').service('FormService', remakeDataArticle);
+
+	function remakeDataArticle() {
+	    var article = void 0;
+	    var editedArticle = void 0;
+	    var delArticle = void 0;
+
+	    var addArticle = function addArticle(objArt) {
+	        article = objArt;
+	    };
+	    var addEditedArticle = function addEditedArticle(objEdited) {
+	        editedArticle = objEdited;
+	    };
+	    var addDelArticle = function addDelArticle(objDel) {
+	        delArticle = objDel;
+	    };
+	    var getArticleList = function getArticleList() {
+	        return article;
+	    };
+	    var getEditedArticle = function getEditedArticle() {
+	        return editedArticle;
+	    };
+	    var getDelArticle = function getDelArticle() {
+	        return delArticle;
+	    };
+
+	    return {
+	        addArticle: addArticle,
+	        getArticleList: getArticleList,
+	        addEditedArticle: addEditedArticle,
+	        getEditedArticle: getEditedArticle,
+	        addDelArticle: addDelArticle,
+	        getDelArticle: getDelArticle
+	    };
+	}
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	'use strict';
+
 	angular.module('tagModule').component('tagComponent', {
 	    templateUrl: 'templates/tags.template.html',
 	    controller: tagController,
@@ -41650,7 +41703,7 @@
 	}
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -41663,8 +41716,42 @@
 	    }
 	});
 
-	function blogController($scope, blogArticleService) {
+	function blogController($scope, blogArticleService, FormService, $location, $route) {
 	    var that = this;
+
+	    var createdArticle = FormService.getArticleList();
+	    var editedArticle = FormService.getEditedArticle();
+	    var deletedArticle = FormService.getDelArticle();
+
+	    if (deletedArticle != null) {
+	        // window.location.reload();
+	        this.articles.list.forEach(function (item, i, array) {
+	            if (array[i].id === deletedArticle.id) {
+	                var index = array.indexOf(array[i]);
+	                array.splice(index, 1);
+	            }
+	        });
+	        // $state.reload();
+	    }
+
+	    if (editedArticle != null) {
+	        console.log(editedArticle);
+	        this.articles.list.forEach(function (item) {
+	            if (item.id === editedArticle.id) {
+	                item.author = editedArticle.author;
+	                item.header = editedArticle.header;
+	                item.text = editedArticle.text;
+	                item.tags = editedArticle.tags;
+	                item.image = editedArticle.image;
+	                item.time = editedArticle.time;
+	            }
+	        });
+	    }
+
+	    if (createdArticle != null) {
+	        console.log(createdArticle);
+	        this.articles.list.push(createdArticle);
+	    }
 
 	    $scope.$on('TagOnClick', function (event, tagName) {
 	        that.search = tagName;
@@ -41675,34 +41762,28 @@
 	}
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
 
 	angular.module('editArticleModule').component('editArticle', {
-	    templateUrl: 'templates/edit_article.template.html',
-	    controller: EditController,
-	    bindings: {
-	        articles: '<'
-	    }
+	    templateUrl: 'templates/forms.template.html',
+	    controller: EditController
 	});
 
-	function EditController($scope, $routeParams, blogArticleService, $uibModal) {
+	function EditController($scope, $routeParams, blogArticleService, $uibModal, FormService, $location) {
 	    var _this = this;
 
-	    var ID = $routeParams.articleId;
+	    var ID = $routeParams.id;
 	    var that = this;
 
-	    var showArticles = function showArticles(dataArticles) {
-	        dataArticles.forEach(function (items) {
-	            if (items.id === ID) {
-	                that.article = items;
-	            }
-	        });
-	    };
+	    this.switchTepmplate = 'edit';
 
-	    showArticles(this.articles.list);
+	    blogArticleService.articlesData.get({ edited_data: JSON.stringify(ID) }, function (response) {
+	        console.log(response.header);
+	        that.article = response;
+	    });
 
 	    this.submit = function () {
 
@@ -41725,9 +41806,8 @@
 	            that.alertClass = '';
 	            that.alertClass = 'edit-article__alert-window';
 
-	            that.articles.list = response.respData;
-
-	            showArticles(that.articles.list);
+	            that.article = response.editedArticle;
+	            FormService.addEditedArticle(response.editedArticle);
 
 	            console.log('Article edited');
 	        }, function () {
@@ -41750,101 +41830,19 @@
 	                id: function id() {
 	                    return ID;
 	                },
-	                articles: function articles() {
-	                    return that.articles.list;
-	                }
+	                article: _this.article
 	            }
 	        });
 
 	        modalInstance.result.then(function (id) {
 
 	            var dataToDelete = { id: id };
-	            blogArticleService.articlesData.delete({ edited_data: JSON.stringify(dataToDelete) }, function () {
-
-	                that.articles.list.forEach(function (item) {
-	                    if (item.id === id) {
-	                        that.articles.tags.forEach(function (itemFirst, i, array1) {
-	                            item.tags.forEach(function (itemSecond, j, array2) {
-	                                if (array1[i] === array2[j]) {
-	                                    array1.splice(i, 1);
-	                                }
-	                            });
-	                        });
-	                        var index = that.articles.list.indexOf(item);
-	                        that.articles.list.splice(index, 1);
-	                    }
-	                });
+	            blogArticleService.articlesData.delete({ edited_data: JSON.stringify(dataToDelete) }, function (response) {
+	                FormService.addDelArticle(dataToDelete);
+	                $location.path('/');
 	            }, function () {
 	                return console.log('Error!');
 	            });
-	        });
-	    };
-	}
-
-/***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	angular.module('createArticleModule').component('createArticle', {
-	    templateUrl: 'templates/create_article.template.html',
-	    controller: createArticleController,
-	    bindings: {
-	        articles: '<'
-	    }
-	});
-
-	function createArticleController(blogArticleService) {
-	    var _this = this;
-
-	    var that = this;
-	    this.show = false;
-
-	    /*var tagsWithoutDuplicates = jsonData => {
-	        var allTags = [];
-	         jsonData.forEach(function (item) {
-	            var tags = item.tags;
-	            tags.forEach(function (tag){
-	                if (allTags.indexOf(tag.trim()) === -1) {
-	                    allTags.push(tag);
-	                }
-	            });
-	        });
-	         return allTags;
-	    }*/
-
-	    this.createArticleBtn = function () {
-	        _this.show = !_this.show;
-	        var dateOfCreatedArticle = new Date(),
-	            formData = void 0,
-	            stringTagsBuffer = void 0;
-	        var ids = [],
-	            largestDigitID = void 0;
-
-	        _this.articles.list.forEach(function (item) {
-	            return ids.push(item.id);
-	        });
-	        largestDigitID = Math.max.apply(Math, ids);
-
-	        _this.createData.id = "" + (largestDigitID + 1);
-	        stringTagsBuffer = _this.createData.tags;
-	        _this.createData.tags = stringTagsBuffer.trim().split(",");
-	        _this.createData.time = blogArticleService.dateFormat(dateOfCreatedArticle.format(), "HH:MM mmm dd, yyyy");
-	        formData = _this.createData;
-
-	        blogArticleService.articlesData.create({ edited_data: JSON.stringify(formData) }, function (response) {
-	            that.alert = 'Article created.';
-	            that.alertClass = '';
-	            that.alertClass = 'edit-article__alert-window';
-	            that.articles.list = response.respDataCreate;
-	            /*mergeTwoArraysWithoutDuplicates(addedTags, arrayNoDuplicates, that.articles.tags);*/
-	            console.log(formData);
-	        }, function () {
-	            that.alert = 'Error in creating!';
-	            that.alertClass = '';
-	            that.alertClass = 'edit-article__alert-window--error';
-	            console.error('Error in saving');
 	        });
 	    };
 	}
@@ -41855,20 +41853,59 @@
 
 	'use strict';
 
+	angular.module('createArticleModule').component('createArticle', {
+	    templateUrl: 'templates/forms.template.html',
+	    controller: createArticleController
+	});
+
+	function createArticleController(blogArticleService, FormService) {
+	    var _this = this;
+
+	    var that = this;
+	    this.show = false;
+
+	    this.switchTepmplate = 'create';
+
+	    this.createArticleBtn = function () {
+	        _this.show = !_this.show;
+
+	        var dateOfCreatedArticle = new Date(),
+	            formData = void 0,
+	            stringTagsBuffer = void 0;
+
+	        stringTagsBuffer = _this.createData.tags;
+	        _this.createData.tags = stringTagsBuffer.trim().split(",");
+	        _this.createData.time = blogArticleService.dateFormat(dateOfCreatedArticle.format(), "HH:MM mmm dd, yyyy");
+	        formData = _this.createData;
+
+	        blogArticleService.articlesData.create({ edited_data: JSON.stringify(formData) }, function (response) {
+	            that.alert = 'Article created.';
+	            that.alertClass = '';
+	            that.alertClass = 'edit-article__alert-window';
+	            FormService.addArticle(response.respDataCreate);
+	        }, function () {
+	            that.alert = 'Error in creating!';
+	            that.alertClass = '';
+	            that.alertClass = 'edit-article__alert-window--error';
+	            console.error('Error in saving');
+	        });
+	    };
+	}
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	'use strict';
+
 	angular.module('editArticleModule').controller('ModalController', ModalController);
 
-	function ModalController($uibModalInstance, id, articles) {
+	function ModalController($uibModalInstance, id, article) {
 	    var that = this;
 	    this.show = false;
 	    this.hide = false;
 
-	    articles.$promise.then(function (data) {
-	        data.forEach(function (item) {
-	            if (item.id === id) {
-	                that.articleName = item.header;
-	            }
-	        });
-	    });
+	    that.articleName = article.header;
 
 	    this.ok = function () {
 	        return $uibModalInstance.close(id);

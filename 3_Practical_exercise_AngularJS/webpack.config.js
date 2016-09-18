@@ -57,20 +57,16 @@ module.exports = {
             template: path.resolve(root, './index.html')
         }),
         new HtmlWebpackPlugin({
-            filename: 'templates/create_article.template.html',
-            template: path.resolve(root, './blog-forms/create_article.template.html')
-        }),
-        new HtmlWebpackPlugin({
             filename: 'templates/start_page.template.html',
             template: path.resolve(root, './start-page/start_page.template.html')
         }),
         new HtmlWebpackPlugin({
-            filename: 'templates/edit_article.template.html',
-            template: path.resolve(root, './blog-forms/edit_article.template.html')
+            filename: 'templates/forms.template.html',
+            template: path.resolve(root, './blog-forms/forms.template.html')
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/modal_delete.template.html',
-            template: path.resolve(root, './blog-forms/modal_delete.template.html')
+            template: path.resolve(root, './blog-forms/form-edit/modal_delete.template.html')
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/tags.template.html',
