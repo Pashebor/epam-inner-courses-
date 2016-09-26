@@ -1,6 +1,10 @@
 'use strict';
+import angular from 'angular';
+import 'angular-ui-bootstrap';
 
-angular.module('editArticleModule').controller('ModalController', ModalController);
+angular.module('formsModule').controller('ModalController', ModalController);
+
+ModalController.$inject = ['$uibModalInstance', 'id', 'article'];
 
 function ModalController($uibModalInstance, id, article) {
     const that = this;

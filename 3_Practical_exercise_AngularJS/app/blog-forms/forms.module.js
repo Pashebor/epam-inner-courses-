@@ -2,4 +2,4 @@
 import  angular from 'angular';
 import 'angular-route';
 
-angular.module('tagModule', ['ngRoute']);
+angular.module('formsModule', ['ngRoute', 'ngResource']);

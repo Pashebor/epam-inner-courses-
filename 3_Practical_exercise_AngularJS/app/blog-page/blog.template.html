@@ -1,13 +1,13 @@
-<head><link href="../css/style.css" rel="stylesheet"></head><main role="main" class="blog">
+<main role="main" class="blog">
    <div class="create-and-search">
-       <a href="#/create" role="link" class="btn btn-info btn-submit btn-submit--create-article">create</a>
+       <a href="/create" role="link" class="btn btn-info btn-submit btn-submit--create-article">create</a>
        <input type="search" id="searchInput" placeholder="Search" class="form-control" ng-model="$ctrl.search">
    </div>
     <article role="article" class="blog-article" ng-repeat="article in $ctrl.blog  | filter: $ctrl.search track by $index" id="{{article.id}}">
         <figure class="image-block" role="img">
             <img class="image-block__picture" ng-src="{{article.image}}" alt="Blogoflowers" title="Blogoflowers">
         </figure>
-        <h2 class="blog-article__description"><a href="#/edit/{{article.id}}" class="blog-article__description-link" role="link">{{article.header}}</a></h2>
+        <h2 class="blog-article__description"><a href="/create/?id={{article.id}}" class="blog-article__description-link" role="link">{{article.header}}</a></h2>
         <footer class="blog-article__info" role="contentinfoo">
             <time role="alert" class="blog-article__date"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="blog-article__date-icon"><use xlink:href="images/sprite.svg#icon-clock"/></svg></span>{{article.time}}</time>
             <address class="blog-article__author"><span><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" class="blog-article__author-icon"><use xlink:href="images/sprite.svg#icon-footstep"/></svg></span>{{article.author}}</address>
@@ -44,4 +44,3 @@
         <tag-component ng-repeat="tag in $ctrl.tags track by $index" tag="tag"></tag-component>
     </ul>
 </aside>
-<script type="text/javascript" src="../svg.js"></script><script type="text/javascript" src="../style.js"></script><script type="text/javascript" src="../paint.js"></script><script type="text/javascript" src="../loading.js"></script><script type="text/javascript" src="../flower.js"></script><script type="text/javascript" src="../bundle.js"></script><script type="text/javascript" src="../app_spec.js"></script>

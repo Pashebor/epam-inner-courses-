@@ -46,23 +46,7 @@
 
 	'use strict';
 
-	var _angular = __webpack_require__(12);
-
-	var _angular2 = _interopRequireDefault(_angular);
-
-	var _angularRoute = __webpack_require__(14);
-
-	var _angularRoute2 = _interopRequireDefault(_angularRoute);
-
-	var _angularResource = __webpack_require__(16);
-
-	var _angularResource2 = _interopRequireDefault(_angularResource);
-
-	var _angularUiBootstrap = __webpack_require__(18);
-
-	var _angularUiBootstrap2 = _interopRequireDefault(_angularUiBootstrap);
-
-	__webpack_require__(20);
+	__webpack_require__(12);
 
 	__webpack_require__(21);
 
@@ -84,12 +68,6 @@
 
 	__webpack_require__(30);
 
-	__webpack_require__(31);
-
-	__webpack_require__(32);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 /***/ },
 /* 1 */,
 /* 2 */,
@@ -105,12 +83,32 @@
 /* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(13);
+	'use strict';
+
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	__webpack_require__(15);
+
+	__webpack_require__(17);
+
+	__webpack_require__(19);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'formsModule', 'blogModule', 'tagModule']);
+
+/***/ },
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(14);
 	module.exports = angular;
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/**
@@ -31883,15 +31881,15 @@
 	!window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(15);
+	__webpack_require__(16);
 	module.exports = 'ngRoute';
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/**
@@ -32966,15 +32964,15 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(17);
+	__webpack_require__(18);
 	module.exports = 'ngResource';
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	/**
@@ -33843,23 +33841,23 @@
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(19);
+	__webpack_require__(20);
 
 	module.exports = 'ui.bootstrap';
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	/*
 	 * angular-ui-bootstrap
 	 * http://angular-ui.github.io/bootstrap/
 
-	 * Version: 2.1.3 - 2016-08-25
+	 * Version: 2.1.4 - 2016-09-23
 	 * License: MIT
 	 */angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.collapse","ui.bootstrap.tabindex","ui.bootstrap.accordion","ui.bootstrap.alert","ui.bootstrap.buttons","ui.bootstrap.carousel","ui.bootstrap.dateparser","ui.bootstrap.isClass","ui.bootstrap.datepicker","ui.bootstrap.position","ui.bootstrap.datepickerPopup","ui.bootstrap.debounce","ui.bootstrap.dropdown","ui.bootstrap.stackedMap","ui.bootstrap.modal","ui.bootstrap.paging","ui.bootstrap.pager","ui.bootstrap.pagination","ui.bootstrap.tooltip","ui.bootstrap.popover","ui.bootstrap.progressbar","ui.bootstrap.rating","ui.bootstrap.tabs","ui.bootstrap.timepicker","ui.bootstrap.typeahead"]);
 	angular.module("ui.bootstrap.tpls", ["uib/template/accordion/accordion-group.html","uib/template/accordion/accordion.html","uib/template/alert/alert.html","uib/template/carousel/carousel.html","uib/template/carousel/slide.html","uib/template/datepicker/datepicker.html","uib/template/datepicker/day.html","uib/template/datepicker/month.html","uib/template/datepicker/year.html","uib/template/datepickerPopup/popup.html","uib/template/modal/window.html","uib/template/pager/pager.html","uib/template/pagination/pagination.html","uib/template/tooltip/tooltip-html-popup.html","uib/template/tooltip/tooltip-popup.html","uib/template/tooltip/tooltip-template-popup.html","uib/template/popover/popover-html.html","uib/template/popover/popover-template.html","uib/template/popover/popover.html","uib/template/progressbar/bar.html","uib/template/progressbar/progress.html","uib/template/progressbar/progressbar.html","uib/template/rating/rating.html","uib/template/tabs/tab.html","uib/template/tabs/tabset.html","uib/template/timepicker/timepicker.html","uib/template/typeahead/typeahead-match.html","uib/template/typeahead/typeahead-popup.html"]);
@@ -37075,8 +37073,8 @@
 	      return;
 	    }
 
-	    openScope.isOpen = false;
 	    openScope.focusToggleElement();
+	    openScope.isOpen = false;
 
 	    if (!$rootScope.$$phase) {
 	      openScope.$apply();
@@ -41090,9 +41088,9 @@
 	    "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n" +
 	    "  <thead>\n" +
 	    "    <tr>\n" +
-	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left uib-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"glyphicon glyphicon-chevron-left\"></i></button></th>\n" +
+	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left uib-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i aria-hidden=\"true\" class=\"glyphicon glyphicon-chevron-left\"></i><span class=\"sr-only\">previous</span></button></th>\n" +
 	    "      <th colspan=\"{{::5 + showWeeks}}\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm uib-title\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\"><strong>{{title}}</strong></button></th>\n" +
-	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right uib-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"glyphicon glyphicon-chevron-right\"></i></button></th>\n" +
+	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right uib-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i aria-hidden=\"true\" class=\"glyphicon glyphicon-chevron-right\"></i><span class=\"sr-only\">next</span></button></th>\n" +
 	    "    </tr>\n" +
 	    "    <tr>\n" +
 	    "      <th ng-if=\"showWeeks\" class=\"text-center\"></th>\n" +
@@ -41125,9 +41123,9 @@
 	    "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n" +
 	    "  <thead>\n" +
 	    "    <tr>\n" +
-	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left uib-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"glyphicon glyphicon-chevron-left\"></i></button></th>\n" +
+	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left uib-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i aria-hidden=\"true\" class=\"glyphicon glyphicon-chevron-left\"></i><span class=\"sr-only\">previous</span></button></th>\n" +
 	    "      <th colspan=\"{{::yearHeaderColspan}}\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm uib-title\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\"><strong>{{title}}</strong></button></th>\n" +
-	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right uib-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"glyphicon glyphicon-chevron-right\"></i></button></th>\n" +
+	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right uib-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i aria-hidden=\"true\" class=\"glyphicon glyphicon-chevron-right\"></i><span class=\"sr-only\">next</span></i></button></th>\n" +
 	    "    </tr>\n" +
 	    "  </thead>\n" +
 	    "  <tbody>\n" +
@@ -41155,9 +41153,9 @@
 	    "<table role=\"grid\" aria-labelledby=\"{{::uniqueId}}-title\" aria-activedescendant=\"{{activeDateId}}\">\n" +
 	    "  <thead>\n" +
 	    "    <tr>\n" +
-	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left uib-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i class=\"glyphicon glyphicon-chevron-left\"></i></button></th>\n" +
+	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-left uib-left\" ng-click=\"move(-1)\" tabindex=\"-1\"><i aria-hidden=\"true\" class=\"glyphicon glyphicon-chevron-left\"></i><span class=\"sr-only\">previous</span></button></th>\n" +
 	    "      <th colspan=\"{{::columns - 2}}\"><button id=\"{{::uniqueId}}-title\" role=\"heading\" aria-live=\"assertive\" aria-atomic=\"true\" type=\"button\" class=\"btn btn-default btn-sm uib-title\" ng-click=\"toggleMode()\" ng-disabled=\"datepickerMode === maxMode\" tabindex=\"-1\"><strong>{{title}}</strong></button></th>\n" +
-	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right uib-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i class=\"glyphicon glyphicon-chevron-right\"></i></button></th>\n" +
+	    "      <th><button type=\"button\" class=\"btn btn-default btn-sm pull-right uib-right\" ng-click=\"move(1)\" tabindex=\"-1\"><i aria-hidden=\"true\" class=\"glyphicon glyphicon-chevron-right\"></i><span class=\"sr-only\">next</span></button></th>\n" +
 	    "    </tr>\n" +
 	    "  </thead>\n" +
 	    "  <tbody>\n" +
@@ -41182,7 +41180,7 @@
 
 	angular.module("uib/template/datepickerPopup/popup.html", []).run(["$templateCache", function($templateCache) {
 	  $templateCache.put("uib/template/datepickerPopup/popup.html",
-	    "<ul class=\"uib-datepicker-popup dropdown-menu uib-position-measure\" dropdown-nested ng-if=\"isOpen\" ng-keydown=\"keydown($event)\" ng-click=\"$event.stopPropagation()\">\n" +
+	    "<ul role=\"presentation\" class=\"uib-datepicker-popup dropdown-menu uib-position-measure\" dropdown-nested ng-if=\"isOpen\" ng-keydown=\"keydown($event)\" ng-click=\"$event.stopPropagation()\">\n" +
 	    "  <li ng-transclude></li>\n" +
 	    "  <li ng-if=\"showButtonBar\" class=\"uib-button-bar\">\n" +
 	    "    <span class=\"btn-group pull-left\">\n" +
@@ -41393,60 +41391,66 @@
 	angular.module('ui.bootstrap.typeahead').run(function() {!angular.$$csp().noInlineStyle && !angular.$$uibTypeaheadCss && angular.element(document).find('head').prepend('<style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style>'); angular.$$uibTypeaheadCss = true; });
 
 /***/ },
-/* 20 */
-/***/ function(module, exports) {
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('racoonBlog').config(config);
+
+	function config($routeProvider, $locationProvider) {
+	    $routeProvider.when('/', {
+	        template: "<blog-component class='start-blog'></blog-component>"
+	    }).when('/create', {
+	        template: "<form-component  class='create-article' ng-switch='$ctrl.switchTepmplate'></form-component>"
+	    });
+
+	    $locationProvider.html5Mode(true);
+	}
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	__webpack_require__(15);
+
+	__webpack_require__(17);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('blogModule', ['ngRoute', 'ngResource']);
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
 
 	
 	'use strict';
 
-	angular.module('racoonBlog', ['ngRoute', 'ngResource', 'ui.bootstrap', 'editArticleModule', 'startBlogModule', 'tagModule', 'createArticleModule']).controller('AppCtrl', appController);
+	var _angular = __webpack_require__(13);
 
-	function appController(blogArticleService) {
-	    var vm = this;
+	var _angular2 = _interopRequireDefault(_angular);
 
-	    vm.articles = {
-	        list: function () {
-	            return blogArticleService.getArticles;
-	        }(),
-	        tags: function () {
-	            return blogArticleService.getTags.query();
-	        }()
-	    };
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/***/ },
-/* 21 */
-/***/ function(module, exports) {
+	_angular2.default.module('blogModule').factory('blogService', startBlog);
 
-	'use strict';
-
-	angular.module('racoonBlog').factory('blogArticleService', blogArticle);
-
-	function blogArticle($resource) {
+	function startBlog($resource) {
 
 	    var getArticles = function getArticles() {
-	        return $resource('/articles_data').query();
-	    };
-
-	    function getTags() {
-	        return $resource('tags');
-	    }
-
-	    var articlesData = function articlesData() {
-	        return $resource('/articles_data/:edited_data', { edited_data: '@edited_data' }, {
-	            update: {
-	                method: 'PUT'
-	            },
-	            create: {
-	                method: 'POST'
-	            },
-	            delete: {
-	                method: 'DELETE'
-	            },
-	            get: {
-	                method: 'GET'
-	            }
-	        });
+	        return $resource('/articles_data');
 	    };
 
 	    var tagsWithoutDuplicates = function tagsWithoutDuplicates(jsonData) {
@@ -41455,6 +41459,7 @@
 	        jsonData.forEach(function (item) {
 	            var tags = item.tags;
 	            tags.forEach(function (tag) {
+
 	                if (allTags.indexOf(tag.trim()) === -1) {
 	                    allTags.push(tag);
 	                }
@@ -41464,441 +41469,307 @@
 	        return allTags;
 	    };
 
-	    /*Copy-pasted, very useful function with date time*/
-	    var dateFormat = function () {
-	        var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
-	            timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
-	            timezoneClip = /[^-+\dA-Z]/g,
-	            pad = function pad(val, len) {
-	            val = String(val);
-	            len = len || 2;
-	            while (val.length < len) {
-	                val = "0" + val;
-	            }return val;
-	        };
-
-	        // Regexes and supporting functions are cached through closure
-	        return function (date, mask, utc) {
-	            var dF = dateFormat;
-
-	            // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
-	            if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
-	                mask = date;
-	                date = undefined;
-	            }
-
-	            // Passing date through Date applies Date.parse, if necessary
-	            date = date ? new Date(date) : new Date();
-	            if (isNaN(date)) throw SyntaxError("invalid date");
-
-	            mask = String(dF.masks[mask] || mask || dF.masks["default"]);
-
-	            // Allow setting the utc argument via the mask
-	            if (mask.slice(0, 4) == "UTC:") {
-	                mask = mask.slice(4);
-	                utc = true;
-	            }
-
-	            var _ = utc ? "getUTC" : "get",
-	                d = date[_ + "Date"](),
-	                D = date[_ + "Day"](),
-	                m = date[_ + "Month"](),
-	                y = date[_ + "FullYear"](),
-	                H = date[_ + "Hours"](),
-	                M = date[_ + "Minutes"](),
-	                s = date[_ + "Seconds"](),
-	                L = date[_ + "Milliseconds"](),
-	                o = utc ? 0 : date.getTimezoneOffset(),
-	                flags = {
-	                d: d,
-	                dd: pad(d),
-	                ddd: dF.i18n.dayNames[D],
-	                dddd: dF.i18n.dayNames[D + 7],
-	                m: m + 1,
-	                mm: pad(m + 1),
-	                mmm: dF.i18n.monthNames[m],
-	                mmmm: dF.i18n.monthNames[m + 12],
-	                yy: String(y).slice(2),
-	                yyyy: y,
-	                h: H % 12 || 12,
-	                hh: pad(H % 12 || 12),
-	                H: H,
-	                HH: pad(H),
-	                M: M,
-	                MM: pad(M),
-	                s: s,
-	                ss: pad(s),
-	                l: pad(L, 3),
-	                L: pad(L > 99 ? Math.round(L / 10) : L),
-	                t: H < 12 ? "a" : "p",
-	                tt: H < 12 ? "am" : "pm",
-	                T: H < 12 ? "A" : "P",
-	                TT: H < 12 ? "AM" : "PM",
-	                Z: utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-	                o: (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-	                S: ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
-	            };
-
-	            return mask.replace(token, function ($0) {
-	                return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
-	            });
-	        };
-	    }();
-
-	    // Some common format strings
-	    dateFormat.masks = {
-	        "default": "ddd mmm dd yyyy HH:MM:ss",
-	        shortDate: "m/d/yy",
-	        mediumDate: "mmm d, yyyy",
-	        longDate: "mmmm d, yyyy",
-	        fullDate: "dddd, mmmm d, yyyy",
-	        shortTime: "h:MM TT",
-	        mediumTime: "h:MM:ss TT",
-	        longTime: "h:MM:ss TT Z",
-	        isoDate: "yyyy-mm-dd",
-	        isoTime: "HH:MM:ss",
-	        isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
-	        isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
-	    };
-
-	    // Internationalization strings
-	    dateFormat.i18n = {
-	        dayNames: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-	        monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-	    };
-
-	    // For convenience...
-	    Date.prototype.format = function (mask, utc) {
-	        return dateFormat(this, mask, utc);
-	    };
-
 	    return {
 	        getArticles: getArticles(),
-	        getTags: getTags(),
-	        articlesData: articlesData(),
-	        dateFormat: dateFormat,
 	        tagsWithoutDuplicates: tagsWithoutDuplicates
 	    };
 	}
 
 /***/ },
-/* 22 */
-/***/ function(module, exports) {
-
-	
-	'use strict';
-
-	angular.module('racoonBlog').config(config);
-
-	function config($routeProvider, $locationProvider) {
-	    $routeProvider.when('/', {
-	        template: "<start-blog articles='ctrl.articles' class='start-blog'></start-blog>"
-	        /*controller: 'BlogController'*/
-	    }).when('/edit/:id', {
-	        template: "<edit-article class='create-article' ng-switch='$ctrl.switchTepmplate'></edit-article>"
-	        /*controller: 'EditArticleController as edit'*/
-	    }).when('/create', {
-	        template: "<create-article  class='create-article' ng-switch='$ctrl.switchTepmplate'></create-article>"
-	    });
-
-	    $locationProvider.html5Mode({
-	        enabled: false,
-	        requireBase: false
-	    });
-	}
-
-/***/ },
-/* 23 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	angular.module('startBlogModule', ['ngRoute']);
-
-/***/ },
 /* 24 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	angular.module('tagModule', ['ngRoute']);
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	__webpack_require__(15);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('tagModule', ['ngRoute']);
 
 /***/ },
 /* 25 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	angular.module('editArticleModule', ['ngRoute', 'ui.bootstrap']);
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	__webpack_require__(15);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('formsModule', ['ngRoute', 'ngResource']);
 
 /***/ },
 /* 26 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	angular.module('createArticleModule', ['ngRoute']);
+	var _angular = __webpack_require__(13);
 
-/***/ },
-/* 27 */
-/***/ function(module, exports) {
+	var _angular2 = _interopRequireDefault(_angular);
 
-	'use strict';
+	__webpack_require__(17);
 
-	angular.module('createArticleModule').service('FormService', remakeDataArticle);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function remakeDataArticle() {
-	    var article = void 0;
-	    var editedArticle = void 0;
-	    var delArticle = void 0;
+	_angular2.default.module('formsModule').factory('formsService', formService);
 
-	    var addArticle = function addArticle(objArt) {
-	        article = objArt;
+	function formService($resource) {
+
+	    var articlesData = function articlesData() {
+	        return $resource('/articles_data', { data: '@data' }, {
+	            update: {
+	                method: 'PUT'
+	            }
+	        });
 	    };
-	    var addEditedArticle = function addEditedArticle(objEdited) {
-	        editedArticle = objEdited;
+
+	    var createArticle = function createArticle() {
+	        return $resource('/articles_data');
 	    };
-	    var addDelArticle = function addDelArticle(objDel) {
-	        delArticle = objDel;
-	    };
-	    var getArticleList = function getArticleList() {
-	        return article;
-	    };
-	    var getEditedArticle = function getEditedArticle() {
-	        return editedArticle;
-	    };
-	    var getDelArticle = function getDelArticle() {
-	        return delArticle;
+
+	    var article = function article() {
+	        return $resource('/articles_data/:id');
 	    };
 
 	    return {
-	        addArticle: addArticle,
-	        getArticleList: getArticleList,
-	        addEditedArticle: addEditedArticle,
-	        getEditedArticle: getEditedArticle,
-	        addDelArticle: addDelArticle,
-	        getDelArticle: getDelArticle
+	        articlesData: articlesData(),
+	        createArticle: createArticle(),
+	        article: article()
+
 	    };
 	}
 
 /***/ },
-/* 28 */
-/***/ function(module, exports) {
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	angular.module('tagModule').component('tagComponent', {
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('tagModule').component('tagComponent', {
 	    templateUrl: 'templates/tags.template.html',
-	    controller: tagController,
+	    controller: TagController,
 	    bindings: {
 	        tag: '<'
 	    }
 	});
 
-	function tagController($scope) {
+	TagController.$inject = ['$scope'];
+
+	function TagController($scope) {
 
 	    this.changeInputWithTag = function (tag) {
 	        $scope.$emit('TagOnClick', tag);
+	        return tag;
 	    };
 	}
 
 /***/ },
-/* 29 */
-/***/ function(module, exports) {
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	angular.module('startBlogModule').component('startBlog', {
-	    templateUrl: 'templates/start_page.template.html',
-	    controller: blogController,
-	    bindings: {
-	        articles: '<'
-	    }
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('blogModule').component('blogComponent', {
+	    templateUrl: 'templates/blog.template.html',
+	    controller: BlogController
 	});
 
-	function blogController($scope, blogArticleService, FormService, $location, $route) {
+	BlogController.$inject = ['$scope', 'blogService'];
+
+	function BlogController($scope, blogService) {
+	    var _this = this;
+
 	    var that = this;
 
-	    var createdArticle = FormService.getArticleList();
-	    var editedArticle = FormService.getEditedArticle();
-	    var deletedArticle = FormService.getDelArticle();
-
-	    if (deletedArticle != null) {
-	        // window.location.reload();
-	        this.articles.list.forEach(function (item, i, array) {
-	            if (array[i].id === deletedArticle.id) {
-	                var index = array.indexOf(array[i]);
-	                array.splice(index, 1);
-	            }
-	        });
-	        // $state.reload();
-	    }
-
-	    if (editedArticle != null) {
-	        console.log(editedArticle);
-	        this.articles.list.forEach(function (item) {
-	            if (item.id === editedArticle.id) {
-	                item.author = editedArticle.author;
-	                item.header = editedArticle.header;
-	                item.text = editedArticle.text;
-	                item.tags = editedArticle.tags;
-	                item.image = editedArticle.image;
-	                item.time = editedArticle.time;
-	            }
-	        });
-	    }
-
-	    if (createdArticle != null) {
-	        console.log(createdArticle);
-	        this.articles.list.push(createdArticle);
-	    }
+	    blogService.getArticles.query(function (response) {
+	        that.blog = response;
+	        _this.tags = blogService.tagsWithoutDuplicates(response);
+	    });
 
 	    $scope.$on('TagOnClick', function (event, tagName) {
 	        that.search = tagName;
 	    });
+	}
 
-	    this.blog = this.articles.list;
-	    this.tags = blogArticleService.tagsWithoutDuplicates(this.articles.list);
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+	var _angular = __webpack_require__(13);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	__webpack_require__(19);
+
+	__webpack_require__(15);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_angular2.default.module('formsModule').component('formComponent', {
+	    templateUrl: 'templates/forms.template.html',
+	    controller: FormsController
+	});
+
+	FormsController.$inject = ['$scope', '$routeParams', 'formsService', '$uibModal', '$location'];
+
+	function FormsController($scope, $routeParams, formsService, $uibModal, $location) {
+	    var _this = this;
+
+	    var that = this;
+
+	    this.show = false;
+	    console.log($routeParams.id);
+
+	    (function () {
+	        switch (_typeof($routeParams.id)) {
+
+	            case 'undefined':
+
+	                _this.switchTepmplate = 'create';
+
+	                _this.createArticleBtn = function () {
+	                    _this.show = !_this.show;
+
+	                    var dateOfCreatedArticle = new Date().toLocaleString("en-US", { minute: 'numeric', hour: 'numeric', hour12: false }) + ' ' + new Date().toLocaleString("en-US", { year: 'numeric', month: 'short', day: 'numeric' });
+	                    var formData = void 0,
+	                        stringTagsBuffer = void 0;
+
+	                    stringTagsBuffer = _this.createData.tags;
+	                    _this.createData.tags = stringTagsBuffer.trim().split(",");
+	                    _this.createData.time = dateOfCreatedArticle;
+	                    formData = _this.createData;
+
+	                    formsService.createArticle.save({ data: formData }, function () {
+	                        that.alert = 'Article created.';
+	                        that.alertClass = '';
+	                        that.alertClass = 'edit-article__alert-window';
+	                    }, function () {
+	                        that.alert = 'Error in creating!';
+	                        that.alertClass = '';
+	                        that.alertClass = 'edit-article__alert-window--error';
+	                        console.error('Error in saving');
+	                    });
+	                };
+
+	                break;
+
+	            case 'string':
+	                _this.switchTepmplate = 'edit';
+
+	                var ID = $routeParams.id;
+	                formsService.article.get({ id: ID }, function (response) {
+	                    console.log(response.header);
+	                    that.article = response;
+	                });
+
+	                _this.submit = function () {
+
+	                    _this.show = !_this.show;
+	                    var data = void 0,
+	                        dateOfEditedArticle = void 0,
+	                        stringTagBuffer = void 0;
+
+	                    dateOfEditedArticle = new Date().toLocaleString("en-US", { minute: 'numeric', hour: 'numeric', hour12: false }) + ' ' + new Date().toLocaleString("en-US", { year: 'numeric', month: 'short', day: 'numeric' });
+	                    stringTagBuffer = _this.editData.tags;
+	                    _this.editData.id = ID;
+	                    _this.editData.time = dateOfEditedArticle;
+	                    _this.editData.tags = stringTagBuffer.trim().split(",");
+
+	                    data = _this.editData;
+
+	                    formsService.articlesData.update({ data: data }, function (response) {
+
+	                        that.alert = 'Article has been changed.';
+	                        that.alertClass = '';
+	                        that.alertClass = 'edit-article__alert-window';
+
+	                        that.article = response.editedArticle;
+
+	                        console.log('Article edited');
+	                    }, function () {
+	                        that.alert = 'Error in posting!';
+	                        that.alertClass = '';
+	                        that.alertClass = 'edit-article__alert-window--error';
+	                        console.error('error in posting');
+	                    });
+	                };
+
+	                _this.delete = function (size) {
+
+	                    var modalInstance = $uibModal.open({
+	                        templateUrl: 'templates/modal_delete.template.html',
+	                        controller: 'ModalController as ctrl',
+	                        scope: $scope,
+	                        size: size,
+	                        backdrop: 'static',
+	                        resolve: {
+	                            id: function id() {
+	                                return ID;
+	                            },
+	                            article: _this.article
+	                        }
+	                    });
+
+	                    modalInstance.result.then(function (id) {
+
+	                        formsService.article.delete({ id: id }, function () {
+
+	                            $location.path('/');
+	                        }, function () {
+	                            return console.log('Error!');
+	                        });
+	                    });
+	                };
+
+	                break;
+
+	        }
+	    })();
 	}
 
 /***/ },
 /* 30 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	angular.module('editArticleModule').component('editArticle', {
-	    templateUrl: 'templates/forms.template.html',
-	    controller: EditController
-	});
+	var _angular = __webpack_require__(13);
 
-	function EditController($scope, $routeParams, blogArticleService, $uibModal, FormService, $location) {
-	    var _this = this;
+	var _angular2 = _interopRequireDefault(_angular);
 
-	    var ID = $routeParams.id;
-	    var that = this;
+	__webpack_require__(19);
 
-	    this.switchTepmplate = 'edit';
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	    blogArticleService.articlesData.get({ edited_data: JSON.stringify(ID) }, function (response) {
-	        console.log(response.header);
-	        that.article = response;
-	    });
+	_angular2.default.module('formsModule').controller('ModalController', ModalController);
 
-	    this.submit = function () {
-
-	        _this.show = !_this.show;
-	        var data = void 0,
-	            dateOfEditedArticle = void 0,
-	            stringTagBuffer = void 0;
-
-	        dateOfEditedArticle = new Date();
-	        stringTagBuffer = _this.editData.tags;
-	        _this.editData.id = ID;
-	        _this.editData.time = blogArticleService.dateFormat(dateOfEditedArticle.format(), "HH:MM mmm dd, yyyy");
-	        _this.editData.tags = stringTagBuffer.trim().split(",");
-
-	        data = _this.editData;
-
-	        blogArticleService.articlesData.update({ edited_data: JSON.stringify(data) }, function (response) {
-
-	            that.alert = 'Article has been changed.';
-	            that.alertClass = '';
-	            that.alertClass = 'edit-article__alert-window';
-
-	            that.article = response.editedArticle;
-	            FormService.addEditedArticle(response.editedArticle);
-
-	            console.log('Article edited');
-	        }, function () {
-	            that.alert = 'Error in posting!';
-	            that.alertClass = '';
-	            that.alertClass = 'edit-article__alert-window--error';
-	            console.error('error in posting');
-	        });
-	    };
-
-	    this.delete = function (size) {
-
-	        var modalInstance = $uibModal.open({
-	            templateUrl: 'templates/modal_delete.template.html',
-	            controller: 'ModalController as ctrl',
-	            scope: $scope,
-	            size: size,
-	            backdrop: 'static',
-	            resolve: {
-	                id: function id() {
-	                    return ID;
-	                },
-	                article: _this.article
-	            }
-	        });
-
-	        modalInstance.result.then(function (id) {
-
-	            var dataToDelete = { id: id };
-	            blogArticleService.articlesData.delete({ edited_data: JSON.stringify(dataToDelete) }, function (response) {
-	                FormService.addDelArticle(dataToDelete);
-	                $location.path('/');
-	            }, function () {
-	                return console.log('Error!');
-	            });
-	        });
-	    };
-	}
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	angular.module('createArticleModule').component('createArticle', {
-	    templateUrl: 'templates/forms.template.html',
-	    controller: createArticleController
-	});
-
-	function createArticleController(blogArticleService, FormService) {
-	    var _this = this;
-
-	    var that = this;
-	    this.show = false;
-
-	    this.switchTepmplate = 'create';
-
-	    this.createArticleBtn = function () {
-	        _this.show = !_this.show;
-
-	        var dateOfCreatedArticle = new Date(),
-	            formData = void 0,
-	            stringTagsBuffer = void 0;
-
-	        stringTagsBuffer = _this.createData.tags;
-	        _this.createData.tags = stringTagsBuffer.trim().split(",");
-	        _this.createData.time = blogArticleService.dateFormat(dateOfCreatedArticle.format(), "HH:MM mmm dd, yyyy");
-	        formData = _this.createData;
-
-	        blogArticleService.articlesData.create({ edited_data: JSON.stringify(formData) }, function (response) {
-	            that.alert = 'Article created.';
-	            that.alertClass = '';
-	            that.alertClass = 'edit-article__alert-window';
-	            FormService.addArticle(response.respDataCreate);
-	        }, function () {
-	            that.alert = 'Error in creating!';
-	            that.alertClass = '';
-	            that.alertClass = 'edit-article__alert-window--error';
-	            console.error('Error in saving');
-	        });
-	    };
-	}
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	angular.module('editArticleModule').controller('ModalController', ModalController);
+	ModalController.$inject = ['$uibModalInstance', 'id', 'article'];
 
 	function ModalController($uibModalInstance, id, article) {
 	    var that = this;

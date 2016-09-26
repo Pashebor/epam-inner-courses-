@@ -35,18 +35,9 @@ module.exports = {
                 test: /\.less$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader!autoprefixer-loader?safe=true!less-loader")
             },
-
-            // {
-            //     test: /\.css$/,
-            //     loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
-            // },
             {
-                test: /\.(svg)$/,
+                test: /\.(svg)|(png)$/,
                 loader: 'file?name=images/[name].[ext]'
-            },
-            {
-              test: /\.png?$/,
-              loader: "file?name=images/[name].[ext]"
             }
         ]
     },
@@ -57,8 +48,8 @@ module.exports = {
             template: path.resolve(root, './index.html')
         }),
         new HtmlWebpackPlugin({
-            filename: 'templates/start_page.template.html',
-            template: path.resolve(root, './start-page/start_page.template.html')
+            filename: 'templates/blog.template.html',
+            template: path.resolve(root, './blog-page/blog.template.html')
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/forms.template.html',
@@ -66,7 +57,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/modal_delete.template.html',
-            template: path.resolve(root, './blog-forms/form-edit/modal_delete.template.html')
+            template: path.resolve(root, './blog-forms/modal-delete/modal_delete.template.html')
         }),
         new HtmlWebpackPlugin({
             filename: 'templates/tags.template.html',

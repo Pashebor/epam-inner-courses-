@@ -9,6 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', express.static('./build'));
 app.use('/', express.static('articles.json'));
 app.use('/node_modules', express.static('./node_modules'));
+app.use('/create', express.static('./build'));
+app.use('/edit/:id', express.static('./build'));
 
 /*var articles = [
     {
@@ -32,9 +34,9 @@ app.use('/node_modules', express.static('./node_modules'));
 ];*/
 
 
-app.delete('/articles_data/:edited_data', function(req, res) {
+app.delete('/articles_data/:id', function(req, res) {
 
-    var datId = JSON.parse(req.params.edited_data);
+    var datId = req.params.id;
 
     function deleteArticle(deleteArt, callback) {
        console.log(deleteArt);
@@ -43,7 +45,7 @@ app.delete('/articles_data/:edited_data', function(req, res) {
        var objData = {};
 
         jsonToDeleteArticle.forEach(function(item, i) {
-               if (jsonToDeleteArticle[i].id === deleteArt.id) {
+               if (jsonToDeleteArticle[i].id === deleteArt) {
                    var index = jsonToDeleteArticle.indexOf(jsonToDeleteArticle[i]);
                    jsonToDeleteArticle.splice(index, 1);
                }
@@ -63,8 +65,8 @@ app.delete('/articles_data/:edited_data', function(req, res) {
 
 });
 
-app.get('/articles_data/:edited_data', function (req, res) {
-    var idToEdit = JSON.parse(req.params.edited_data);
+app.get('/articles_data/:id', function (req, res) {
+    var idToEdit = req.params.id;
 
     var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
 
@@ -75,9 +77,10 @@ app.get('/articles_data/:edited_data', function (req, res) {
        })
 });
 
-app.put('/articles_data/:edited_data', function (req, res) {
+app.put('/articles_data', function (req, res) {
 
-    var editedData = JSON.parse(req.params.edited_data);
+    var editedData = req.body.data;
+
 
     function saveEditedArticle(editedArt, callback) {
         var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
@@ -109,9 +112,9 @@ app.put('/articles_data/:edited_data', function (req, res) {
     });
 });
 
-app.post('/articles_data/:edited_data', function(req, res) {
+app.post('/articles_data', function(req, res) {
 
-    var createdData = JSON.parse(req.params.edited_data);
+    var createdData = req.body.data;
 
     function createArticle(data, callback) {
         var objData = {};

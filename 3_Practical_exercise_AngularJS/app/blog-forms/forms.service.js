@@ -1,36 +1,32 @@
-angular.module('createArticleModule').service('FormService', remakeDataArticle);
+'use strict';
 
+import angular from 'angular';
+import 'angular-resource';
 
-function remakeDataArticle() {
-    let article;
-    let editedArticle;
-    let delArticle;
+angular.module('formsModule').factory('formsService', formService);
 
-    const addArticle = objArt => {
-        article = objArt;
-    };
-    const addEditedArticle = objEdited => {
-        editedArticle = objEdited
-    };
-    const addDelArticle = objDel => {
-      delArticle = objDel;
-    };
-    const getArticleList = () => {
-        return article;
-    };
-    const getEditedArticle = () => {
-        return editedArticle;
-    };
-    const getDelArticle = () => {
-      return delArticle;
+function formService ($resource) {
+
+    let articlesData = () => {
+        return $resource('/articles_data', { data: '@data' }, {
+            update: {
+                method: 'PUT'
+            }
+        });
     };
 
-    return {
-        addArticle: addArticle,
-        getArticleList: getArticleList,
-        addEditedArticle: addEditedArticle,
-        getEditedArticle: getEditedArticle,
-        addDelArticle: addDelArticle,
-        getDelArticle: getDelArticle
+    let createArticle = () => $resource('/articles_data');
+
+    let article = () => $resource('/articles_data/:id');
+
+
+
+
+    return{
+        articlesData: articlesData(),
+        createArticle: createArticle(),
+        article: article()
+
     }
+
 }
