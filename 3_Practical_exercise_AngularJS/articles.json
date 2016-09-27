@@ -1,21 +1,26 @@
 [
     {
-        "id": "1",
-        "author": "E. Hyperraccoon",
-        "image": "images/flowers.png",
-        "header": "Blogotitle of blogopost about blogoflowers",
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "time": "22:58 Jan 01, 2014",
+        "author": "wefewf",
+        "image": "http://media.caranddriver.com/images/media/51/25-cars-worth-waiting-for-lp-mclaren-p14-photo-658259-s-original.jpg",
+        "header": "Scroll to change background-color (jquery)",
+        "text": "dffhdh",
         "tags": [
-            "Racoon",
-            "Racoon",
-            "Coon",
-            "Dog",
-            "Cat",
-            "Developer",
-            "Anna",
-            "Beer",
-            "Banana"
-        ]
+            "tag",
+            " another tag"
+        ],
+        "time": "23:41 Sep 27, 2016",
+        "id": "2"
+    },
+    {
+        "author": "P. Demyanov",
+        "image": "http://www.alternativenation.net/wp-content/uploads/2016/04/Black_Sabbath.jpg",
+        "header": "Black Sabath",
+        "text": "dfhdf",
+        "tags": [
+            "sludge",
+            " ozzy"
+        ],
+        "time": "23:41 Sep 27, 2016",
+        "id": "4"
     }
 ]

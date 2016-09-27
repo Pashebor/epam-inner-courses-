@@ -10,43 +10,45 @@ angular.module('formsModule').component('formComponent', {
     controller: FormsController
 });
 
-FormsController.$inject = ['$scope', '$routeParams', 'formsService', '$uibModal', '$location'];
+FormsController.$inject = ['$scope', '$routeParams', 'blogService', '$uibModal', '$location'];
 
-function FormsController($scope, $routeParams, formsService, $uibModal, $location) {
-    const that = this;
+function FormsController($scope, $routeParams, blogService, $uibModal, $location) {
+    const vm = this;
 
-    this.show = false;
+    vm.show = false;
+
     console.log($routeParams.id);
+
     switch (typeof $routeParams.id) {
 
         case 'undefined':
 
-            this.switchTepmplate = 'create';
+            vm.switchTepmplate = 'create';
 
-            this.createArticleBtn =  () => {
-                this.show = !this.show;
+            vm.createArticleBtn =  () => {
+                vm.show = !vm.show;
 
                 let dateOfCreatedArticle = `${new Date().toLocaleString("en-US", {minute: 'numeric',hour: 'numeric',hour12: false})} ${new Date().toLocaleString("en-US", {year: 'numeric',month: 'short',day: 'numeric'})}`;
                 let formData, stringTagsBuffer;
 
-                stringTagsBuffer = this.createData.tags;
-                this.createData.tags = stringTagsBuffer.trim().split(",");
-                this.createData.time = dateOfCreatedArticle;
-                formData = this.createData;
+                stringTagsBuffer = vm.createData.tags;
+                vm.createData.tags = stringTagsBuffer.trim().split(",");
+                vm.createData.time = dateOfCreatedArticle;
+                formData = vm.createData;
 
 
-                formsService.createArticle.save({data: formData} ,
+                blogService.save({data: formData} ,
 
                     () => {
-                        that.alert = 'Article created.';
-                        that.alertClass = '';
-                        that.alertClass = 'edit-article__alert-window';
+                        vm.alert = 'Article created.';
+                        vm.alertClass = '';
+                        vm.alertClass = 'edit-article__alert-window';
 
                     },
                     () => {
-                        that.alert = 'Error in creating!';
-                        that.alertClass = '';
-                        that.alertClass = 'edit-article__alert-window--error';
+                        vm.alert = 'Error in creating!';
+                        vm.alertClass = '';
+                        vm.alertClass = 'edit-article__alert-window--error';
                         console.error('Error in saving');
                     });
             };
@@ -54,50 +56,50 @@ function FormsController($scope, $routeParams, formsService, $uibModal, $locatio
             break;
 
         case 'string':
-            this.switchTepmplate = 'edit';
+            vm.switchTepmplate = 'edit';
 
             const ID = $routeParams.id;
-            formsService.article.get({id: ID}, response => {
+            blogService.get({id: ID}, response => {
                 console.log(response.header);
-                that.article = response;
+                vm.article = response;
             });
 
-            this.submit = () => {
+            vm.submit = () => {
 
-                this.show = !this.show;
+                vm.show = !vm.show;
                 let data, dateOfEditedArticle, stringTagBuffer;
 
 
 
                 dateOfEditedArticle = `${new Date().toLocaleString("en-US", {minute: 'numeric',hour: 'numeric',hour12: false})} ${new Date().toLocaleString("en-US", {year: 'numeric',month: 'short',day: 'numeric'})}`;
-                 stringTagBuffer = this.editData.tags;
-                this.editData.id = ID;
-                this.editData.time = dateOfEditedArticle;
-                this.editData.tags = stringTagBuffer.trim().split(",");
+                 stringTagBuffer = vm.editData.tags;
+                vm.editData.id = ID;
+                vm.editData.time = dateOfEditedArticle;
+                vm.editData.tags = stringTagBuffer.trim().split(",");
 
 
-                data = this.editData;
+                data = vm.editData;
 
-                formsService.articlesData.update({data: data}, response => {
+                blogService.update({data: data}, response => {
 
-                    that.alert = 'Article has been changed.';
-                    that.alertClass = '';
-                    that.alertClass = 'edit-article__alert-window';
+                    vm.alert = 'Article has been changed.';
+                    vm.alertClass = '';
+                    vm.alertClass = 'edit-article__alert-window';
 
-                    that.article = response.editedArticle;
+                    vm.article = response.editedArticle;
 
                     console.log('Article edited');
                 }, () => {
-                    that.alert = 'Error in posting!';
-                    that.alertClass = '';
-                    that.alertClass = 'edit-article__alert-window--error';
+                    vm.alert = 'Error in posting!';
+                    vm.alertClass = '';
+                    vm.alertClass = 'edit-article__alert-window--error';
                     console.error('error in posting');
                 });
 
 
             };
 
-            this.delete = size => {
+            vm.delete = size => {
 
 
                 let modalInstance = $uibModal.open({
@@ -108,13 +110,13 @@ function FormsController($scope, $routeParams, formsService, $uibModal, $locatio
                     backdrop: 'static',
                     resolve:{
                         id: () => {return ID;},
-                        article: this.article
+                        article: vm.article
                     }
                 });
 
                 modalInstance.result.then(id => {
 
-                    formsService.article.delete({id: id}, () => {
+                    blogService.delete({id: id}, () => {
 
                             $location.path('/');
                         },

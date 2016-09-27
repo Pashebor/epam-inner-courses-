@@ -8,7 +8,7 @@ function config($routeProvider, $locationProvider){
         .when('/',  {
             template: "<blog-component class='start-blog'></blog-component>"
         })
-        .when('/create', {
+        .when('/create/', {
             template: "<form-component  class='create-article' ng-switch='$ctrl.switchTepmplate'></form-component>"
         });
 

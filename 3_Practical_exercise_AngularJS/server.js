@@ -65,17 +65,17 @@ app.delete('/articles_data/:id', function(req, res) {
 
 });
 
-app.get('/articles_data/:id', function (req, res) {
-    var idToEdit = req.params.id;
-
-    var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-
-       jsonToUptade.forEach( function (item) {
-           if (item.id === idToEdit) {
-               res.send(item);
-           }
-       })
-});
+// app.get('/articles_data/:id', function (req, res) {
+    // var idToEdit = req.params.id;
+    //
+    // var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
+    //
+    //    jsonToUptade.forEach( function (item) {
+    //        if (item.id === idToEdit) {
+    //            res.send(item);
+    //        }
+    //    })
+// });
 
 app.put('/articles_data', function (req, res) {
 
@@ -143,15 +143,27 @@ app.post('/articles_data', function(req, res) {
 
 });
 
-app.get('/articles_data', function(req, res) {
-    var json = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
+app.get('/articles_data/:id', function(req, res) {
+    console.log(req.params.id);
+    var objData = {};
+    if (req.params.id == 0) {
 
-    var arr = Object.keys(json).map(
-        function(key) {
-            return json[key]
-        });
+      var json = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
+      objData.articles = json;
 
-    res.send(JSON.stringify(arr));
+      res.send(objData);
+    } else {
+      var idToEdit = req.params.id;
+
+      var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
+
+         jsonToUptade.forEach( function (item) {
+             if (item.id === idToEdit) {
+                 res.send(item);
+             }
+         })
+
+    }
 });
 
 

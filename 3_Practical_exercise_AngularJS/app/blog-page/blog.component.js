@@ -10,18 +10,33 @@ angular.module('blogModule').component('blogComponent', {
 BlogController.$inject = ['$scope','blogService'];
 
 function BlogController($scope ,blogService){
-    let that = this;
+    let vm = this;
 
+    let tagsWithoutDuplicates = articles => {
+        let allTags = [];
 
-    blogService.getArticles.query(response => {
-        that.blog = response;
-        this.tags = blogService.tagsWithoutDuplicates(response);
+        articles.forEach(function (item) {
+            let tags = item.tags;
+            tags.forEach(function (tag){
+
+                if (allTags.indexOf(tag.trim()) === -1) {
+                    allTags.push(tag);
+                }
+            });
+        });
+
+        return allTags;
+    };
+
+    blogService.get({id: 0}, response => {
+        vm.blog = response.articles;
+        vm.tags = tagsWithoutDuplicates(response.articles);
     });
 
 
 
     $scope.$on('TagOnClick',  (event, tagName) =>{
-        that.search = tagName;
+        vm.search = tagName;
     });
 
 
