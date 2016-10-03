@@ -1,32 +1,24 @@
 'use strict';
 
 import angular from 'angular';
-import 'angular-resource';
 
-angular.module('formsModule').factory('formsService', formService);
+angular.module('formsModule').factory('FormService', () => {
 
-function formService ($resource) {
+  let addTagAndTime = (id, formData) => {
 
-    let articlesData = () => {
-        return $resource('/articles_data', { data: '@data' }, {
-            update: {
-                method: 'PUT'
-            }
-        });
-    };
+    let dateOfArticle = `${new Date().toLocaleString("en-US", {minute: 'numeric',hour: 'numeric',hour12: false})} ${new Date().toLocaleString("en-US", {year: 'numeric',month: 'short',day: 'numeric'})}`;
+    let stringTagsBuffer;
 
-    let createArticle = () => $resource('/articles_data');
-
-    let article = () => $resource('/articles_data/:id');
-
-
-
-
-    return{
-        articlesData: articlesData(),
-        createArticle: createArticle(),
-        article: article()
-
+    if (id) {
+      formData.id = id;
     }
+    stringTagsBuffer = formData.tags;
+    formData.tags = stringTagsBuffer.trim().split(",");
+    formData.time = dateOfArticle;
+  };
 
-}
+  return {
+    addTagAndTime: addTagAndTime
+  }
+
+});

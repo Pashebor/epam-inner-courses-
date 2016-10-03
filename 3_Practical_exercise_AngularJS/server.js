@@ -10,7 +10,6 @@ app.use('/', express.static('./build'));
 app.use('/', express.static('articles.json'));
 app.use('/node_modules', express.static('./node_modules'));
 app.use('/create', express.static('./build'));
-app.use('/edit/:id', express.static('./build'));
 
 /*var articles = [
     {
@@ -65,21 +64,11 @@ app.delete('/articles_data/:id', function(req, res) {
 
 });
 
-// app.get('/articles_data/:id', function (req, res) {
-    // var idToEdit = req.params.id;
-    //
-    // var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-    //
-    //    jsonToUptade.forEach( function (item) {
-    //        if (item.id === idToEdit) {
-    //            res.send(item);
-    //        }
-    //    })
-// });
+
 
 app.put('/articles_data', function (req, res) {
 
-    var editedData = req.body.data;
+    var article = req.body;
 
 
     function saveEditedArticle(editedArt, callback) {
@@ -98,13 +87,12 @@ app.put('/articles_data', function (req, res) {
             }
         });
 
-        objData.respData = jsonToUptade;
-        objData.editedArticle = editedData;
+        objData.editedArticle = article.updated;
         res.send(objData);
         fs.writeFile('./articles.json', JSON.stringify(jsonToUptade, null, 4), callback);
     }
 
-    saveEditedArticle(editedData, function(err) {
+    saveEditedArticle(article.updated, function(err) {
         if (err) {
             res.status(404).send('Data not saved');
             return;
@@ -114,7 +102,7 @@ app.put('/articles_data', function (req, res) {
 
 app.post('/articles_data', function(req, res) {
 
-    var createdData = req.body.data;
+    var article = req.body;
 
     function createArticle(data, callback) {
         var objData = {};
@@ -122,19 +110,24 @@ app.post('/articles_data', function(req, res) {
 
         var jsonToCreateArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
 
-        jsonToCreateArticle.forEach(function(item) {ids.push(item.id)});
-        largestDigitID = Math.max.apply(Math, ids);
-        data.id = "" + (largestDigitID + 1);
-        jsonToCreateArticle.push(data);
+        jsonToCreateArticle.forEach(function(item) {
+          ids.push(item.id)});
 
-        objData.respDataCreate = data;
-        res.send(objData);
+          if (ids.length === 0) {
+            ids[0] = 0;
+          }
 
-        fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
+          largestDigitID = Math.max.apply(Math, ids);
+
+          data.id = "" + (largestDigitID + 1);
+          jsonToCreateArticle.push(data);
+          objData.respDataCreate = data;
+          res.send(objData);
+          fs.writeFile('./articles.json', JSON.stringify(jsonToCreateArticle, null, 4), callback);
 
     }
 
-    createArticle(createdData, function (error) {
+    createArticle(article.created, function (error) {
         if (error) {
             res.status(404).send('Data not created');
             return;
@@ -143,16 +136,9 @@ app.post('/articles_data', function(req, res) {
 
 });
 
+
+
 app.get('/articles_data/:id', function(req, res) {
-    console.log(req.params.id);
-    var objData = {};
-    if (req.params.id == 0) {
-
-      var json = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
-      objData.articles = json;
-
-      res.send(objData);
-    } else {
       var idToEdit = req.params.id;
 
       var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
@@ -161,27 +147,12 @@ app.get('/articles_data/:id', function(req, res) {
              if (item.id === idToEdit) {
                  res.send(item);
              }
-         })
-
-    }
+         });
 });
 
-
-app.get('/tags', function(req, res) {
-    var jsonData = JSON.parse(fs.readFileSync('articles.json', 'utf8'));
-
-    var allTags = [];
-
-    jsonData.forEach(function (item) {
-        var tags = item.tags;
-        tags.forEach(function (tag){
-            if (allTags.indexOf(tag.trim()) === -1) {
-                allTags.push(tag);
-            }
-        });
-    });
-
-    res.send(allTags);
+app.get('/articles', function(req, res) {
+  articles = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
+    res.send(articles);
 });
 
 app.listen(3000, function () {

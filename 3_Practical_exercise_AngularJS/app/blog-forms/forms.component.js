@@ -3,6 +3,7 @@
 import angular from 'angular';
 import 'angular-ui-bootstrap';
 import 'angular-route';
+import 'angular-resource';
 
 
 angular.module('formsModule').component('formComponent', {
@@ -10,123 +11,82 @@ angular.module('formsModule').component('formComponent', {
     controller: FormsController
 });
 
-FormsController.$inject = ['$scope', '$routeParams', 'blogService', '$uibModal', '$location'];
+FormsController.$inject = ['$scope', '$routeParams', '$uibModal', '$location', '$resource', 'FormService'];
 
-function FormsController($scope, $routeParams, blogService, $uibModal, $location) {
-    const vm = this;
+function FormsController($scope, $routeParams, $uibModal, $location, $resource, FormService) {
 
-    vm.show = false;
+  let Article = $resource('/articles_data/:id', null, {
+    'update': { method:'PUT' }
+  });
 
-    console.log($routeParams.id);
+  let articleInstance = new Article();
 
-    switch (typeof $routeParams.id) {
+  const vm = this;
+  const ID = $routeParams.id;
 
-        case 'undefined':
+  vm.showAlert = false;
+  vm.isNewPost = () => {if (ID) {return false} return true;};
 
-            vm.switchTepmplate = 'create';
+  if (ID != undefined) {
+    articleInstance.$get({id: ID}, data => {
+      vm.article =  data;
+    });
+  }
 
-            vm.createArticleBtn =  () => {
-                vm.show = !vm.show;
+  vm.createArticleBtn =  () => {
 
-                let dateOfCreatedArticle = `${new Date().toLocaleString("en-US", {minute: 'numeric',hour: 'numeric',hour12: false})} ${new Date().toLocaleString("en-US", {year: 'numeric',month: 'short',day: 'numeric'})}`;
-                let formData, stringTagsBuffer;
+    vm.showAlert = !vm.showAlert;
 
-                stringTagsBuffer = vm.createData.tags;
-                vm.createData.tags = stringTagsBuffer.trim().split(",");
-                vm.createData.time = dateOfCreatedArticle;
-                formData = vm.createData;
+    FormService.addTagAndTime(ID, vm.formData);
 
+    articleInstance.created = vm.formData;
 
-                blogService.save({data: formData} ,
+    articleInstance.$save(() => {
+          vm.alert = 'Article created.';
+          vm.isError = true;
+        },() => {
+          vm.alert = 'Error in creating!';
+          vm.isError = false;
+        });
+      };
 
-                    () => {
-                        vm.alert = 'Article created.';
-                        vm.alertClass = '';
-                        vm.alertClass = 'edit-article__alert-window';
+    vm.submit = () => {
 
-                    },
-                    () => {
-                        vm.alert = 'Error in creating!';
-                        vm.alertClass = '';
-                        vm.alertClass = 'edit-article__alert-window--error';
-                        console.error('Error in saving');
-                    });
-            };
+      vm.showAlert = !vm.showAlert;
 
-            break;
+      FormService.addTagAndTime(ID, vm.formData);
 
-        case 'string':
-            vm.switchTepmplate = 'edit';
+      articleInstance.updated = vm.formData;
 
-            const ID = $routeParams.id;
-            blogService.get({id: ID}, response => {
-                console.log(response.header);
-                vm.article = response;
-            });
+      articleInstance.$update( response => {
+        vm.alert = 'Article has been changed.';
+        vm.isError = true;
+        vm.article = response.editedArticle;
+      },() => {
+        vm.alert = 'Error in posting!';
+        vm.isError = false;
+      });
+    };
 
-            vm.submit = () => {
+    vm.delete = size => {
 
-                vm.show = !vm.show;
-                let data, dateOfEditedArticle, stringTagBuffer;
+      let modalInstance = $uibModal.open({
+        templateUrl: 'templates/modal_delete.template.html',
+        controller: 'ModalController as ctrl',
+        scope: $scope,
+        size: size,
+        backdrop: 'static',
+        resolve:{
+          id: () => {return ID;},
+          article: vm.article
+        }
+      });
 
-
-
-                dateOfEditedArticle = `${new Date().toLocaleString("en-US", {minute: 'numeric',hour: 'numeric',hour12: false})} ${new Date().toLocaleString("en-US", {year: 'numeric',month: 'short',day: 'numeric'})}`;
-                 stringTagBuffer = vm.editData.tags;
-                vm.editData.id = ID;
-                vm.editData.time = dateOfEditedArticle;
-                vm.editData.tags = stringTagBuffer.trim().split(",");
-
-
-                data = vm.editData;
-
-                blogService.update({data: data}, response => {
-
-                    vm.alert = 'Article has been changed.';
-                    vm.alertClass = '';
-                    vm.alertClass = 'edit-article__alert-window';
-
-                    vm.article = response.editedArticle;
-
-                    console.log('Article edited');
-                }, () => {
-                    vm.alert = 'Error in posting!';
-                    vm.alertClass = '';
-                    vm.alertClass = 'edit-article__alert-window--error';
-                    console.error('error in posting');
-                });
-
-
-            };
-
-            vm.delete = size => {
-
-
-                let modalInstance = $uibModal.open({
-                    templateUrl: 'templates/modal_delete.template.html',
-                    controller: 'ModalController as ctrl',
-                    scope: $scope,
-                    size: size,
-                    backdrop: 'static',
-                    resolve:{
-                        id: () => {return ID;},
-                        article: vm.article
-                    }
-                });
-
-                modalInstance.result.then(id => {
-
-                    blogService.delete({id: id}, () => {
-
-                            $location.path('/');
-                        },
-                        () => console.log('Error!'));
-                })
-
-            };
-
-            break;
-
-    }
+      modalInstance.result.then(id => {
+        articleInstance.$delete({id: id}, () => {
+          $location.path('/');
+        },() => console.log('Error!'));
+      });
+    };
 
 }

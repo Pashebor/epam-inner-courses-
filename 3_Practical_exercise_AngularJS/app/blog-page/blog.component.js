@@ -7,10 +7,12 @@ angular.module('blogModule').component('blogComponent', {
     controller: BlogController
 });
 
-BlogController.$inject = ['$scope','blogService'];
+BlogController.$inject = ['$scope','BlogService'];
 
-function BlogController($scope ,blogService){
+function BlogController($scope , BlogService){
+
     let vm = this;
+    let articles = BlogService;
 
     let tagsWithoutDuplicates = articles => {
         let allTags = [];
@@ -28,12 +30,10 @@ function BlogController($scope ,blogService){
         return allTags;
     };
 
-    blogService.get({id: 0}, response => {
-        vm.blog = response.articles;
-        vm.tags = tagsWithoutDuplicates(response.articles);
+    articles.query(resp => {
+      vm.blog = resp;
+      //vm.tags = tagsWithoutDuplicates(resp);
     });
-
-
 
     $scope.$on('TagOnClick',  (event, tagName) =>{
         vm.search = tagName;

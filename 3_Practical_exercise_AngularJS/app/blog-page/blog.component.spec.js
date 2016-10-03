@@ -10,7 +10,7 @@ describe('component: blog.component.js', function() {
         describe('Blog Controller', function () {
 
             var $componentController;
-            var blogService;
+            var BlogService, httpBackend;
             var $scope, $rootScope;
 
             var data = {
@@ -36,25 +36,32 @@ describe('component: blog.component.js', function() {
             };
 
 
-            beforeEach(inject(function(_$componentController_, _blogService_, _$rootScope_) {
+            beforeEach(inject(function(_$componentController_, _BlogService_, _$rootScope_, $httpBackend) {
+              httpBackend = $httpBackend;
               $rootScope = _$rootScope_;
               $scope = $rootScope.$new();
-              blogService = _blogService_;
-              $componentController = _$componentController_('blogComponent', {$scope: $scope}, blogService, null);
+              BlogService = _BlogService_;
+              $componentController = _$componentController_('blogComponent', {$scope: $scope}, BlogService, null);
             }));
 
-
-
-
-            it('should get articles from server with a service', function () {
-              expect($componentController.getArticles).toBeDefined();
+            afterEach(function() {
+                httpBackend.verifyNoOutstandingExpectation();
+                httpBackend.verifyNoOutstandingRequest();
             });
 
-            it('should accept an event click from Tag component', function () {
-                $scope.$broadcast('TagOnClick', 'Tag name');
-                expect($componentController.search).toEqual('Tag name');
-                dump($componentController.search);
+            it('should get articles for blog template', function () {
+              httpBackend.expectGET('/articles').respond(data);
+              var response = BlogService.get();
+              httpBackend.flush();
+              dump(response);
+              expect(response).toEqual(data.articles);
             });
+
+            // it('should accept an event click from Tag component', function () {
+            //     $scope.$emit('TagOnClick', 'Tag name');
+            //     expect($componentController.search).toEqual('Tag name');
+            //     dump($componentController.search);
+            // });
 
 
         });

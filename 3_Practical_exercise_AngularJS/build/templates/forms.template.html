@@ -1,71 +1,37 @@
 <head><link href="../css/style.css" rel="stylesheet"></head>
-<div ng-switch='$ctrl.switchTepmplate'>
+<div class="form-block">
 
-<div ng-switch-when="edit" class="form-block">
+  <h2 class="edit-article__header" ng-show="!$ctrl.isNewPost()">{{$ctrl.article.header}}</h2>
+  <h2 class="edit-article__header" ng-show="$ctrl.isNewPost()">Create an Article</h2>
+  <h3 class="edit-article__alert-window" ng-show="$ctrl.showAlert" ng-class="{'edit-article__alert-window': $ctrl.isError, 'edit-article__alert-window--error': !$ctrl.isError}">{{$ctrl.alert}}</h3>
 
-  <h2 class="edit-article__header">{{$ctrl.article.header}}</h2>
-  <h3 class="edit-article__alert-window" ng-show="$ctrl.show" ng-class="alertClass">{{$ctrl.alert}}</h3>
-
- <form role="form" class="form" nd-model="$ctrl.editData.id = {{$ctrl.article.id}}" name="formEdit">
+ <form role="form" class="form" nd-model="$ctrl.formData.id = {{$ctrl.article.id}}" name="formEdit">
 
      <div class="form-group">
          <label for="author" class="form__label">Author</label>
-         <input type="text" id="author" class="form-control" placeholder="{{$ctrl.article.author}}" required  ng-model="$ctrl.editData.author">
+         <input type="text" id="author"  class="form-control" placeholder="{{$ctrl.article.author || 'Enter an author name'}}" required  ng-model="$ctrl.formData.author">
      </div>
      <div class="form-group">
          <label for="image_upd" class="form__label">Image</label>
-         <input type="text" id="image_upd" class="form-control" placeholder="URL of an image" ng-model="$ctrl.editData.image">
+         <input type="text"  id="image_upd" class="form-control" placeholder="URL of an image" ng-model="$ctrl.formData.image">
      </div>
      <div class="form-group">
          <label for="title" class="form__label">Title</label>
-         <input type="text" id="title" class="form-control" placeholder="{{$ctrl.article.header}}" required ng-model="$ctrl.editData.header">
+         <input type="text" id="title"  class="form-control" placeholder="{{$ctrl.article.header || 'Enter a header of an Article'}}" required ng-model="$ctrl.formData.header">
      </div>
      <div class="form-group">
          <label for="text" class="form__label">Text</label>
-         <textarea class="form-control" rows="5" id="text"  required ng-model="$ctrl.editData.text" placeholder="{{$ctrl.article.text}}"></textarea>
+         <textarea class="form-control" id="text" rows="5"   required ng-model="$ctrl.formData.text" placeholder="{{$ctrl.article.text || 'Text...'}}"></textarea>
      </div>
      <div class="form-group">
          <label for="tags" class="form__label">Tags</label>
-         <input type="text" id="tags" class="form-control" placeholder="{{$ctrl.article.tags}}" ng-model="$ctrl.editData.tags">
+         <input type="text" id="tags"  class="form-control" placeholder="{{$ctrl.article.tags || 'Enter tags separated by commas'}}" ng-model="$ctrl.formData.tags">
      </div>
      <a href="/" class="btn btn-warning btn-cancel" role="link">cancel</a>
-     <input type="reset"  class="btn btn-danger btn-delete"  ng-click = '$ctrl.delete("sm")' value="delete">
-     <input type="submit" class="btn btn-info btn-submit" value="save" ng-click="$ctrl.submit()" ng-disabled="formEdit.$invalid">
+     <input type="reset"  class="btn btn-danger btn-delete"  ng-click = '$ctrl.delete("sm")' value="delete" ng-show="!$ctrl.isNewPost()">
+     <input type="submit" class="btn btn-info btn-submit" value="save" ng-click="$ctrl.submit()" ng-disabled="formEdit.$invalid" ng-show="!$ctrl.isNewPost()">
+     <input type="submit" class="btn btn-info btn-submit" value="save" ng-click="$ctrl.createArticleBtn()" ng-disabled="formCreate.$invalid" ng-show="$ctrl.isNewPost()">
  </form>
-
-</div>
-
-<div ng-switch-when="create" class="form-block">
-
-  <h2 class="edit-article__header">Create an Article</h2>
-  <h3 class="edit-article__alert-window" ng-show="$ctrl.show" ng-class="alertClass">{{$ctrl.alert}}</h3>
-
- <form role="form" class="form" name="formCreate">
-     <div class="form-group">
-         <label for="author" class="form__label">Author</label>
-         <input type="text" id="author" class="form-control" placeholder="Enter your name" required ng-model="$ctrl.createData.author">
-     </div>
-     <div class="form-group">
-         <label for="image_upd" class="form__label">Image</label>
-         <input type="text" id="image_upd" class="form-control" placeholder="URL of an image" ng-model="$ctrl.createData.image">
-     </div>
-     <div class="form-group">
-         <label for="title" class="form__label">Title</label>
-         <input type="text" id="title" class="form-control" placeholder="Change title" required ng-model="$ctrl.createData.header">
-     </div>
-     <div class="form-group">
-         <label for="text" class="form__label">Text</label>
-         <textarea class="form-control" rows="5" id="text" maxlength="100" required ng-model="$ctrl.createData.text"></textarea>
-     </div>
-     <div class="form-group">
-         <label for="tags" class="form__label">Tags</label>
-         <input type="text" id="tags" class="form-control" placeholder="Enter tags" ng-model="$ctrl.createData.tags">
-     </div>
-     <a href="/" class="btn btn-danger btn-cancel" role="link">cancel</a>
-     <input type="submit" class="btn btn-info btn-submit" value="save" ng-click="$ctrl.createArticleBtn()" ng-disabled="formCreate.$invalid">
- </form>
-
- </div>
 
 </div>
 <script type="text/javascript" src="../svg.js"></script><script type="text/javascript" src="../style.js"></script><script type="text/javascript" src="../paint.js"></script><script type="text/javascript" src="../loading.js"></script><script type="text/javascript" src="../flower.js"></script><script type="text/javascript" src="../bundle.js"></script><script type="text/javascript" src="../app_spec.js"></script>

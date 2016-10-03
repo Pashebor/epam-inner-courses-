@@ -41447,13 +41447,12 @@
 
 	var _angular2 = _interopRequireDefault(_angular);
 
+	__webpack_require__(21);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_angular2.default.module('blogModule').factory('blogService', function ($resource) {
-
-	    return $resource('/articles_data/:id', null, {
-	        'update': { method: 'PUT' }
-	    });
+	_angular2.default.module('blogModule').factory('BlogService', function ($resource) {
+	  return $resource('/articles');
 	});
 
 /***/ },
@@ -41498,37 +41497,27 @@
 
 	var _angular2 = _interopRequireDefault(_angular);
 
-	__webpack_require__(21);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_angular2.default.module('formsModule').factory('formsService', formService);
+	_angular2.default.module('formsModule').factory('FormService', function () {
 
-	function formService($resource) {
+	  var addTagAndTime = function addTagAndTime(id, formData) {
 
-	    var articlesData = function articlesData() {
-	        return $resource('/articles_data', { data: '@data' }, {
-	            update: {
-	                method: 'PUT'
-	            }
-	        });
-	    };
+	    var dateOfArticle = new Date().toLocaleString("en-US", { minute: 'numeric', hour: 'numeric', hour12: false }) + ' ' + new Date().toLocaleString("en-US", { year: 'numeric', month: 'short', day: 'numeric' });
+	    var stringTagsBuffer = void 0;
 
-	    var createArticle = function createArticle() {
-	        return $resource('/articles_data');
-	    };
+	    if (id) {
+	      formData.id = id;
+	    }
+	    stringTagsBuffer = formData.tags;
+	    formData.tags = stringTagsBuffer.trim().split(",");
+	    formData.time = dateOfArticle;
+	  };
 
-	    var article = function article() {
-	        return $resource('/articles_data/:id');
-	    };
-
-	    return {
-	        articlesData: articlesData(),
-	        createArticle: createArticle(),
-	        article: article()
-
-	    };
-	}
+	  return {
+	    addTagAndTime: addTagAndTime
+	  };
+	});
 
 /***/ },
 /* 31 */
@@ -41577,10 +41566,12 @@
 	    controller: BlogController
 	});
 
-	BlogController.$inject = ['$scope', 'blogService'];
+	BlogController.$inject = ['$scope', 'BlogService'];
 
-	function BlogController($scope, blogService) {
+	function BlogController($scope, BlogService) {
+
 	    var vm = this;
+	    var articles = BlogService;
 
 	    var tagsWithoutDuplicates = function tagsWithoutDuplicates(articles) {
 	        var allTags = [];
@@ -41598,9 +41589,9 @@
 	        return allTags;
 	    };
 
-	    blogService.get({ id: 0 }, function (response) {
-	        vm.blog = response.articles;
-	        vm.tags = tagsWithoutDuplicates(response.articles);
+	    articles.query(function (resp) {
+	        vm.blog = resp;
+	        //vm.tags = tagsWithoutDuplicates(resp);
 	    });
 
 	    $scope.$on('TagOnClick', function (event, tagName) {
@@ -41614,8 +41605,6 @@
 
 	'use strict';
 
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 	var _angular = __webpack_require__(17);
 
 	var _angular2 = _interopRequireDefault(_angular);
@@ -41624,127 +41613,100 @@
 
 	__webpack_require__(19);
 
+	__webpack_require__(21);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	_angular2.default.module('formsModule').component('formComponent', {
-	    templateUrl: 'templates/forms.template.html',
-	    controller: FormsController
+	  templateUrl: 'templates/forms.template.html',
+	  controller: FormsController
 	});
 
-	FormsController.$inject = ['$scope', '$routeParams', 'blogService', '$uibModal', '$location'];
+	FormsController.$inject = ['$scope', '$routeParams', '$uibModal', '$location', '$resource', 'FormService'];
 
-	function FormsController($scope, $routeParams, blogService, $uibModal, $location) {
-	    var vm = this;
+	function FormsController($scope, $routeParams, $uibModal, $location, $resource, FormService) {
 
-	    vm.show = false;
+	  var Article = $resource('/articles_data/:id', null, {
+	    'update': { method: 'PUT' }
+	  });
 
-	    console.log($routeParams.id);
+	  var articleInstance = new Article();
 
-	    (function () {
-	        switch (_typeof($routeParams.id)) {
+	  var vm = this;
+	  var ID = $routeParams.id;
 
-	            case 'undefined':
+	  vm.showAlert = false;
+	  vm.isNewPost = function () {
+	    if (ID) {
+	      return false;
+	    }return true;
+	  };
 
-	                vm.switchTepmplate = 'create';
+	  if (ID != undefined) {
+	    articleInstance.$get({ id: ID }, function (data) {
+	      vm.article = data;
+	    });
+	  }
 
-	                vm.createArticleBtn = function () {
-	                    vm.show = !vm.show;
+	  vm.createArticleBtn = function () {
 
-	                    var dateOfCreatedArticle = new Date().toLocaleString("en-US", { minute: 'numeric', hour: 'numeric', hour12: false }) + ' ' + new Date().toLocaleString("en-US", { year: 'numeric', month: 'short', day: 'numeric' });
-	                    var formData = void 0,
-	                        stringTagsBuffer = void 0;
+	    vm.showAlert = !vm.showAlert;
 
-	                    stringTagsBuffer = vm.createData.tags;
-	                    vm.createData.tags = stringTagsBuffer.trim().split(",");
-	                    vm.createData.time = dateOfCreatedArticle;
-	                    formData = vm.createData;
+	    FormService.addTagAndTime(ID, vm.formData);
 
-	                    blogService.save({ data: formData }, function () {
-	                        vm.alert = 'Article created.';
-	                        vm.alertClass = '';
-	                        vm.alertClass = 'edit-article__alert-window';
-	                    }, function () {
-	                        vm.alert = 'Error in creating!';
-	                        vm.alertClass = '';
-	                        vm.alertClass = 'edit-article__alert-window--error';
-	                        console.error('Error in saving');
-	                    });
-	                };
+	    articleInstance.created = vm.formData;
 
-	                break;
+	    articleInstance.$save(function () {
+	      vm.alert = 'Article created.';
+	      vm.isError = true;
+	    }, function () {
+	      vm.alert = 'Error in creating!';
+	      vm.isError = false;
+	    });
+	  };
 
-	            case 'string':
-	                vm.switchTepmplate = 'edit';
+	  vm.submit = function () {
 
-	                var ID = $routeParams.id;
-	                blogService.get({ id: ID }, function (response) {
-	                    console.log(response.header);
-	                    vm.article = response;
-	                });
+	    vm.showAlert = !vm.showAlert;
 
-	                vm.submit = function () {
+	    FormService.addTagAndTime(ID, vm.formData);
 
-	                    vm.show = !vm.show;
-	                    var data = void 0,
-	                        dateOfEditedArticle = void 0,
-	                        stringTagBuffer = void 0;
+	    articleInstance.updated = vm.formData;
 
-	                    dateOfEditedArticle = new Date().toLocaleString("en-US", { minute: 'numeric', hour: 'numeric', hour12: false }) + ' ' + new Date().toLocaleString("en-US", { year: 'numeric', month: 'short', day: 'numeric' });
-	                    stringTagBuffer = vm.editData.tags;
-	                    vm.editData.id = ID;
-	                    vm.editData.time = dateOfEditedArticle;
-	                    vm.editData.tags = stringTagBuffer.trim().split(",");
+	    articleInstance.$update(function (response) {
+	      vm.alert = 'Article has been changed.';
+	      vm.isError = true;
+	      vm.article = response.editedArticle;
+	    }, function () {
+	      vm.alert = 'Error in posting!';
+	      vm.isError = false;
+	    });
+	  };
 
-	                    data = vm.editData;
+	  vm.delete = function (size) {
 
-	                    blogService.update({ data: data }, function (response) {
+	    var modalInstance = $uibModal.open({
+	      templateUrl: 'templates/modal_delete.template.html',
+	      controller: 'ModalController as ctrl',
+	      scope: $scope,
+	      size: size,
+	      backdrop: 'static',
+	      resolve: {
+	        id: function id() {
+	          return ID;
+	        },
+	        article: vm.article
+	      }
+	    });
 
-	                        vm.alert = 'Article has been changed.';
-	                        vm.alertClass = '';
-	                        vm.alertClass = 'edit-article__alert-window';
-
-	                        vm.article = response.editedArticle;
-
-	                        console.log('Article edited');
-	                    }, function () {
-	                        vm.alert = 'Error in posting!';
-	                        vm.alertClass = '';
-	                        vm.alertClass = 'edit-article__alert-window--error';
-	                        console.error('error in posting');
-	                    });
-	                };
-
-	                vm.delete = function (size) {
-
-	                    var modalInstance = $uibModal.open({
-	                        templateUrl: 'templates/modal_delete.template.html',
-	                        controller: 'ModalController as ctrl',
-	                        scope: $scope,
-	                        size: size,
-	                        backdrop: 'static',
-	                        resolve: {
-	                            id: function id() {
-	                                return ID;
-	                            },
-	                            article: vm.article
-	                        }
-	                    });
-
-	                    modalInstance.result.then(function (id) {
-
-	                        blogService.delete({ id: id }, function () {
-
-	                            $location.path('/');
-	                        }, function () {
-	                            return console.log('Error!');
-	                        });
-	                    });
-	                };
-
-	                break;
-
-	        }
-	    })();
+	    modalInstance.result.then(function (id) {
+	      articleInstance.$delete({ id: id }, function () {
+	        $location.path('/');
+	      }, function () {
+	        return console.log('Error!');
+	      });
+	    });
+	  };
 	}
 
 /***/ },
