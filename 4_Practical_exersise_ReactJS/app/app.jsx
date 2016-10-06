@@ -1,1 +1,2 @@
-import './components/start_page.component.jsx';
+import './blog-page/RacoonApp.jsx';
+import './router.jsx'
