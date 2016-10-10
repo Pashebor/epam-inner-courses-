@@ -7,8 +7,8 @@ import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 're
 class Article extends Component {
     render() {
 
-        let linkTo = "/edit_article/" + this.props.data.id;
-        console.log(this.props);
+        let linkTo = "/blog_editor/" + this.props.data.id;
+      
         return (
             <article role="article" className="blog-article"  id={this.props.data.id}>
                 <figure className="image-block" role="img">

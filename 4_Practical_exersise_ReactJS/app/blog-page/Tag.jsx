@@ -7,7 +7,7 @@ import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 're
 class Tag extends Component{
     render() {
         return(
-            <li className="hot-hashtags__item"  ><span className="hot__hashtags-item__link"><span className="screen-reader-text">link</span>'ass'</span></li>
+            <li className="hot-hashtags__item"  ><span className="hot__hashtags-item__link"><span className="screen-reader-text">link</span>{this.props.data}</span></li>
 
         );
     }

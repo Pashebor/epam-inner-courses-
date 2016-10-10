@@ -9,7 +9,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', express.static('./build'));
 app.use('/', express.static('articles.json'));
 app.use('/node_modules', express.static('./node_modules'));
-app.use('/create', express.static('./build'));
+app.use('/blog_editor/', express.static('./build'));
+app.use('/blog_editor/:id', express.static('./build'));
 
 /*var articles = [
     {
@@ -155,7 +156,7 @@ app.post('/articles_data', function(req, res) {
 
 app.get('/articles_data/:id', function(req, res) {
       var idToEdit = req.params.id;
-
+      console.log(req.params.id);
       var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
 
          jsonToUptade.forEach( function (item) {

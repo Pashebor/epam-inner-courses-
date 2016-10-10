@@ -10,11 +10,11 @@ class SideBar extends Component{
 
 
     render() {
-        // let listTags = this.props.data.map(function (tag, i) {
-        //     return(
-        //         <Tag data={tag} key={i}/>
-        //     )
-        // });
+        let listTags = this.props.data.tags.map(function (tag, i) {
+            return(
+                <Tag data={tag} key={i}/>
+            )
+        });
         return(
             <aside role="complementary" className="sidebar">
                 <article className="sidebar-hint" role="article">
@@ -31,7 +31,7 @@ class SideBar extends Component{
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 </article>
                 <ul className="hot-hashtags" role="presentation">
-                    
+                {listTags}
                 </ul>
             </aside>
         );
