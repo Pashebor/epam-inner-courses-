@@ -3,6 +3,7 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
+import { connect } from 'react-redux';
 
 import Tag from './Tag.jsx';
 
@@ -10,7 +11,8 @@ class SideBar extends Component{
 
 
     render() {
-        let listTags = this.props.data.tags.map(function (tag, i) {
+
+        let listTags = this.props.store.tagState.map(function (tag, i) {
             return(
                 <Tag data={tag} key={i}/>
             )
@@ -31,11 +33,17 @@ class SideBar extends Component{
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 </article>
                 <ul className="hot-hashtags" role="presentation">
-                {listTags}
+                    {listTags}
                 </ul>
             </aside>
         );
     }
 }
 
-export default SideBar;
+function mapStateToProps (store) {
+    return {
+        store: store
+    }
+}
+
+export default connect(mapStateToProps) (SideBar);

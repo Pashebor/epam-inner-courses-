@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
+import {  Link } from 'react-router';
 
 class Article extends Component {
     render() {
