@@ -4,11 +4,33 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
+import $ from 'jquery';
+import {getTags} from './../actions/index.js';
 
 import Tag from './Tag.jsx';
 
 class SideBar extends Component{
 
+    componentDidMount() {
+
+        let removeDuplicatedTags = (data) => {
+            let allTags = [];
+
+            data.forEach( item => {
+                item.tags.forEach( tag => {
+                    if (allTags.indexOf(tag.trim()) === -1) {
+                        allTags.push(tag);
+                    }
+                });
+            });
+            return allTags;
+        };
+        if(this.props.store.tagState[0] === undefined){
+          $.ajax({url: '/articles', dataType: 'json', type: 'GET', async: true}).done( response => {
+            this.props.dispatch(getTags(removeDuplicatedTags(response)));
+          });
+        }
+    }
 
     render() {
 

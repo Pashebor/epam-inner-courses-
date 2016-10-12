@@ -4,18 +4,28 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
 import Article from './Article.jsx';
-import store from '../store.js';
 import { connect } from 'react-redux';
+import $ from 'jquery';
+import {getArticles} from './../actions/index.js';
 
 class Blog extends Component {
+    componentDidMount() {
 
+        if (this.props.store.blogState[0] === undefined) {
+          $.ajax({url: '/articles', dataType: 'json', type: 'GET', async: true}).done(response => {
+            this.props.dispatch(getArticles(response));
+        });
+      }
+
+    }
     render() {
-      console.log(this.props);
+
         let listArticles = this.props.store.blogState.map(function(article, i) {
             return(
                 <Article data={article} key={i}/>
             )
         });
+
         return (
             <main role="main" className="blog">
 

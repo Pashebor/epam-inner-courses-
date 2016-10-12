@@ -80,8 +80,8 @@ app.delete('/articles_data/:id', function(req, res) {
 app.put('/articles_data/:id', function (req, res) {
 
     var articleId = req.params.id;
-    var article = req.body;
 
+    var article = req.body;
 
     function saveEditedArticle(editedArt, callback) {
         var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
@@ -100,13 +100,12 @@ app.put('/articles_data/:id', function (req, res) {
                 item.time = editedArt.time;
             }
         });
-
-        objData.editedArticle = article.updated;
-        res.send(objData);
+        editedArt.id = articleId;
+        res.send(editedArt);
         fs.writeFile('./articles.json', JSON.stringify(jsonToUptade, null, 4), callback);
     }
 
-    saveEditedArticle(article.data, function(err) {
+    saveEditedArticle(article, function(err) {
         if (err) {
             res.status(404).send('Data not saved');
             return;
@@ -143,7 +142,7 @@ app.post('/articles_data', function(req, res) {
 
     }
 
-    createArticle(article.data, function (error) {
+    createArticle(article, function (error) {
         if (error) {
             res.status(404).send('Data not created');
             return;
