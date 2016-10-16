@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -42,10 +43,14 @@ module.exports = {
     },
 
     plugins: [
-       new HtmlWebpackPlugin({
+        new HtmlWebpackPlugin({
            template: path.resolve(root, './index.html')
-       }),
-
-       new ExtractTextPlugin("css/[name].css", {allChunk:true})
+        }),
+        new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": "jquery"
+        }),
+        new ExtractTextPlugin("css/[name].css", {allChunk:true})
    ]
 }

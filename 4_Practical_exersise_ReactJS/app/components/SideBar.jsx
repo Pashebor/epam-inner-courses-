@@ -5,38 +5,23 @@ import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import {getTags} from './../actions/index.js';
-
+import {removeDuplicatedTags} from './../controllers/tags.controller';
 import Tag from './Tag.jsx';
 
 class SideBar extends Component{
+     tagHandler(e){
+       e.preventDefault();
+       let target = e.target;
+         if (target.tagName.toLowerCase() === 'li') {
+           this.props.dispatch({type: 'TAG_SEARCH', tag: target.innerHTML});
+         }
 
-    componentDidMount() {
-
-        let removeDuplicatedTags = (data) => {
-            let allTags = [];
-
-            data.forEach( item => {
-                item.tags.forEach( tag => {
-                    if (allTags.indexOf(tag.trim()) === -1) {
-                        allTags.push(tag);
-                    }
-                });
-            });
-            return allTags;
-        };
-        if(this.props.store.tagState[0] === undefined){
-          $.ajax({url: '/articles', dataType: 'json', type: 'GET', async: true}).done( response => {
-            this.props.dispatch(getTags(removeDuplicatedTags(response)));
-          });
-        }
-    }
-
+     }
     render() {
 
-        let listTags = this.props.store.tagState.map(function (tag, i) {
+        let listTags = removeDuplicatedTags(this.props.store.blogState).map(function (tag, i) {
             return(
-                <Tag data={tag} key={i}/>
+              <li className="hot-hashtags__item" key={i}>{tag}</li>
             )
         });
         return(
@@ -54,7 +39,7 @@ class SideBar extends Component{
                         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 </article>
-                <ul className="hot-hashtags" role="presentation">
+                <ul className="hot-hashtags" role="presentation" onClick={this.tagHandler.bind(this)} >
                     {listTags}
                 </ul>
             </aside>

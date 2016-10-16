@@ -52,7 +52,6 @@ app.delete('/articles_data/:id', function(req, res) {
        console.log(deleteArt);
 
        var jsonToDeleteArticle = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
-       var objData = {};
 
         jsonToDeleteArticle.forEach(function(item, i) {
                if (jsonToDeleteArticle[i].id === deleteArt) {
@@ -61,7 +60,6 @@ app.delete('/articles_data/:id', function(req, res) {
                }
         });
 
-        objData.respDataDelete = jsonToDeleteArticle;
         res.send(deleteArt);
         fs.writeFile('./articles.json', JSON.stringify(jsonToDeleteArticle, null, 4), callback);
     }
@@ -155,7 +153,7 @@ app.post('/articles_data', function(req, res) {
 
 app.get('/articles_data/:id', function(req, res) {
       var idToEdit = req.params.id;
-      console.log(req.params.id);
+      console.log(req.params);
       var jsonToUptade = JSON.parse(fs.readFileSync('./articles.json', 'utf8'));
 
          jsonToUptade.forEach( function (item) {

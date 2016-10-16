@@ -6,8 +6,9 @@ const initialState = [];
 
 const tagReducer =  ( state = initialState, action) => {
     switch (action.type) {
-        case 'GET_TAGS':
-        return state.concat(action.tags);
+      case 'TAG_SEARCH':
+      return state.concat(action.tag);
+      default: state;
     }
     return state;
 };

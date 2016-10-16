@@ -13,7 +13,6 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
         <Route path='/' component={App}/>
-        <Route path='/blog_editor/' component={BlogEditor}/>
-        <Route path='/blog_editor/:id' component={BlogEditor}/>
+        <Route path='/blog_editor/*' component={BlogEditor}/>
     </Router>
   </Provider>, document.getElementById('app'));

@@ -45,13 +45,14 @@
     "babel-loader": "^6.2.5",
     "babel-preset-react": "^6.11.1",
     "body-parser": "^1.15.2",
+    "bootstrap": "^3.3.7",
     "deep-freeze": "0.0.1",
     "express": "^4.14.0",
     "express-history-api-fallback": "^2.0.0",
     "jquery": "^3.1.1",
     "path": "^0.12.7",
     "react-dom": "^15.3.2",
-    "react-router": "^2.7.0",
+    "react-router": "^2.8.1",
     "webpack": "^1.13.2"
   }
 }

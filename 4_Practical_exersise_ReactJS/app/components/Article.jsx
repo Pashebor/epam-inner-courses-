@@ -7,7 +7,7 @@ import {  Link } from 'react-router';
 class Article extends Component {
     render() {
 
-        let linkTo = "/blog_editor/" + this.props.data.id;
+        let linkTo = "/blog_editor/" + this.props.data.id + '/';
       
         return (
             <article role="article" className="blog-article"  id={this.props.data.id}>
