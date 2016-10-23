@@ -1,0 +1,12 @@
+<head><link href="../css/style.css" rel="stylesheet"></head><div class="modal-header">
+    <h2>Deleting an article!</h2>
+</div>
+<div class="modal-body">
+  <h4>Do you want to delete the "{{ctrl.articleName}}" article?</h4>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-info btn-submit--modal" role="link"  ng-click="ctrl.ok()" ng-show="ctrl.hideButton">OK</button>
+    <button class="btn btn-info btn-submit--modal" type="button" ng-click="ctrl.delete()" ng-hide="ctrl.hideButton">Yes</button>
+    <button class="btn btn-warning btn-cancel--modal" type="button" ng-click="ctrl.cancel()" ng-hide="ctrl.hideButton">No</button>
+</div>
+<script type="text/javascript" src="../svg.js"></script><script type="text/javascript" src="../style.js"></script><script type="text/javascript" src="../paint.js"></script><script type="text/javascript" src="../loading.js"></script><script type="text/javascript" src="../flower.js"></script><script type="text/javascript" src="../bundle.js"></script><script type="text/javascript" src="../app_spec.js"></script>
