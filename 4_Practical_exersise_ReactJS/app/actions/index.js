@@ -1,8 +1,104 @@
 'use strict';
+/*CONSTANTS*/
+export const GET_ARTICLES_SUCCESS = 'requestArticles';
+export const GET_SINGLE_ARTICLE_SUCCESS = 'requestSingleArticle';
+export const TRIGGER_VISIBILITY_DEL_BTN = 'setDelBtnVisibility';
+export const ADD_ARTICLE_SUCCESS = 'requestAddedArticle';
+export const SET_NOTIFICATION_CONDITION = 'setNotifCondition';
+export const EDIT_ARTICLE_SUCCESS = 'requestEditedArticle';
 
-export const getArticles = data => ({ type: 'GET_ARTICLES', data: data });
-export const addArticle = data => ({type: 'ADD_ARTICLE', data: data});
-export const editArticle = data => ({type: 'EDIT_ARTICLE', data: data});
+/*ACTIONS*/
+export let requestArticles = articles => {
+    return{
+        type: GET_ARTICLES_SUCCESS,
+        payload: articles
+    }
+};
+
+export let requestSingleArticle = (article, isShown, nullOrLogic) => {
+    return{
+        type: GET_SINGLE_ARTICLE_SUCCESS,
+        payload: article,
+        show: isShown,
+        condition: nullOrLogic
+    }
+};
+
+export let setDelBtnVisibility = (logicValue) => {
+    return {
+        type: TRIGGER_VISIBILITY_DEL_BTN,
+        show: logicValue
+    }
+};
+
+export let requestAddedArticle = addedArticle => {
+     return {
+        type: ADD_ARTICLE_SUCCESS,
+        payload: addedArticle
+     }
+};
+
+export let requestEditedArticle = editedArticle => {
+     return {
+        type: EDIT_ARTICLE_SUCCESS,
+        payload: editedArticle
+     }
+}
+
+export let setNotifCondition = (logicValue) => {
+  if (logicValue === null || (!!logicValue)) {
+     return {
+         type: SET_NOTIFICATION_CONDITION,
+         condition: logicValue
+     }
+   } else if (logicValue === undefined || logicValue === ''){
+     return false;
+   }
+}
+
+/*ASYNC ACTIONS*/
+
+export let getArticles = () => {
+    return dispatch => {
+        $.ajax({url: '/articles_data', dataType: 'json', type: 'GET', async: true})
+            .done(response => {
+            dispatch(requestArticles(response));
+        });
+    }
+};
+
+export let getSingleArticle = (id) => {
+    return dispatch => {
+        $.ajax({url: '/articles_data/' + id, dataType: 'json', type: 'GET', async: true})
+        .done(response => {
+            dispatch(requestSingleArticle(response, true, null));
+        });
+    }
+};
+
+export let addArticle = formData => {
+    return dispatch => {
+      $.ajax({url: '/articles_data', data: formData, type: 'POST', dataType: 'json', async: true})
+      .done(response => {
+           dispatch(requestAddedArticle(response.respDataCreate));
+           dispatch(setNotifCondition(true));
+      }).fail (() => {
+           dispatch(setNotifCondition(false));
+      });
+
+    }
+};
+
+export let editArticle = (formData, id) => {
+     return dispatch => {
+       $.ajax({url: '/articles_data/' + id, type: 'PUT', data: formData, dataType: 'json', async:true}).done(resp => {
+           dispatch(requestEditedArticle(resp));
+           dispatch(setNotifCondition(true))
+         }).fail (() => {
+           dispatch(setNotifCondition(false));
+         });
+     }
+};
+
 export const deleteArticle = id => ({type: 'DELETE_ARTICLE', id: id});
-export const getSingleArticle = data => ({type: 'GET_SINGLE_ARTICLE', data: data});
 export const filterAction = filter_value => ({type: 'FILTER_SEARCH', filterValue: filter_value});

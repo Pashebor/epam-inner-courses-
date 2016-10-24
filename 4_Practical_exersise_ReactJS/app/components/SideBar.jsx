@@ -2,10 +2,10 @@
 
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
+import {removeDuplicatedTags} from './../controllers/filteredTags.function';
+import $ from 'jquery';
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
-import $ from 'jquery';
-import {removeDuplicatedTags} from './../controllers/filteredTags.function';
 
 class SideBar extends Component{
 

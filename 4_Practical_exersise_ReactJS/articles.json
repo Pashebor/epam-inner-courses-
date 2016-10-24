@@ -1,34 +1,20 @@
 [
-    {
-        "id": "2",
-        "author": "E. Hyperraccoon",
-        "image": "images/paint.png",
-        "header": "Blogotitle of paints",
-        "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        "time": "28:67 Jan 01, 2014",
-        "tags": [
-            "Racoon",
-            "Racoon",
-            "Coon",
-            "Dog",
-            "Cat",
-            "Duck",
-            "Developer",
-            "Car",
-            "Jeep"
-        ]
-    },
-    {
-        "author": "P. Demyanov",
-        "image": "http://s0.tchkcdn.com/fun/g2/s/1/2/5/5/10255/178003_1dd6.jpeg",
-        "header": "Cats",
-        "text": "ewfwefewfwfe",
-        "tags": [
-            "Some Text",
-            " Some Text",
-            " Some Text"
-        ],
-        "time": "14:05 Oct 18, 2016",
-        "id": "4"
-    }
+  {
+      "id": "1",
+      "author": "E. Hyperraccoon",
+      "image": "images/flowers.png",
+      "header": "Blogotitle of blogopost about blogoflowers",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "time": "22:58 Jan 01, 2014",
+      "tags": ["Racoon", "Racoon", "Coon", "Dog", "Cat", "Developer", "Anna", "Beer", "Banana"]
+  },
+  {
+      "id": "2",
+      "author": "E. Hyperraccoon",
+      "image": "images/paint.png",
+      "header": "Blogotitle of paints",
+      "text": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "time": "28:67 Jan 01, 2014",
+      "tags": ["Racoon", "Racoon", "Coon", "Dog", "Cat", "Duck", "Developer", "Car", "Jeep"]
+  }
 ]

@@ -1,17 +1,11 @@
 'use strict';
-
-import ReactDOM from 'react-dom';
-import React, { Component } from 'react';
-
+import React from 'react';
 import Blog from './Blog.jsx';
 import SideBar from './SideBar.jsx';
 
 
 
-class App extends React.Component{
-
-    render() {
-
+const App = () => {
         return (
             <div className="container">
                 <Blog/>
@@ -19,8 +13,7 @@ class App extends React.Component{
             </div>
 
     )
-    }
-}
+};
 
 
 export default App;

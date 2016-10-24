@@ -8,10 +8,10 @@ import { Router, Route,  browserHistory, Link } from 'react-router';
 import { Provider } from 'react-redux';
 import App from './components/RacoonApp.jsx';
 import BlogEditor from './components/Forms.jsx';
-import thunk from 'redux-thunk';
-import reducer from './reducers';
+import middleWare from 'redux-thunk';
+import reducers from './reducers';
 
-const store = createStore(reducer);
+const store = createStore(reducers, {}, applyMiddleware(middleWare));
 
 
 render(

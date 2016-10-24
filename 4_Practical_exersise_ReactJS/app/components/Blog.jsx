@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { Router, Route, IndexRoute, browserHistory, hashHistory, Link } from 'react-router';
 import Article from './Article.jsx';
 import { connect } from 'react-redux';
-import $ from 'jquery';
 import {getArticles, filterAction} from './../actions/index.js';
 import {filterSearch} from '../controllers/searchFilter.function';
 
@@ -13,9 +12,7 @@ import {filterSearch} from '../controllers/searchFilter.function';
 class Blog extends Component {
 
     componentDidMount() {
-            $.ajax({url: '/articles_data', dataType: 'json', type: 'GET', async: true}).done(response => {
-                this.props.dispatch(getArticles(response));
-            });
+            this.props.dispatch(getArticles());
     }
 
 
@@ -25,7 +22,6 @@ class Blog extends Component {
     }
 
     render() {
-
 
         let listArticles = filterSearch(this.props.store);
 

@@ -6766,7 +6766,7 @@ h6 {
   width: 300px;
 }
 .react-redux-modal .rrm-holder .scroll .rrm-content.m-small .rrm-title h2 {
-  width: 140px;
+  width: inherit;
 }
 .react-redux-modal .rrm-holder .scroll .rrm-content.m-medium {
   width: 500px;
@@ -6781,23 +6781,21 @@ h6 {
   width: 640px;
 }
 .react-redux-modal .rrm-holder .scroll .rrm-content .rrm-title {
-  width: 100%;
+  width: inherit;
   height: 60px;
   border-bottom: 1px solid #dbdbdb;
   position: relative;
   color: #444;
   box-sizing: content-box;
 }
-.react-redux-modal .rrm-holder .scroll .rrm-content .rrm-title h2 {
+.react-redux-modal .rrm-holder .scroll .rrm-title h2 {
   height: 60px;
-  padding: 0px 20px;
+  text-align: center;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: auto;
   text-overflow: ellipsis;
-  font-size: 1.4em;
-  margin: 0;
+  font-size: 1.6em;
   line-height: 60px;
-  float: left;
   box-sizing: content-box;
 }
 .react-redux-modal .rrm-holder .scroll .rrm-content .rrm-title .rr-title-actions {

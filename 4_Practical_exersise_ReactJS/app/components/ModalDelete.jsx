@@ -33,11 +33,7 @@ import {modal} from 'react-redux-modal';
       return (
           <div>
               <p>this is my modal</p>
-              <button
-                  type="button"
-                  onClick={this.removeThisModal.bind(this)}>
-                  close this modal
-              </button>
+              <button type="button" onClick={this.removeThisModal.bind(this)}> cancel</button>
           </div>
       )
   }

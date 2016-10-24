@@ -41,7 +41,7 @@ module.exports = {
             }
         ]
     },
-
+    devtool: "eval-source-map",
     plugins: [
         new HtmlWebpackPlugin({
            template: path.resolve(root, './index.html')
