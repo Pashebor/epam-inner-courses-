@@ -1,0 +1,103 @@
+@import "../assets/less/variables";
+@import "../assets/less/for_screenreaders";
+@import "../assets/less/fonts";
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+.sidebar-hint {
+  margin-bottom: 1.875em;
+}
+
+.sidebar-hint__header {
+  color: @navigation-bar-color;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-bottom: 4px solid @navigation-bar-color;
+  margin: 0;
+  padding: 0;
+
+  &--question::before{
+    content: '?';
+    margin-right: 15px;
+  }
+  &--exclamation::before{
+    content: '!';
+    margin-right: 15px;
+  }
+}
+
+.sidebar-hint__header::before{
+  color: @link-text-color;
+  text-align: center;
+  padding:0.156em 0.625em 0.156em 0.625em;
+  background-color: @navigation-bar-color;
+}
+
+.sidebar-hint__description {
+  font-size: 1em;
+  word-wrap: break-word;
+  text-align: justify;
+  color: @main-text-color;
+}
+
+
+.hot-hashtags {
+  list-style:none;
+  width: 100%;
+
+  padding: 0;
+  margin: 8px 0 0 0;
+}
+.hot-hashtags__item {
+  display: inline-block;
+  height:1.250em;
+  line-height:1.250em;
+  position:relative;
+  font-size:1em;
+  margin-right: 0.7em;
+  padding:0 1.1em 0 0.825em;
+  background: @navigation-bar-color;
+  color: @link-text-color;
+  text-decoration:none;
+  margin-bottom: 0.625em;
+  cursor: pointer;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+
+
+}
+
+
+.hot-hashtags__item:after{
+  content:"";
+  float:left;
+  position:absolute;
+  top:0;
+  right:-0.625em;
+  width:0;
+  height:0;
+  border-color:transparent transparent transparent @navigation-bar-color;
+  border-style:solid;
+  border-width:0.625em 0 0.625em 0.625em;
+}
+
+.hot-hashtags__item:before{
+  content:"\2022";
+  position:absolute;
+  color: @link-text-color;
+  font-size: 1.5em;
+  right: -2px;
+  z-index: 2;
+}
+
+.hot-hashtags__item:hover{
+  transform: rotate(25deg);
+}
+
+.hot__hashtags-item__link {
+  text-decoration: none;
+  color: @link-text-color;
+}

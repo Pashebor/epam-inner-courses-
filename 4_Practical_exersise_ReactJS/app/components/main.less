@@ -1,0 +1,143 @@
+@import "../assets/less/variables";
+@import "../assets/less/fonts";
+
+.container {
+  width: 61.250em;
+  padding-right: 1.875em;
+  padding-left: 1.875em;
+  margin: auto;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+
+.blog {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.blog-article {
+  position: relative;
+  padding-right: 40px;
+  margin-bottom: 3.125em;
+}
+
+.image-block {
+  position: relative;
+}
+
+.image-block__picture {
+  max-width: 100%;
+}
+
+
+
+.blog-article__description{
+  font-size: 1.67em;
+  margin: 10px 0;
+}
+
+.blog-article__description-link{
+  text-decoration: none;
+  color: @main-text-color;
+}
+
+.blog-article__description-link:hover{
+  color: @social-link-text-color;
+}
+
+.blog-article__info {
+  display: flex;
+  flex-direction: row;
+  padding: 0.625em 0 0.625em 0;
+  border-bottom: 2px solid @social-link-text-color;
+  border-top: 2px solid @social-link-text-color;
+  margin-bottom: 0.625em;
+}
+
+
+.blog-article__date, .blog-article__author {
+  display: flex;
+  flex-direction: row;
+  width: 25%;
+  margin: 0 1.2em 0 0;
+  text-transform: none;
+  color: @main-text-color;
+  font-style: normal;
+}
+
+.blog-article__date-icon{
+  fill: @main-text-color;
+  width: 0.875em;
+  height: 0.875em;
+}
+
+.blog-article__author-icon{
+  fill: @main-text-color;
+  width: 0.938em;
+  height: 0.938em;
+}
+
+
+
+
+.social{
+  margin-left: auto;
+}
+.social__group{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.social__group-item {
+  display: inline-block;
+  width: 3.125em;
+  height: 1.563em;
+  line-height: 1.563em;
+  text-align: center;
+  background-color: @social-link-text-color;
+  color: @link-text-color;
+  font-size: 0.9em;
+  font-weight: 800;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.social__group-item-link{
+  text-decoration: none;
+  color: @link-text-color;
+  font-size: 1.1em;
+}
+
+.social__group-item-icon {
+  fill: @link-text-color;
+  width: 1.250em;
+  height: 1.250em;
+  float: left;
+  margin: 2px 0 0 0;
+}
+
+.social__group-item:hover{
+  background-color: @link-text-color;
+  color: @social-link-text-color;
+  .social__group-item-icon {
+    fill: @social-link-text-color;
+  }
+  .social__group-item-link{
+    color: @social-link-text-color;
+  }
+}
+
+
+.blog-article__note {
+  color: @main-text-color;
+  text-align: justify;
+  word-wrap: break-word;
+}
+
+.create-and-search{
+  display: flex;
+  flex-direction: row;
+  width: 94%;
+}
