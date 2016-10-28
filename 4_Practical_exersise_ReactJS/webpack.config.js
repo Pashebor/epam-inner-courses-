@@ -46,11 +46,6 @@ module.exports = {
         new HtmlWebpackPlugin({
            template: path.resolve(root, './index.html')
         }),
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery"
-        }),
         new ExtractTextPlugin("css/[name].css", {allChunk:true})
    ]
 }

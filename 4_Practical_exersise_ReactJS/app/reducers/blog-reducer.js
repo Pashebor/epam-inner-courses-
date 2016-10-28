@@ -1,5 +1,6 @@
 'use strict';
 import {filteredArticles} from '../controllers/getArticles.function';
+import {editedState, deletedState} from '../controllers/blog.reducer.functions';
 import {GET_ARTICLES_SUCCESS, ADD_ARTICLE_SUCCESS, EDIT_ARTICLE_SUCCESS, DELETE_ARTICLE_SUCCESS} from '../actions/index';
 
 const initialState = [];
@@ -13,18 +14,10 @@ const blogReducer =  ( state = initialState, action) => {
             return state.concat(action.payload);
         case EDIT_ARTICLE_SUCCESS:
             let newState;
-            newState = state.map(item => {
-                if(item.id == action.payload.id) {
-                    return action.payload;
-                } else {
-                    return item;
-                }
-            });
+            newState = editedState(state, action.payload);
             return newState;
         case DELETE_ARTICLE_SUCCESS:
-            let deleteState = state.filter(item => {
-                return item.id != action.payload;
-            });
+            let deleteState = deletedState(state, action.payload);
             return deleteState;
         default: return state;
     }

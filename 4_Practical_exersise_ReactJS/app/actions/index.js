@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch';
 'use strict';
 
 /*CONSTANTS*/
@@ -9,49 +10,14 @@ export const SET_NOTIFICATION_CONDITION = 'setNotifCondition';
 export const EDIT_ARTICLE_SUCCESS = 'requestEditedArticle';
 export const DELETE_ARTICLE_SUCCESS = 'requestDeletedArticleId';
 export const FILTER_SEARCH = 'filterAction';
+
 /*ACTIONS*/
-export let requestArticles = articles => {
-    return{
-        type: GET_ARTICLES_SUCCESS,
-        payload: articles
-    }
-};
-
-export let requestDeletedArticleId = deletedArticleId => {
-     return{
-       type: DELETE_ARTICLE_SUCCESS,
-       payload: deletedArticleId
-     }
-};
-
-export let requestSingleArticle = (article, isShown, nullOrLogic) => {
-    return{
-        type: GET_SINGLE_ARTICLE_SUCCESS,
-        payload: article,
-        show: isShown,
-        condition: nullOrLogic
-    }
-};
 
 export let setDelBtnVisibility = (logicValue) => {
     return {
         type: TRIGGER_VISIBILITY_DEL_BTN,
         show: logicValue
     }
-};
-
-export let requestAddedArticle = addedArticle => {
-     return {
-        type: ADD_ARTICLE_SUCCESS,
-        payload: addedArticle
-     }
-};
-
-export let requestEditedArticle = editedArticle => {
-     return {
-        type: EDIT_ARTICLE_SUCCESS,
-        payload: editedArticle
-     }
 };
 
 export let setNotifCondition = (logicValue) => {
@@ -65,63 +31,104 @@ export let setNotifCondition = (logicValue) => {
    }
 };
 
-/*ASYNC ACTIONS*/
-
-export let getArticles = () => {
-    return dispatch => {
-        $.ajax({url: '/articles_data', dataType: 'json', type: 'GET', async: true})
-            .done(response => {
-            dispatch(requestArticles(response));
-        });
+export const filterAction = filter_value => {
+    return{
+        type: FILTER_SEARCH,
+        filterValue: filter_value
     }
 };
 
-export let getSingleArticle = (id) => {
+/*ASYNC ACTIONS*/
+export let requestArticles = articles => {
+    return{
+        type: GET_ARTICLES_SUCCESS,
+        payload: articles
+    }
+};
+
+export let requestDeletedArticleId = deletedArticleId => {
+    return{
+        type: DELETE_ARTICLE_SUCCESS,
+        payload: deletedArticleId
+    }
+};
+
+export let requestSingleArticle = (article, isShown, nullOrLogic) => {
+    return{
+        type: GET_SINGLE_ARTICLE_SUCCESS,
+        payload: article,
+        show: isShown,
+        condition: nullOrLogic
+    }
+};
+
+export let requestAddedArticle = addedArticle => {
+    return {
+        type: ADD_ARTICLE_SUCCESS,
+        payload: addedArticle
+    }
+};
+
+export let requestEditedArticle = editedArticle => {
+    return {
+        type: EDIT_ARTICLE_SUCCESS,
+        payload: editedArticle
+    }
+};
+
+export let getArticles = () => {
     return dispatch => {
-        $.ajax({url: '/articles_data/' + id, dataType: 'json', type: 'GET', async: true})
-        .done(response => {
-            dispatch(requestSingleArticle(response, true, null));
-        });
+      return fetch('http://localhost:3000/articles_data', {method: 'GET'})
+        .then(response => response.json())
+        .then(json => dispatch(requestArticles(json)))
+        .catch(err => console.log('Error!'));
+    }
+};
+
+export let getSingleArticle = id => {
+    return dispatch => {
+      return fetch('http://localhost:3000/articles_data/' + id, {method: 'GET'})
+        .then(response => response.json())
+        .then(json => dispatch(requestSingleArticle(json, true, null)))
+        .catch(err => console.log('Error!'));
     }
 };
 
 export let addArticle = formData => {
     return dispatch => {
-      $.ajax({url: '/articles_data', data: formData, type: 'POST', dataType: 'json', async: true})
-      .done(response => {
-           dispatch(requestAddedArticle(response));
-           dispatch(setNotifCondition(true));
-      }).fail (() => {
-           dispatch(setNotifCondition(false));
-      });
-
+      return fetch('http://localhost:3000/articles_data', {
+        method: 'POST',
+        headers: {"Content-type": "application/x-www-form-urlencoded"},
+        body: 'formData=' + JSON.stringify(formData)})
+      .then(response => response.json())
+      .then(json => {
+        dispatch(requestAddedArticle(json))
+        dispatch(setNotifCondition(true))
+      })
+      .catch(err => dispatch(setNotifCondition(false)));
     }
 };
 
 export let editArticle = (formData, id) => {
      return dispatch => {
-       $.ajax({url: '/articles_data/' + id, type: 'PUT', data: formData, dataType: 'json', async:true}).done(resp => {
-           dispatch(requestEditedArticle(resp));
-           dispatch(setNotifCondition(true))
-         }).fail (() => {
-           dispatch(setNotifCondition(false));
-         });
+      return fetch('http://localhost:3000/articles_data/' + id, {
+        method: 'PUT',
+        headers: {"Content-type": "application/x-www-form-urlencoded"},
+        body: 'formData=' + JSON.stringify(formData)})
+      .then(response => response.json())
+      .then(json => {
+        dispatch(requestEditedArticle(json))
+        dispatch(setNotifCondition(true))
+      })
+      .catch(err => dispatch(setNotifCondition(false)));
      }
 };
 
 export const deleteArticle = id => {
      return dispatch => {
-       $.ajax({url: '/articles_data/' + id, type: 'DELETE', dataType: 'json', async:true}).done(response => {
-           dispatch(requestDeletedArticleId(response));
-         }).fail (response => {
-           console.log('Error!');
-         });
+      return fetch('http://localhost:3000/articles_data/' + id, {method: 'DELETE'})
+        .then(response => response.json())
+        .then(json => dispatch(requestDeletedArticleId(json)))
+        .catch(err => console.log('Error!'));
      }
-};
-
-export const filterAction = filter_value => {
-  return{
-    type: FILTER_SEARCH,
-    filterValue: filter_value
-  }
 };

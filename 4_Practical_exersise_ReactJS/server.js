@@ -7,7 +7,7 @@ const serverController = require('./server.controller');
 
 let app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', express.static('./build'));
 app.use('/', express.static('articles.json'));
@@ -52,7 +52,8 @@ app.delete('/articles_data/:id', function (req, res) {
   res.send(id);
 });
 app.put('/articles_data/:id', function (req, res) {
-    let editedArticle = serverController.editArticle(req.body, req.params.id, articles);
+    let reqData = req.body;
+    let editedArticle = serverController.editArticle(JSON.parse(reqData.formData), req.params.id, articles);
     res.send(editedArticle);
 });
 app.get('/articles_data/:id', function (req, res) {
@@ -61,7 +62,8 @@ app.get('/articles_data/:id', function (req, res) {
 });
 
 app.post('/articles_data', function (req, res) {
-    let createdArticle = serverController.createArticle(req.body, articles);
+    let reqData = req.body;
+    let createdArticle = serverController.createArticle(JSON.parse(reqData.formData), articles);
     res.send(createdArticle);
 })
 app.get('/articles_data', function (req, res) {

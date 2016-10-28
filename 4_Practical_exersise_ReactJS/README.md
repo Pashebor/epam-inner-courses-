@@ -1,16 +1,13 @@
-## Installing packages for building the project
+## Installing a project's modules from dependencies
 
-1. First you need to open terminal and put following command to install Less CSS pre-processor: "npm install -g less".
+1.First you need to install it globally with command "npm install webpack -g" in your console window.
 
-2. Then you must install an Autoprefixer which adds prefixes to CSS after conversion from Less with command: "npm install -g less-plugin-autoprefix".
-
-## How to build output css from less
-
-Launch a script from terminal called as "build:css" with command ''' npm run build:css ''' to create a specific css-file with prefixes .
-
+2.Then you must type "npm install" to pull all modules for package.
 
 ## How to run localhost with project
 
-In the terminal make your path to "js" package and execute a command ''' node server.js ''', then open your browser and put url http://localhost:8080 in address bar.
+In the terminal you should enter a "node server.js" to launch localhost, then make your path in browser "localhost: 3000" .
 
-;)
+## Testing reducers
+
+Type "npm test" in your terminal to run app's reducer tests.

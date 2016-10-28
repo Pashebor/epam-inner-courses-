@@ -2,7 +2,6 @@
 'use strict';
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
 import { Router, Link } from 'react-router';
 import { connect } from 'react-redux';
 import PostNotification from './PostNotification.jsx';
@@ -80,7 +79,7 @@ class BlogEditor extends Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="text" className="form-block__label">Text</label>
-                    <input className="form-control" rows="5"   name="text" placeholder={this.props.routeParams.splat ? this.props.article.text : 'Text...'}  required/>
+                    <textarea className="form-control" rows="5"   name="text" placeholder={this.props.routeParams.splat ? this.props.article.text : 'Text...'}  required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="tags" className="form-block__label">Tags</label>
