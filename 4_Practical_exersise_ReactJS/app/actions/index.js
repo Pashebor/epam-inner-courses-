@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import {getJson, postJson, putJson, deleteJson} from './../utils/ajax';
 'use strict';
 
 /*CONSTANTS*/
@@ -78,57 +78,47 @@ export let requestEditedArticle = editedArticle => {
 
 export let getArticles = () => {
     return dispatch => {
-      return fetch('http://localhost:3000/articles_data', {method: 'GET'})
-        .then(response => response.json())
-        .then(json => dispatch(requestArticles(json)))
-        .catch(err => console.log('Error!'));
+        return getJson('/articles_data')
+            .then(json => dispatch(requestArticles(json)))
+            .catch(err => console.log('Error!'));
     }
 };
 
 export let getSingleArticle = id => {
     return dispatch => {
-      return fetch('http://localhost:3000/articles_data/' + id, {method: 'GET'})
-        .then(response => response.json())
-        .then(json => dispatch(requestSingleArticle(json, true, null)))
-        .catch(err => console.log('Error!'));
+        return getJson('/articles_data', id)
+            .then(json => dispatch(requestSingleArticle(json, true, null)))
+            .catch(err => console.log('Error!'));
     }
 };
 
 export let addArticle = formData => {
     return dispatch => {
-      return fetch('http://localhost:3000/articles_data', {
-        method: 'POST',
-        headers: {"Content-type": "application/x-www-form-urlencoded"},
-        body: 'formData=' + JSON.stringify(formData)})
-      .then(response => response.json())
-      .then(json => {
-        dispatch(requestAddedArticle(json))
-        dispatch(setNotifCondition(true))
-      })
-      .catch(err => dispatch(setNotifCondition(false)));
+        return postJson('/articles_data', formData)
+            .then(json => {
+                dispatch(requestAddedArticle(json));
+                dispatch(setNotifCondition(true));
+            })
+            .catch(err => dispatch(setNotifCondition(false)));
     }
 };
 
 export let editArticle = (formData, id) => {
      return dispatch => {
-      return fetch('http://localhost:3000/articles_data/' + id, {
-        method: 'PUT',
-        headers: {"Content-type": "application/x-www-form-urlencoded"},
-        body: 'formData=' + JSON.stringify(formData)})
-      .then(response => response.json())
-      .then(json => {
-        dispatch(requestEditedArticle(json))
-        dispatch(setNotifCondition(true))
-      })
-      .catch(err => dispatch(setNotifCondition(false)));
+         return putJson('/articles_data/' + id, formData)
+             .then(json => {
+                 dispatch(requestEditedArticle(json));
+                 dispatch(setNotifCondition(true));
+             })
+             .catch(err => dispatch(setNotifCondition(false)));
      }
 };
 
 export const deleteArticle = id => {
      return dispatch => {
-      return fetch('http://localhost:3000/articles_data/' + id, {method: 'DELETE'})
-        .then(response => response.json())
-        .then(json => dispatch(requestDeletedArticleId(json)))
-        .catch(err => console.log('Error!'));
+         return deleteJson('/articles_data/' + id)
+             .then(json => dispatch(requestDeletedArticleId(json)))
+             .catch(err => console.log('Error!'));
      }
 };
+

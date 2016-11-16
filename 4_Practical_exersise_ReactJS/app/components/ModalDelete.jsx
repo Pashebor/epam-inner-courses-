@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Link } from 'react-router';
-import {deleteArticle} from './../actions/index.js';
 import {modal} from 'react-redux-modal';
 
  class ModalDelete extends Component{
@@ -13,7 +12,7 @@ import {modal} from 'react-redux-modal';
 
      btnYesHandler(e) {
          e.preventDefault();
-         this.props.dispatch(deleteArticle(this.props.articleId));
+         this.props.deleteArticle(this.props.articleId);
          this.props.removeModal();
          this.context.router.push('/');
      }

@@ -1,15 +1,32 @@
 'use strict';
 
 import React from 'react';
-import {removeDuplicatedTags} from './../controllers/filteredTags.function';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {filterAction} from './../actions/index.js';
 
 const SideBar = (props) => {
 
         let tagHandler = (e) => {
           e.preventDefault();
-          props.dispatch(filterAction(e.target.innerHTML));
+          props.filterAction(e.target.innerHTML);
+        };
+
+        let removeDuplicatedTags = (data) => {
+
+            let allTags = [];
+                data.forEach(function (item) {
+                  let tags = item.tags;
+                  tags.forEach(function (tag){
+                      allTags.push(tag.trim());
+                  });
+                });
+
+            let uniqueArray = allTags.filter((item, pos) => {
+                return allTags.indexOf(item) == pos;
+              });
+
+          return uniqueArray;
         };
 
         let listTags = removeDuplicatedTags(props.blogState).map(function (tag, i) {
@@ -38,13 +55,17 @@ const SideBar = (props) => {
                 </ul>
             </aside>
         );
-    }
+    };
 
 
-function mapStateToProps (store) {
+const mapStateToProps = store =>{
     return {
         blogState: store.blogState
     }
-}
+};
 
-export default connect(mapStateToProps) (SideBar);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({filterAction}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (SideBar);

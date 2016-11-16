@@ -9,7 +9,12 @@ export const editedState = (state, action) => {
 };
 
 export const deletedState = (state, action) => {
-  return state.filter(item => {
-      return item.id != action;
-  });
+  return state.filter(item => item.id != action);
+};
+
+export const addedArticle = (state, action) => {
+    let arr = [];
+    arr = state.slice();
+    arr.reverse()
+    return state;
 };

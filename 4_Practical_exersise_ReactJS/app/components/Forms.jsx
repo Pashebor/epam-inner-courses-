@@ -4,8 +4,9 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { Router, Link } from 'react-router';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PostNotification from './PostNotification.jsx';
-import {addArticle, editArticle, getSingleArticle, setDelBtnVisibility, setNotifCondition} from './../actions/index.js';
+import {addArticle, editArticle, getSingleArticle, setDelBtnVisibility, setNotifCondition, deleteArticle} from './../actions/index.js';
 import ModalDelete from './ModalDelete.jsx';
 import {modal} from 'react-redux-modal';
 import ReduxModal from 'react-redux-modal';
@@ -14,29 +15,27 @@ import ReduxModal from 'react-redux-modal';
 class BlogEditor extends Component {
 
     componentDidMount() {
-        if (this.props.routeParams.splat) {
-            this.props.dispatch(getSingleArticle(this.props.routeParams.splat));
+
+        if (this.props.params.id) {
+            this.props.getSingleArticle(this.props.params.id);
         } else {
-            this.props.dispatch(setDelBtnVisibility(false));
-            this.props.dispatch(setNotifCondition(null));
+            this.props.setDelBtnVisibility(false);
+            this.props.setNotifCondition(null);
         }
     }
 
     btnSubmitHandler(e) {
         e.preventDefault();
         let formData = {};
-        let submitedData = [].slice.call(this.refs.form_data.elements);
 
-        for(var i = 0; i < submitedData.length; i+=1) {
-            if (submitedData[i].tagName.toLowerCase() !== 'button') {
-              formData[submitedData[i].getAttribute('name')] = submitedData[i].value;
-            }
+        for (var keys in this.refs) {
+            formData[keys] = this.refs[keys].value;
         }
-
-        if(!this.props.routeParams.splat) {
-          this.props.dispatch(addArticle(formData));
+        
+        if(!this.props.params.id) {
+          this.props.addArticle(formData);
         } else {
-          this.props.dispatch(editArticle(formData, this.props.routeParams.splat));
+          this.props.editArticle(formData, this.props.params.id);
         }
 
     }
@@ -50,9 +49,9 @@ class BlogEditor extends Component {
             closeOnOutsideClick: true,
             hideTitleBar: false,
             hideCloseButton: true,
-            dispatch: this.props.dispatch,
-            articleHeader: this.props.article.header,
-            articleId: this.props.article.id
+            deleteArticle: this.props.deleteArticle,
+            articleHeader: this.props.state.article.header,
+            articleId: this.props.state.article.id
         });
     }
 
@@ -62,31 +61,31 @@ class BlogEditor extends Component {
         return(
           <div>
            {<ReduxModal />}
-            <form role="form" className="form-block"  onSubmit={this.btnSubmitHandler.bind(this)}    ref="form_data" >
-                <h2 className="edit-article__header">{this.props.routeParams.splat ? this.props.article.header : 'CreateArticle'}</h2>
-                {<PostNotification posted={this.props.condition}/>}
+            <form role="form" className="form-block"  onSubmit={this.btnSubmitHandler.bind(this)} >
+                <h2 className="edit-article__header">{this.props.params.id ? this.props.state.article.header : 'CreateArticle'}</h2>
+                {<PostNotification posted={this.props.state.condition}/>}
                 <div className="form-group">
                     <label htmlFor="author" name="author" className="form-block__label">Author</label>
-                    <input type="text" name="author"   className="form-control" placeholder={this.props.routeParams.splat ? this.props.article.author : 'Author name...'}  required />
+                    <input type="text" name="author" ref="author" className="form-control" placeholder={this.props.params.id ? this.props.state.article.author : 'Author name...'}  required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="image"  className="form-block__label">Image</label>
-                    <input type="text"    name="image" className="form-control" placeholder={this.props.routeParams.splat ? this.props.article.image : 'URL of an image'} required />
+                    <input type="text"  ref="image" name="image" className="form-control" placeholder={this.props.params.id ? this.props.state.article.image : 'URL of an image'} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="title" className="form-block__label">Title</label>
-                    <input type="text"  name="header" className="form-control" placeholder={this.props.routeParams.splat ? this.props.article.header : 'Article header...'} required/>
+                    <input type="text"  name="header" ref="header" className="form-control" placeholder={this.props.params.id ? this.props.state.article.header : 'Article header...'} required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="text" className="form-block__label">Text</label>
-                    <textarea className="form-control" rows="5"   name="text" placeholder={this.props.routeParams.splat ? this.props.article.text : 'Text...'}  required/>
+                    <textarea className="form-control" rows="5" ref="text"  name="text" placeholder={this.props.params.id ? this.props.state.article.text : 'Text...'}  required/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="tags" className="form-block__label">Tags</label>
-                    <input type="text"  className="form-control" name="tags" placeholder={this.props.routeParams.splat ? this.props.article.tags : 'Tags...'} required/>
+                    <input type="text"  className="form-control" name="tags" ref="tags" placeholder={this.props.params.id ? this.props.state.article.tags : 'Tags...'} required/>
                 </div>
                 <Link to="/" className="btn btn-warning btn-cancel" role="link">cancel</Link>
-                {this.props.showDeleteButton ? <button type="reset"  className="btn btn-danger btn-delete" onClick={this.openModal.bind(this)} >delete</button> : null}
+                {this.props.state.showDeleteButton ? <button type="reset"  className="btn btn-danger btn-delete" onClick={this.openModal.bind(this)} >delete</button> : null}
                 <button type="submit" className="btn btn-info btn-submit"  >save</button>
             </form>
           </div>
@@ -95,12 +94,14 @@ class BlogEditor extends Component {
 }
 
 
-function mapStateToProps (store) {
+const mapStateToProps = store => {
     return {
-        article: store.formsState.article,
-        condition: store.formsState.condition,
-        showDeleteButton: store.formsState.showDeleteButton
+        state: store.formsState
     }
-}
+};
 
-export default connect(mapStateToProps)(BlogEditor);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({addArticle, editArticle, getSingleArticle, setDelBtnVisibility, setNotifCondition, deleteArticle}, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogEditor);
